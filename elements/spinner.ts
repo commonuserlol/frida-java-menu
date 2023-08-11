@@ -1,83 +1,80 @@
-import { Api } from "../api.js";
-import { Theme } from "../theme.js";
-import { randomString } from "../utils.js";
-import { Object } from "./object.js";
+namespace Menu {
+    /**
+     * Wrapper for `Spinner`
+     *
+     * @export
+     * @class Spinner
+     * @typedef {Spinner}
+     * @extends {Object}
+     */
+    export class Spinner extends Object {
+        public items: Java.Wrapper;
+        private theme: Theme;
 
-/**
- * Wrapper for `Spinner`
- *
- * @export
- * @class Spinner
- * @typedef {Spinner}
- * @extends {Object}
- */
-export class Spinner extends Object {
-    public items: Java.Wrapper;
-    private theme: Theme;
+        /**
+         * Creates an instance of Spinner.
+         *
+         * @constructor
+         * @param {Java.Wrapper} context
+         * @param {string[]} items
+         * @param {Theme} theme
+         */
+        constructor(context: Java.Wrapper, items: string[], theme: Theme) {
+            super(context);
+            this.instance = Api.Spinner.$new(context);
+            this.theme = theme;
+            this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
+            let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
+            params.setMargins(7, 2, 7, 2);
+            this.layoutParams = params;
+            this.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
+            let arrayAdapter = Api.ArrayAdapter.$new(this.context, Api.simple_spinner_dropdown_item, this.items);
+            arrayAdapter.setDropDownViewResource(Api.simple_spinner_dropdown_item);
+            this.adapter = arrayAdapter;
+        }
+        /**
+         * Gets adapter
+         *
+         * @type {Java.Wrapper}
+         */
+        get adapter(): Java.Wrapper {
+            return this.instance.getAdapter();
+        }
+        /**
+         * Sets adapter
+         *
+         * @type {*}
+         */
+        set adapter(adapter: Java.Wrapper) {
+            this.instance.setAdapter(adapter);
+        }
+        /**
+         * Sets onItemSelectedListener
+         *
+         * @type {(index: number) => void}
+         */
+        set onItemSelectedListener(callback: (index: number) => void) {
+            this.instance.setOnItemSelectedListener(Java.registerClass({
+                name: randomString(35),
+                implements: [Api.OnItemSelectedListener],
+                methods: {
+                    onItemSelected: (parent: Java.Wrapper, selected: Java.Wrapper, index: number, id: number) => {
+                        Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(this.theme.secondaryTextColor);
+                        callback(index);
+                    },
+                    onNothingSelected: function(parent: Java.Wrapper) {
 
-    /**
-     * Creates an instance of Spinner.
-     *
-     * @constructor
-     * @param {Java.Wrapper} context
-     * @param {string[]} items
-     * @param {Theme} theme
-     */
-    constructor(context: Java.Wrapper, items: string[], theme: Theme) {
-        super(context);
-        this.instance = Api.Spinner.$new(context);
-        this.theme = theme;
-        this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
-        let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
-        params.setMargins(7, 2, 7, 2);
-        this.layoutParams = params;
-        this.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
-        let arrayAdapter = Api.ArrayAdapter.$new(this.context, Api.simple_spinner_dropdown_item, this.items);
-        arrayAdapter.setDropDownViewResource(Api.simple_spinner_dropdown_item);
-        this.adapter = arrayAdapter;
-    }
-    /**
-     * Gets adapter
-     *
-     * @type {Java.Wrapper}
-     */
-    get adapter(): Java.Wrapper {
-        return this.instance.getAdapter();
-    }
-    /**
-     * Sets adapter
-     *
-     * @type {*}
-     */
-    set adapter(adapter: Java.Wrapper) {
-        this.instance.setAdapter(adapter);
-    }
-    /**
-     * Sets onItemSelectedListener
-     *
-     * @type {(index: number) => void}
-     */
-    set onItemSelectedListener(callback: (index: number) => void) {
-        this.instance.setOnItemSelectedListener(Java.registerClass({
-            name: randomString(35),
-            implements: [Api.OnItemSelectedListener],
-            methods: {
-                onItemSelected: (parent: Java.Wrapper, selected: Java.Wrapper, index: number, id: number) => {
-                    Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(this.theme.secondaryTextColor);
-                    callback(index);
-                },
-                onNothingSelected: function(parent: Java.Wrapper) {
-
+                    }
                 }
-            }
-        }).$new());
-    }
-    /**
-     * Sets selection by given index
-     *
-     * @type {number}
-     */
-    set selection(position: number) {
-        this.instance.setSelection(position);
+            }).$new());
+        }
+        /**
+         * Sets selection by given index
+         *
+         * @type {number}
+         */
+        set selection(position: number) {
+            this.instance.setSelection(position);
+        }
     }
 }

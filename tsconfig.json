@@ -3,7 +3,6 @@
       "target": "es2022",
       "lib": ["es2022"],
       "moduleResolution": "node",
-      "module": "ES2022",
       "sourceRoot": ".",
       "declaration": true,
       "experimentalDecorators": true,
@@ -11,6 +10,7 @@
       "strict": true,
       "strictPropertyInitialization": false,
       "stripInternal": true,
-      "outDir": "./generated"
+      "outDir": "./generated",
+      "outFile": "./generated/index.js"
     }
 }
