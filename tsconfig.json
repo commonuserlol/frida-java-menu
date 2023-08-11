@@ -10,7 +10,7 @@
       "strict": true,
       "strictPropertyInitialization": false,
       "stripInternal": true,
-      "outDir": "./generated",
-      "outFile": "./generated/index.js"
+      "outDir": "./dist",
+      "outFile": "./dist/index.js"
     }
 }

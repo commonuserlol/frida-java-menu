@@ -1,23 +1,36 @@
 {
-    "name": "frida-java-menu",
-    "version": "0.9.8",
-    "description": "Frida module to easily create a user graphical interface (GUI) using the base from lgl",
-    "license": "MIT",
-    "author": "commonuserlol",
-    "exports": "./generated/index.js",
-    "module": "generated/index.js",
-    "main": "generated/index.js",
-    "type": "module",
-    "types": "generated/index.d.ts",
-    "files": [
-      "generated"
-    ],
-    "scripts": {
-      "prepare": "tsc"
-    },
-    "devDependencies": {
-      "@types/frida-gum": "^18.3.2",
-      "@types/node": "^20.2.5",
-      "typescript": "^5.0.4"
-    }
+  "name": "frida-java-menu",
+  "version": "0.9.8",
+  "description": "Frida module to easily create a graphical user interface (GUI) for the android platform",
+  "exports": "./dist/index.js",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/commonuserlol/frida-java-menu.git"
+  },
+  "keywords": [
+    "frida",
+    "android",
+    "ui"
+  ],
+  "author": "commonuserlol",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/commonuserlol/frida-java-menu/issues"
+  },
+  "homepage": "https://github.com/commonuserlol/frida-java-menu#readme",
+  "devDependencies": {
+    "@types/frida-gum": "^18.3.2",
+    "@types/node": "^20.2.5",
+    "typescript": "^5.0.4"
+  }
 }
