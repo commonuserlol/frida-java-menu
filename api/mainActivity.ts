@@ -127,6 +127,9 @@ namespace Api {
                     resolve(MainActivity.classInstance);
                     return;
                 }
+                //`Java.choose` has strange behavior on Android 6-7 (5 and 8 not tested)
+                //sometimes an access violation accessing 0x152 may occur
+                //so it will be used only as fallback
                 Java.choose(Activity.$className, {
                     onMatch: (instance) => {
                         if (instance.getComponentName().getClassName() == this.className) {
