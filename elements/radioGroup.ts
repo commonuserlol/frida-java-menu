@@ -1,25 +1,9 @@
 namespace Menu {
-    /**
-     * Wrapper for `RadioGroup`
-     *
-     * @export
-     * @class RadioGroup
-     * @typedef {RadioGroup}
-     * @extends {Object}
-     */
     export class RadioGroup extends Object {
         private label: TextView;
         private theme: Theme;
         private unformattedText: string;
         
-        /**
-         * Creates an instance of RadioGroup.
-         *
-         * @constructor
-         * @param {Java.Wrapper} context
-         * @param {string} text
-         * @param {Theme} theme
-         */
         constructor(context: Java.Wrapper, text: string, theme: Theme) {
             super(context);
             this.instance = Api.RadioGroup.$new(context);

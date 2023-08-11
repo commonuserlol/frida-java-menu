@@ -1,21 +1,5 @@
 namespace Menu {
-    /**
-     * Wrapper for `Switch`
-     *
-     * @export
-     * @class Switch
-     * @typedef {Switch}
-     * @extends {Object}
-     */
     export class Switch extends Object {
-        /**
-         * Creates an instance of Switch.
-         *
-         * @constructor
-         * @param {Java.Wrapper} context
-         * @param {?string} [text]
-         * @param {boolean} [state=false]
-         */
         constructor(context: Java.Wrapper, text?: string, state: boolean = false) {
             super(context);
             this.instance = Api.Switch.$new(context);

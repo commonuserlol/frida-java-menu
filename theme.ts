@@ -1,19 +1,7 @@
 namespace Menu {
-    /**
-     * Theme class for menu visuals
-     *
-     * @export
-     * @class Theme
-     * @typedef {Theme}
-     */
     export class Theme {
         private holder: Map<string, string | number>;
-
-        /**
-         * Creates an instance of Theme.
-         *
-         * @constructor
-         */
+        
         constructor () {
             this.holder = new Map<string, string | number>();
         }

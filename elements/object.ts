@@ -1,22 +1,8 @@
 namespace Menu {
-    /**
-     * Wrapper class for `View`
-     *
-     * @export
-     * @class Object
-     * @typedef {Object}
-     */
     export class Object {
         public context: Java.Wrapper;
         public instance: Java.Wrapper;
 
-        /**
-         * Creates an instance of Object.
-         *
-         * @constructor
-         * @public
-         * @param {Java.Wrapper} context
-         */
         public constructor (context: Java.Wrapper) {
             this.context = context;
         }

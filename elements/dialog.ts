@@ -1,22 +1,5 @@
 namespace Menu {
-    /**
-     * Wrapper class for `AlertDialog(.Builder)`
-     *
-     * @export
-     * @class Dialog
-     * @typedef {Dialog}
-     * @extends {Object}
-     */
     export class Dialog extends Object {
-
-        /**
-         * Creates an instance of Dialog.
-         *
-         * @constructor
-         * @param {Java.Wrapper} context
-         * @param {?string} [title]
-         * @param {?string} [message]
-         */
         constructor(context: Java.Wrapper, title?: string, message?: string) {
             super(context);
             this.instance = Api.AlertDialog_Builder.$new(context);
@@ -96,7 +79,7 @@ namespace Menu {
          */
         public show() {
             const dialog = this.instance.create();
-            dialog.getWindow().setType(getApiVersion() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value);
+            dialog.getWindow().setType(getApiLevel() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value);
             dialog.show();
         }
     }

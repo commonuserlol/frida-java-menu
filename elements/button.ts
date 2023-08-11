@@ -1,20 +1,5 @@
 namespace Menu {
-    /**
-     * Wrapper for `Button`
-     *
-     * @export
-     * @class Button
-     * @typedef {Button}
-     * @extends {Object}
-     */
     export class Button extends Object {
-        /**
-         * Creates an instance of Button.
-         *
-         * @constructor
-         * @param {Java.Wrapper} context
-         * @param {?string} [text]
-         */
         constructor(context: Java.Wrapper, text?: string) {
             super(context);
             this.instance = Api.Button.$new(context);

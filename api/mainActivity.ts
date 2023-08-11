@@ -1,22 +1,10 @@
 namespace Api {
-    /**
-     * Wrapper class for `MainActivity` Java class
-     *
-     * @export
-     * @class MainActivity
-     * @typedef {MainActivity}
-     */
     export class MainActivity {
         public static instance: MainActivity;
         public static classInstance: Java.Wrapper;
         private className: string;
         private launcherIntent: Java.Wrapper;
 
-        /**
-         * Creates an instance of MainActivity.
-         *
-         * @constructor
-         */
         constructor() {
             let app = ActivityThread.currentApplication();
             this.launcherIntent = app.getPackageManager().getLaunchIntentForPackage(app.getPackageName());

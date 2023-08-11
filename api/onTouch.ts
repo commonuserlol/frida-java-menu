@@ -1,10 +1,4 @@
 namespace Api {
-    /**
-     * Represents `OnTouchListener` Java class 
-     * 
-     * @class OnTouch
-     * @typedef {OnTouch}
-     */
     export class OnTouch {
         private instance: Java.Wrapper;
         private windowManager: Java.Wrapper;

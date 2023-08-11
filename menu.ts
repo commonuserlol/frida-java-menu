@@ -1,11 +1,4 @@
 namespace Menu {
-    /**
-     * Main menu class
-     *
-     * @export
-     * @class Menu
-     * @typedef {Menu}
-     */
     export class Menu {
         private static instance: Menu;
         private layout: Java.Wrapper;
@@ -24,14 +17,6 @@ namespace Menu {
         public theme: Theme;
         public windowManager: Java.Wrapper;
 
-        /**
-         * Creates an instance of Menu.
-         *
-         * @constructor
-         * @param {string} title
-         * @param {string} subtitle
-         * @param {Theme} theme
-         */
         constructor (title: string, subtitle: string, theme: Theme) {
             Menu.instance = this;
             this.context = Api.ActivityThread.currentApplication().getApplicationContext();
@@ -46,7 +31,7 @@ namespace Menu {
             this.windowManager = Java.retain(Java.cast(this.context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager));
             this.rootFrame = Api.FrameLayout.$new(this.context);
             this.rootContainer = Api.RelativeLayout.$new(this.context);
-            this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, getApiVersion() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
+            this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, getApiLevel() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
             this.collapsedView = Api.RelativeLayout.$new(this.context);
             this.expandedView = Api.LinearLayout.$new(this.context);
             this.layout = Api.LinearLayout.$new(this.context);

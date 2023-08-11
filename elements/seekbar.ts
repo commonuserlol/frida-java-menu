@@ -1,24 +1,8 @@
 namespace Menu {
-    /**
-     * Wrapper for `SeekBar`
-     *
-     * @export
-     * @class SeekBar
-     * @typedef {SeekBar}
-     * @extends {Object}
-     */
     export class SeekBar extends Object {
         public label: TextView;
         public unformattedText: String;
 
-        /**
-         * Creates an instance of SeekBar.
-         *
-         * @constructor
-         * @param {Java.Wrapper} context
-         * @param {string} text
-         * @param {number} [progress=0]
-         */
         constructor(context: Java.Wrapper, text: string, progress: number = 0) {
             super(context);
             this.instance = Api.SeekBar.$new(context);

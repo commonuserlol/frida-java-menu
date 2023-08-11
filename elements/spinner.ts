@@ -1,24 +1,8 @@
 namespace Menu {
-    /**
-     * Wrapper for `Spinner`
-     *
-     * @export
-     * @class Spinner
-     * @typedef {Spinner}
-     * @extends {Object}
-     */
     export class Spinner extends Object {
         public items: Java.Wrapper;
         private theme: Theme;
 
-        /**
-         * Creates an instance of Spinner.
-         *
-         * @constructor
-         * @param {Java.Wrapper} context
-         * @param {string[]} items
-         * @param {Theme} theme
-         */
         constructor(context: Java.Wrapper, items: string[], theme: Theme) {
             super(context);
             this.instance = Api.Spinner.$new(context);

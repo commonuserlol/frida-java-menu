@@ -1,20 +1,5 @@
 namespace Menu {
-    /**
-     * Wrapper for `TextView`
-     *
-     * @export
-     * @class TextView
-     * @typedef {TextView}
-     * @extends {Object}
-     */
     export class TextView extends Object {
-        /**
-         * Creates an instance of TextView.
-         *
-         * @constructor
-         * @param {Java.Wrapper} context
-         * @param {string} text
-         */
         constructor(context: Java.Wrapper, text: string) {
             super(context);
             this.instance = Api.TextView.$new(context);
