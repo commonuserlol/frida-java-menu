@@ -1,6 +1,6 @@
 {
     "name": "frida-java-menu",
-    "version": "0.9.7",
+    "version": "0.9.8",
     "description": "Frida module to easily create a user graphical interface (GUI) using the base from lgl",
     "license": "MIT",
     "author": "commonuserlol",
