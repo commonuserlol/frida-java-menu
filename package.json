@@ -1,0 +1,23 @@
+{
+    "name": "frida-java-menu",
+    "version": "0.9.7",
+    "description": "Frida module to easily create a user graphical interface (GUI) using the base from lgl",
+    "license": "MIT",
+    "author": "commonuserlol",
+    "exports": "./generated/index.js",
+    "module": "generated/index.js",
+    "main": "generated/index.js",
+    "type": "module",
+    "types": "generated/index.d.ts",
+    "files": [
+      "generated"
+    ],
+    "scripts": {
+      "prepare": "tsc"
+    },
+    "devDependencies": {
+      "@types/frida-gum": "^18.3.2",
+      "@types/node": "^20.2.5",
+      "typescript": "^5.0.4"
+    }
+}
