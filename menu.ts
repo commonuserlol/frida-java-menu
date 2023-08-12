@@ -292,7 +292,7 @@ namespace Menu {
             return label;
         }
 
-        public async inputNumber(title: string, max: number, callback?: (this: Dialog, isSuccessful: boolean, result?: number) => void): Promise<void> {
+        public async inputNumber(title: string, max: number, positiveCallback?: (this: Dialog, result: number) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
             let view = Api.EditText.$new(this.context);
             if (max > 0) {
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
@@ -300,20 +300,20 @@ namespace Menu {
             view.setInputType(Api.InputType.TYPE_CLASS_NUMBER.value);
             await dialog(title, "", function () {
                 let result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
-                !Number.isNaN(result) ? callback?.call(this, true, result <= max ? result : max) : callback?.call(this, true, NaN);
+                !Number.isNaN(result) ? positiveCallback?.call(this, result <= max ? result : max) : positiveCallback?.call(this, NaN);
             }, function () {
-                callback?.call(this, false);
+                negativeCallback?.call(this);
             }, view).then((d) => d.show());  
         }
 
-        public async inputText(title: string, hint?: string, callback?: (this: Dialog, isSuccessful: boolean, result?: string) => void): Promise<void> {
+        public async inputText(title: string, hint?: string, positiveCallback?: (this: Dialog, result: string) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
             let view = Api.EditText.$new(this.context);
             if (hint) view.setHint(wrap(hint));
             await dialog(title, "", function () {
                 const result = Java.cast(view, Api.TextView).getText().toString();
-                callback?.call(this, true);
+                positiveCallback?.call(this, result);
             }, function () {
-                callback?.call(this, false);
+                negativeCallback?.call(this);
             }, view).then((d) => d.show());     
         }
 

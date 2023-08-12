@@ -56,13 +56,13 @@ namespace Menu {
         }
     }
 
-    export async function dialog(title: string, message: string, positiveButton?: (this: Dialog) => void, negativeButton?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
+    export async function dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
         //We can create a dialog only with an activity instance, the context is not suitable.
         const instance = await Api.MainActivity.instance.getClassInstance();
         const dialog = new Dialog(instance, title, message);
         view ? (view instanceof Object ? dialog.view = view.instance : dialog.view = view) : null;
-        if (positiveButton) dialog.setPositiveButton(positiveButton)
-        if (negativeButton) dialog.setNegativeButton(negativeButton);
+        if (positiveCallback) dialog.setPositiveButton(positiveCallback)
+        if (negativeCallback) dialog.setNegativeButton(negativeCallback);
 
         return dialog;
     }
