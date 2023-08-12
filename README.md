@@ -1,6 +1,6 @@
 # frida-java-menu
 Easily create graphical user interface for android with frida<br>
-![](https://i.imgur.com/HF9oIm2.gif)
+![](https://i.imgur.com/3EoO951.gif)
 
 # Supported roms
 Should work with (almost) pure **aosp** like LineageOS and PixelExperience based roms<br>
