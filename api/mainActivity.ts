@@ -1,4 +1,4 @@
-namespace Api {
+namespace Menu {
     export class MainActivity {
         public static instance: MainActivity;
         public static classInstance: Java.Wrapper;
@@ -6,7 +6,7 @@ namespace Api {
         private launcherIntent: Java.Wrapper;
 
         constructor() {
-            let app = ActivityThread.currentApplication();
+            let app = Api.ActivityThread.currentApplication();
             this.launcherIntent = app.getPackageManager().getLaunchIntentForPackage(app.getPackageName());
             this.className = this.launcherIntent.resolveActivityInfo(app.getPackageManager(), 0).name.value;
         }
@@ -19,9 +19,9 @@ namespace Api {
          */
         static set onCreate(callback: (() => void ) | null) {
             if (callback == null) {
-                Activity.onCreate.overload("android.os.Bundle").implementation = null;
+                Api.Activity.onCreate.overload("android.os.Bundle").implementation = null;
             }
-            Activity.onCreate.overload("android.os.Bundle").implementation = function(savedInstanceState: Java.Wrapper) {
+            Api.Activity.onCreate.overload("android.os.Bundle").implementation = function(savedInstanceState: Java.Wrapper) {
                 this.onCreate.overload("android.os.Bundle").call(this, savedInstanceState);
                 callback?.();
                 if (!MainActivity.classInstance) {
@@ -39,10 +39,10 @@ namespace Api {
          */
         set onPause(callback: (() => void ) | null) {
             if (callback == null) {
-                Activity.onPause.implementation = null;
+                Api.Activity.onPause.implementation = null;
             }
             let targetActivityName = this.className;
-            Activity.onPause.implementation = function() {
+            Api.Activity.onPause.implementation = function() {
                 if (this.getComponentName().getClassName() == targetActivityName) {
                     callback?.();
                 }
@@ -58,10 +58,10 @@ namespace Api {
          */
         set onResume(callback: (() => void ) | null) {
             if (callback == null) {
-                Activity.onResume.implementation = null;
+                Api.Activity.onResume.implementation = null;
             }
             let targetActivityName = this.className;
-            Activity.onResume.implementation = function() {
+            Api.Activity.onResume.implementation = function() {
                 if (this.getComponentName().getClassName() == targetActivityName) {
                     callback?.();
                 }
@@ -77,10 +77,10 @@ namespace Api {
          */
         set onDestroy(callback: (() => void ) | null) {
             if (callback == null) {
-                Activity.onDestroy.implementation = null;
+                Api.Activity.onDestroy.implementation = null;
             }
             let targetActivityName = this.className;
-            Activity.onDestroy.implementation = function() {
+            Api.Activity.onDestroy.implementation = function() {
                 if (this.getComponentName().getClassName() == targetActivityName) {
                     callback?.();
                 }
@@ -101,7 +101,7 @@ namespace Api {
             MainActivity.onCreate = () => {};
             return new Promise((resolve, reject) => {
                 const waitInterval = setInterval(() => {
-                    if (!ActivityThread.currentApplication()) return;
+                    if (!Api.ActivityThread.currentApplication()) return;
                     if (!this.instance) this.instance = new MainActivity();
                     Java.perform(callback);
                     clearInterval(waitInterval);
@@ -118,7 +118,7 @@ namespace Api {
                 //`Java.choose` has strange behavior on Android 6-7 (5 and 8 not tested)
                 //sometimes an access violation accessing 0x152 may occur
                 //so it will be used only as fallback
-                Java.choose(Activity.$className, {
+                Java.choose(Api.Activity.$className, {
                     onMatch: (instance) => {
                         if (instance.getComponentName().getClassName() == this.className) {
                             MainActivity.classInstance = Java.retain(instance);

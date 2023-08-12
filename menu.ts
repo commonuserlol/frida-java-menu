@@ -100,9 +100,9 @@ namespace Menu {
                 this.destroy();
                 this.isAlive = false;
                 toast(this.context, this.theme.killText, 1);
-                Api.MainActivity.instance.onPause = null;
-                Api.MainActivity.instance.onResume = null;
-                Api.MainActivity.instance.onDestroy = null;
+                MainActivity.instance.onPause = null;
+                MainActivity.instance.onResume = null;
+                MainActivity.instance.onDestroy = null;
             }
 
             closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
@@ -129,13 +129,13 @@ namespace Menu {
             this.add(closeButton, buttonView);
             this.add(buttonView, this.expandedView);
 
-            Api.MainActivity.instance.onDestroy = () => {
+            MainActivity.instance.onDestroy = () => {
                 this.destroy();
             };
-            Api.MainActivity.instance.onPause = () => {
+            MainActivity.instance.onPause = () => {
                 this.destroy();
             };
-            Api.MainActivity.instance.onResume = () => {
+            MainActivity.instance.onResume = () => {
                 this.show();
             };
         }
