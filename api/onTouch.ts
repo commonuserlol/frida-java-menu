@@ -16,7 +16,7 @@ namespace Api {
             this.expandedView = expandedView;
             this.rootFrame = rootFrame;
             this.params = params;
-            MainActivity.instance.getClassInstance().then((instance) => {
+            Menu.MainActivity.instance.getClassInstance().then((instance) => {
                 if (instance) this.orientation = instance.getResources().getConfiguration().orientation.value;
                 else this.orientation = 1;
             });
