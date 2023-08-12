@@ -51,7 +51,7 @@ namespace Menu {
         const spinner = new Spinner(context, items, Menu.getInstance().theme);
         const savedIndex = Menu.getInstance().sharedPrefs.getInt(items.join());
         if (callback) spinner.onItemSelectedListener;
-        if (savedIndex != -1) spinner.selection = savedIndex;
+        if (savedIndex != -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
 
         return spinner;
     }

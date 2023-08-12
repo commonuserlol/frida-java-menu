@@ -51,7 +51,7 @@ namespace Menu {
             const index = buttons.indexOf(button);
             radioGroup.addButton(button, index, callback);
         }
-        radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId());
+        Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
 
         return radioGroup;
     }

@@ -33,7 +33,7 @@ namespace Menu {
         toggle.textColor = Menu.getInstance().theme.secondaryTextColor;
         toggle.padding = [10, 5, 10, 5];
         if (callback) toggle.onCheckedChangeListener = callback;
-        if (savedState) toggle.checked = savedState;
+        if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
 
         return toggle;
     }
