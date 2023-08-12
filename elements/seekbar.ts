@@ -53,7 +53,7 @@ namespace Menu {
                     onProgressChanged: (seekBar: Java.Wrapper, progress: number) => {
                         seekBar.setProgress(progress)
                         this.label.text = format(this.unformattedText, progress);
-                        callback(progress);
+                        callback.call(this, progress);
                     }
                 }
             }).$new());
@@ -74,7 +74,7 @@ namespace Menu {
         seekbar.padding = [25, 10, 35, 10];
         seekbar.max = max;
         min ? seekbar.min = min : seekbar.min = 0;
-        if (callback) seekbar.onSeekBarChangeListener = callback?.bind(seekbar);
+        if (callback) seekbar.onSeekBarChangeListener = callback;
 
         return seekbar;
     }

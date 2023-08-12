@@ -28,7 +28,7 @@ namespace Menu {
                         return "OnClickListenerPositive";
                     },
                     onClick: (dialog: Java.Wrapper, which: Java.Wrapper) => {
-                        callback.bind(this)();
+                        callback.call(this);
                     }
                 }
             }).$new());
@@ -43,7 +43,7 @@ namespace Menu {
                         return "OnClickListenerNegative";
                     },
                     onClick: (dialog, which) => {
-                        callback.bind(this)();
+                        callback.call(this);
                     }
                 }
             }).$new());

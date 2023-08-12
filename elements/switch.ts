@@ -18,7 +18,7 @@ namespace Menu {
                 methods: {
                     onCheckedChanged: (object: Java.Wrapper, state: boolean) => {
                         Menu.getInstance().sharedPrefs.putBool(this.text, state);
-                        callback(state);
+                        callback.call(this, state);
                     }
                 }
             }).$new());
@@ -31,7 +31,7 @@ namespace Menu {
         const savedState = Menu.getInstance().sharedPrefs.getBool(label);
         toggle.textColor = Menu.getInstance().theme.secondaryTextColor;
         toggle.padding = [10, 5, 10, 5];
-        if (callback) toggle.onCheckedChangeListener = callback.bind(toggle);
+        if (callback) toggle.onCheckedChangeListener = callback;
         if (savedState) toggle.checked = savedState;
 
         return toggle;

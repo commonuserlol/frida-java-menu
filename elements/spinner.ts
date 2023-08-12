@@ -32,7 +32,7 @@ namespace Menu {
                 methods: {
                     onItemSelected: (parent: Java.Wrapper, selected: Java.Wrapper, index: number, id: number) => {
                         Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(this.theme.secondaryTextColor);
-                        callback(index);
+                        callback.call(this, index);
                     },
                     onNothingSelected: function(parent: Java.Wrapper) {
 
@@ -49,7 +49,7 @@ namespace Menu {
     export function spinner(context: Java.Wrapper, items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
         const spinner = new Spinner(context, items, Menu.getInstance().theme);
         const savedIndex = Menu.getInstance().sharedPrefs.getInt(items.join());
-        if (callback) spinner.onItemSelectedListener = callback.bind(spinner);
+        if (callback) spinner.onItemSelectedListener;
         if (savedIndex != -1) spinner.selection = savedIndex;
 
         return spinner;
