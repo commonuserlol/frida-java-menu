@@ -11,7 +11,7 @@ namespace Menu {
         private titleLayout: Java.Wrapper;
         private settingsView: Java.Wrapper;
         private scrollView: Java.Wrapper;
-        private sharedPrefs: Api.SharedPreferences;
+        public sharedPrefs: Api.SharedPreferences;
         private isAlive: boolean;
         public context: Java.Wrapper;
         public theme: Theme;

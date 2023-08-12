@@ -6,92 +6,47 @@ namespace Menu {
         public constructor (context: Java.Wrapper) {
             this.context = context;
         }
-        /**
-         * Gets background
-         *
-         * @readonly
-         * @type {Java.Wrapper}
-         */
+        /** Gets background */
         get background(): Java.Wrapper {
             return this.instance.getBackground();
         }
-        /**
-         * Gets layout params
-         *
-         * @type {Java.Wrapper}
-         */
+        /** Gets layout params */
         get layoutParams(): Java.Wrapper {
             return this.instance.getLayoutParams();
         }
-        /**
-         * Gets padding
-         *
-         * @type {Array<number>} [left, top, right, bottom]
-         */
+        /** Gets padding */
         get padding(): Array<number> {
             return [this.instance.getPaddingLeft(), this.instance.getPaddingTop(), this.instance.getPaddingRight(), this.instance.getPaddingBottom()];
         }
-        /**
-         * Gets text
-         *
-         * @type {string}
-         */
+        /** Gets text */
         get text(): string {
             return Java.cast(this.instance, Api.TextView).getText().toString();
         }
-        /**
-         * Gets text color
-         *
-         * @type {Java.Wrapper}
-         */
+        /** Gets text color */
         get textColor(): Java.Wrapper {
             return this.instance.getTextColors();
         }
-        /**
-         * Sets background color
-         *
-         * @type {*}
-         */
+        /** Sets background color */
         set backgroundColor(color: Java.Wrapper | number) {
             this.instance.setBackgroundColor(color);
         }
-        /**
-         * Sets layout params
-         *
-         * @type {*}
-         */
+        /** Sets layout params */
         set layoutParams(params: Java.Wrapper) {
             this.instance.setLayoutParams(params);
         }
-        /**
-         * Sets padding
-         *
-         * @type {*}
-         */
+        /** Sets padding */
         set padding(position: [left: number, top: number, right: number, bottom: number]) {
             this.instance.setPadding(...position);
         }
-        /**
-         * Sets text
-         *
-         * @type {string}
-         */
+        /** Sets text */
         set text(text: string) {
             this.instance.setText(wrap(text));
         }
-        /**
-         * Sets text color
-         *
-         * @type {*}
-         */
+        /** Sets text color */
         set textColor(color: Java.Wrapper | number) {
             this.instance.setTextColor(color);
         }
-        /**
-         * Sets onClickListener callback
-         *
-         * @type {() => void}
-         */
+        /** Sets onClickListener callback */
         set onClickListener(callback: () => void) {
             this.instance.setOnClickListener(Java.registerClass({
                 name: randomString(35),
@@ -103,11 +58,7 @@ namespace Menu {
                 }
             }).$new());
         }
-        /**
-         * Sets onLongClickListener callback
-         *
-         * @type {() => void}
-         */
+        /** Sets onLongClickListener callback */
         set onLongClickListener(callback: () => void) {
             this.instance.setOnLongClickListener(Java.registerClass({
                 name: randomString(35),

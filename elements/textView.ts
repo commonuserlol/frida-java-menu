@@ -5,101 +5,61 @@ namespace Menu {
             this.instance = Api.TextView.$new(context);
             this.text = text;
         }
-        /**
-         * Gets ellipsize
-         *
-         * @type {Java.Wrapper}
-         */
+        /** Gets ellipsize */
         get ellipsize(): Java.Wrapper {
             return this.instance.getEllipsize();
         }
-        /**
-         * Gets gravity
-         *
-         * @type {number}
-         */
+        /** Gets gravity */
         get gravity(): number {
             return this.instance.getGravity();
         }
-        /**
-         * Gets marqueeRepeatLimit
-         *
-         * @type {number}
-         */
+        /** Gets marqueeRepeatLimit */
         get marqueeRepeatLimit(): number {
             return this.instance.getMarqueeRepeatLimit();
         }
-        /**
-         * Gets text size
-         *
-         * @type {number}
-         */
+        /** Gets text size */
         get textSize(): number {
             return this.instance.getTextSize();
         }
-        /**
-         * Gets typeface
-         *
-         * @type {Java.Wrapper}
-         */
+        /** Gets typeface */
         get typeface(): Java.Wrapper {
             return this.instance.getTypeface();
         }
-        /**
-         * Sets ellipsize
-         *
-         * @type {*}
-         */
+        /** Sets ellipsize */
         set ellipsize(where: Java.Wrapper) {
             this.instance.setEllipsize(where);
         }
-        /**
-         * Sets gravity
-         *
-         * @type {number}
-         */
+        /** Sets gravity */
         set gravity(gravity: number) {
             this.instance.setGravity(gravity);
         }
-        /**
-         * Sets marqueeRepeatLimit
-         *
-         * @type {number}
-         */
+        /** Sets marqueeRepeatLimit */
         set marqueeRepeatLimit(limit: number) {
             this.instance.setMarqueeRepeatLimit(limit);
         }
-        /**
-         * Sets selected
-         *
-         * @type {boolean}
-         */
+        /** Sets selected */
         set selected(selected: boolean) {
             this.instance.setSelected(selected);    
         }
-        /**
-         * Sets singleLine
-         *
-         * @type {boolean}
-         */
+        /** Sets singleLine */
         set singleLine(singleLine: boolean) {
             this.instance.setSingleLine(singleLine);
         }
-        /**
-         * Sets text size
-         *
-         * @type {number}
-         */
+        /** Sets text size */
         set textSize(size: number) {
             this.instance.setTextSize(size);
         }
-        /**
-         * Sets typeface
-         *
-         * @type {*}
-         */
+        /** Sets typeface */
         set typeface(tf: Java.Wrapper) {
             this.instance.setTypeface(tf);
         }
+    }
+
+    export function textView(context: Java.Wrapper, label: string): TextView {
+        const textView = new TextView(context, label);
+        textView.textColor = Menu.getInstance().theme.secondaryTextColor;
+        textView.padding = [10, 5, 10, 5];
+
+        return textView;
     }
 }

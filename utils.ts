@@ -66,4 +66,8 @@ namespace Menu {
             return obj[p1]
         })
     }
+
+    export function raise(text: string) {
+        throw new Error(text);
+    }
 }

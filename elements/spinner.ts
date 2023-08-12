@@ -16,27 +16,15 @@ namespace Menu {
             arrayAdapter.setDropDownViewResource(Api.simple_spinner_dropdown_item);
             this.adapter = arrayAdapter;
         }
-        /**
-         * Gets adapter
-         *
-         * @type {Java.Wrapper}
-         */
+        /** Gets adapter */
         get adapter(): Java.Wrapper {
             return this.instance.getAdapter();
         }
-        /**
-         * Sets adapter
-         *
-         * @type {*}
-         */
+        /** Sets adapter */
         set adapter(adapter: Java.Wrapper) {
             this.instance.setAdapter(adapter);
         }
-        /**
-         * Sets onItemSelectedListener
-         *
-         * @type {(index: number) => void}
-         */
+        /** Sets onItemSelectedListener */
         set onItemSelectedListener(callback: (index: number) => void) {
             this.instance.setOnItemSelectedListener(Java.registerClass({
                 name: randomString(35),
@@ -52,13 +40,18 @@ namespace Menu {
                 }
             }).$new());
         }
-        /**
-         * Sets selection by given index
-         *
-         * @type {number}
-         */
+        /** Sets selection by given index */
         set selection(position: number) {
             this.instance.setSelection(position);
         }
+    }
+
+    export function spinner(context: Java.Wrapper, items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
+        const spinner = new Spinner(context, items, Menu.getInstance().theme);
+        const savedIndex = Menu.getInstance().sharedPrefs.getInt(items.join());
+        if (callback) spinner.onItemSelectedListener = callback.bind(spinner);
+        if (savedIndex != -1) spinner.selection = savedIndex;
+
+        return spinner;
     }
 }

@@ -6,19 +6,11 @@ namespace Menu {
             if (text) this.text = text;
             this.checked = state;
         }
-        /**
-         * Sets checked
-         *
-         * @type {boolean}
-         */
+        /** Sets checked */
         set checked(checked: boolean) {
             this.instance.setChecked(checked);
         }
-        /**
-         * Sets onCheckedChangeListener
-         *
-         * @type {(state: boolean) => void}
-         */
+        /** Sets onCheckedChangeListener */
         set onCheckedChangeListener(callback: (state: boolean) => void) {
             this.instance.setOnCheckedChangeListener(Java.registerClass({
                 name: randomString(35),
@@ -30,5 +22,17 @@ namespace Menu {
                 }
             }).$new());
         }
+    }
+
+    export function toggle(context: Java.Wrapper, label: string, callback?: (this: Switch, state: boolean) => void): Switch {
+        //switch keyword already used, so we borrow the name from lgl code
+        const toggle = new Switch(context, label);
+        const savedState = Menu.getInstance().sharedPrefs.getBool(label);
+        toggle.textColor = Menu.getInstance().theme.secondaryTextColor;
+        toggle.padding = [10, 5, 10, 5];
+        if (callback) toggle.onCheckedChangeListener = callback.bind(toggle);
+        if (savedState) toggle.checked = savedState;
+
+        return toggle;
     }
 }
