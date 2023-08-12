@@ -1,6 +1,6 @@
 {
   "name": "frida-java-menu",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "Frida module to easily create a graphical user interface (GUI) for the android platform",
   "exports": "./dist/index.js",
   "module": "dist/index.js",
