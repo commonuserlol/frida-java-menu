@@ -257,9 +257,10 @@ namespace Menu {
          * @param {(Java.Wrapper | Object)} view to add
          * @param {?Java.Wrapper} [layout] for add. If not provided general layout will be used
          */
-        public add(view: Java.Wrapper | Object, layout?: Java.Wrapper): void {
+        public add(view: Java.Wrapper | Object, layout?: Java.Wrapper | Object): void {
             Java.scheduleOnMainThread(() => {
-                (layout ?? this.layout)?.addView((view instanceof Object ? view.instance : view));
+                const l = layout ?? this.layout;
+                (l instanceof Object ? l.instance : l).addView((view instanceof Object ? view.instance : view));
             })
         }
 
@@ -270,9 +271,10 @@ namespace Menu {
          * @param {(Java.Wrapper | Object)} view to remove
          * @param {?Java.Wrapper} [layout] for remove. If not provided general layout will be used
          */
-        public remove(view: Java.Wrapper | Object, layout?: Java.Wrapper): void {
+        public remove(view: Java.Wrapper | Object, layout?: Java.Wrapper | Object): void {
             Java.scheduleOnMainThread(() => {
-                (layout ?? this.layout)?.removeView((view instanceof Object ? view.instance : view));
+                const l = layout ?? this.layout;
+                (l instanceof Object ? l.instance : l).removeView((view instanceof Object ? view.instance : view));
             })
         }
 
@@ -284,7 +286,7 @@ namespace Menu {
          * @returns {TextView}
          */
         public category(text: string): TextView {
-            const label = textView(this.context, text);
+            const label = textView(text);
             label.backgroundColor = this.theme.categoryColor;
             label.gravity = Api.CENTER;
             label.padding = [0, 5, 0, 5];

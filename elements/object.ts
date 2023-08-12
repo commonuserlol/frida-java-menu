@@ -19,7 +19,7 @@ namespace Menu {
             return this.instance.getOrientation();
         }
         /** Gets padding */
-        get padding(): Array<number> {
+        get padding(): number[] {
             return [this.instance.getPaddingLeft(), this.instance.getPaddingTop(), this.instance.getPaddingRight(), this.instance.getPaddingBottom()];
         }
         /** Gets text */
@@ -60,7 +60,7 @@ namespace Menu {
                 name: randomString(35),
                 implements: [Api.OnClickListener],
                 methods: {
-                    onClick: function(view: Java.Wrapper) {
+                    onClick: (view: Java.Wrapper) => {
                         callback();
                     }
                 }

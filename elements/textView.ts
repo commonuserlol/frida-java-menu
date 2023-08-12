@@ -55,7 +55,8 @@ namespace Menu {
         }
     }
 
-    export function textView(context: Java.Wrapper, label: string): TextView {
+    export function textView(label: string): TextView {
+        const context = Menu.getInstance().context;
         const textView = new TextView(context, label);
         textView.textColor = Menu.getInstance().theme.secondaryTextColor;
         textView.padding = [10, 5, 10, 5];

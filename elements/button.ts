@@ -15,7 +15,8 @@ namespace Menu {
         }
     }
 
-    export function button(context: Java.Wrapper, text?: string, callback?: () => void, longCallback?: () => void): Button {
+    export function button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
+        const context = Menu.getInstance().context;
         const button = new Button(context, text);
         const params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
         params.setMargins(7, 5, 7, 5);
@@ -23,8 +24,8 @@ namespace Menu {
         button.allCaps = false;
         button.textColor = Menu.getInstance().theme.secondaryTextColor;
         button.backgroundColor = Menu.getInstance().theme.buttonColor;
-        if (callback) button.onClickListener = callback;
-        if (longCallback) button.onLongClickListener = longCallback;
+        if (callback) button.onClickListener = () => callback.call(button);
+        if (longCallback) button.onLongClickListener = () => longCallback.call(button);
 
         return button;
     }

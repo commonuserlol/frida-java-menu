@@ -25,8 +25,9 @@ namespace Menu {
         }
     }
 
-    export function toggle(context: Java.Wrapper, label: string, callback?: (this: Switch, state: boolean) => void): Switch {
+    export function toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
         //switch keyword already used, so we borrow the name from lgl code
+        const context = Menu.getInstance().context;
         const toggle = new Switch(context, label);
         const savedState = Menu.getInstance().sharedPrefs.getBool(label);
         toggle.textColor = Menu.getInstance().theme.secondaryTextColor;

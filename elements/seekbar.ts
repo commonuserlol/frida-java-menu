@@ -65,7 +65,9 @@ namespace Menu {
         }
     }
 
-    export function seekbar(context: Java.Wrapper, label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): SeekBar {
+    export function seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
+        const add = Menu.getInstance().add;
+        const context = Menu.getInstance().context;
         const seekbar = new SeekBar(context, label, Menu.getInstance().sharedPrefs.getInt(label));
         const layout = new Object(context);
         layout.instance = Api.LinearLayout.$new(context);
@@ -76,6 +78,9 @@ namespace Menu {
         min ? seekbar.min = min : seekbar.min = 0;
         if (callback) seekbar.onSeekBarChangeListener = callback;
 
-        return seekbar;
+        add(seekbar.label, layout.instance);
+        add(seekbar, layout.instance);
+
+        return layout;
     }
 }

@@ -41,7 +41,8 @@ namespace Menu {
         }
     }
 
-    export function radioGroup(context: Java.Wrapper, label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
+    export function radioGroup(label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
+        const context = Menu.getInstance().context;
         const radioGroup = new RadioGroup(context, label, Menu.getInstance().theme);
         const savedIndex = Menu.getInstance().sharedPrefs.getInt(label);
         radioGroup.padding = [10, 5, 10, 5];

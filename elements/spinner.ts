@@ -46,7 +46,8 @@ namespace Menu {
         }
     }
 
-    export function spinner(context: Java.Wrapper, items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
+    export function spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
+        const context = Menu.getInstance().context;
         const spinner = new Spinner(context, items, Menu.getInstance().theme);
         const savedIndex = Menu.getInstance().sharedPrefs.getInt(items.join());
         if (callback) spinner.onItemSelectedListener;
