@@ -17,6 +17,12 @@ namespace Menu {
 
     export function button(context: Java.Wrapper, text?: string, callback?: () => void, longCallback?: () => void): Button {
         const button = new Button(context, text);
+        const params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
+        params.setMargins(7, 5, 7, 5);
+        button.layoutParams = params;
+        button.allCaps = false;
+        button.textColor = Menu.getInstance().theme.secondaryTextColor;
+        button.backgroundColor = Menu.getInstance().theme.buttonColor;
         if (callback) button.onClickListener = callback;
         if (longCallback) button.onLongClickListener = longCallback;
 

@@ -14,6 +14,10 @@ namespace Menu {
         get layoutParams(): Java.Wrapper {
             return this.instance.getLayoutParams();
         }
+        /** Gets orientation */
+        get orientation(): number {
+            return this.instance.getOrientation();
+        }
         /** Gets padding */
         get padding(): Array<number> {
             return [this.instance.getPaddingLeft(), this.instance.getPaddingTop(), this.instance.getPaddingRight(), this.instance.getPaddingBottom()];
@@ -33,6 +37,10 @@ namespace Menu {
         /** Sets layout params */
         set layoutParams(params: Java.Wrapper) {
             this.instance.setLayoutParams(params);
+        }
+        /** Sets orientation */
+        set orientation(orientation: number) {
+            this.instance.setOrientation(orientation);
         }
         /** Sets padding */
         set padding(position: [left: number, top: number, right: number, bottom: number]) {

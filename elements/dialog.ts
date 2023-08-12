@@ -1,9 +1,4 @@
 namespace Menu {
-    export type OnClickListener = {
-        label: string,
-        callback: () => void
-    }
-
     export class Dialog extends Object {
         constructor(context: Java.Wrapper, title?: string, message?: string) {
             super(context);
@@ -24,8 +19,8 @@ namespace Menu {
             this.instance.setView(view);
         }
         /** Sets positive button */
-        public setPositiveButton(button: OnClickListener) {
-            this.instance.setPositiveButton(wrap(button.label), Java.registerClass({
+        public setPositiveButton(callback: (this: Dialog) => void) {
+            this.instance.setPositiveButton(wrap(Menu.getInstance().theme.dialogPositiveText), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {
@@ -33,14 +28,14 @@ namespace Menu {
                         return "OnClickListenerPositive";
                     },
                     onClick: (dialog: Java.Wrapper, which: Java.Wrapper) => {
-                        button.callback();
+                        callback.bind(this)();
                     }
                 }
             }).$new());
         }
         /** Sets negative button */
-        public setNegativeButton(button: OnClickListener) {
-            this.instance.setNegativeButton(wrap(button.label), Java.registerClass({
+        public setNegativeButton(callback: (this: Dialog) => void) {
+            this.instance.setNegativeButton(wrap(Menu.getInstance().theme.dialogNegativeText), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {
@@ -48,7 +43,7 @@ namespace Menu {
                         return "OnClickListenerNegative";
                     },
                     onClick: (dialog, which) => {
-                        button.callback();
+                        callback.bind(this)();
                     }
                 }
             }).$new());
@@ -61,8 +56,10 @@ namespace Menu {
         }
     }
 
-    export function dialog(context: Java.Wrapper, title: string, message: string, positiveButton?: OnClickListener, negativeButton?: OnClickListener, view?: Java.Wrapper | Object): Dialog {
-        const dialog = new Dialog(context, title, message);
+    export async function dialog(title: string, message: string, positiveButton?: (this: Dialog) => void, negativeButton?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
+        //We can create a dialog only with an activity instance, the context is not suitable.
+        const instance = await Api.MainActivity.instance.getClassInstance();
+        const dialog = new Dialog(instance, title, message);
         view ? (view instanceof Object ? dialog.view = view.instance : dialog.view = view) : null;
         if (positiveButton) dialog.setPositiveButton(positiveButton)
         if (negativeButton) dialog.setNegativeButton(negativeButton);

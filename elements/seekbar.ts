@@ -70,10 +70,12 @@ namespace Menu {
         const layout = new Object(context);
         layout.instance = Api.LinearLayout.$new(context);
         layout.layoutParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
+        layout.orientation = Api.VERTICAL;
         seekbar.padding = [25, 10, 35, 10];
         seekbar.max = max;
         min ? seekbar.min = min : seekbar.min = 0;
         if (callback) seekbar.onSeekBarChangeListener = callback?.bind(seekbar);
-        
+
+        return seekbar;
     }
 }

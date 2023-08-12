@@ -14,14 +14,6 @@ namespace Menu {
             this.label.text = format(text, 0);
             this.instance.addView(Java.cast(this.label.instance, Api.View), 0, params);
         }
-        /** Gets orientation */
-        get orientation(): number {
-            return this.instance.getOrientation();
-        }
-        /** Sets orientation */
-        set orientation(orientation: number) {
-            this.instance.setOrientation(orientation);
-        }
         /** Adds new `RadioButton` */
         public addButton(label: string, index: number, callback?: (index: number) => void) {
             let button = new Object(this.context);
@@ -32,6 +24,7 @@ namespace Menu {
             if (callback) {
                 button.onClickListener = () => {
                     this.label.text = format(this.unformattedText, label);
+                    Menu.getInstance().sharedPrefs.putInt(this.label.text, index);
                     callback(index);
                 }
             }
@@ -50,10 +43,14 @@ namespace Menu {
 
     export function radioGroup(context: Java.Wrapper, label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
         const radioGroup = new RadioGroup(context, label, Menu.getInstance().theme);
+        const savedIndex = Menu.getInstance().sharedPrefs.getInt(label);
+        radioGroup.padding = [10, 5, 10, 5];
+        radioGroup.orientation = 1;
         for (const button of buttons) {
             const index = buttons.indexOf(button);
             radioGroup.addButton(button, index, callback);
         }
+        radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId());
 
         return radioGroup;
     }
