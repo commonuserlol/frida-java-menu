@@ -21,7 +21,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Smartphone (please complete the following information):**
- - Device: [e.g. Nokia 3310]
+ - Device: [e.g. Xiaomi Redmi 10TS Pro Max]
+ - Firmware or Custom ROM: [e.g. MIUI 14 or LineageOS 20]
  - Android version: [e.g. Android 12.1]
 
 **Additional context**
