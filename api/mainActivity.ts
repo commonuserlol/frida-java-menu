@@ -2,8 +2,8 @@ namespace Menu {
     export class MainActivity {
         public static instance: MainActivity;
         public static classInstance: Java.Wrapper;
-        private className: string;
-        private launcherIntent: Java.Wrapper;
+        private readonly className: string;
+        private readonly launcherIntent: Java.Wrapper;
 
         constructor() {
             let app = Api.ActivityThread.currentApplication();

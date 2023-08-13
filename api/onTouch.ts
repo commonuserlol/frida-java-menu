@@ -27,11 +27,11 @@ namespace Api {
                 methods: {
                     onTouch: (view: Java.Wrapper, event: Java.Wrapper) => {
                         switch(event.getAction()) {
-                            case 0: //ACTION_DOWN
+                            case ACTION_DOWN:
                                 this.initialPosition = [Math.floor(this.params.x.value), Math.floor(this.params.y.value)];
                                 this.touchPosition = [Math.floor(event.getRawX()), Math.floor(event.getRawY())];
                                 return true;
-                            case 1: //ACTION_UP
+                            case ACTION_UP:
                                 this.expandedView.setAlpha(1.);
                                 this.collapsedView.setAlpha(1.);
                                 let [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition[0]), Math.floor(event.getRawX() - this.touchPosition[1])];
@@ -46,7 +46,7 @@ namespace Api {
                                     }
                                 }
                                 return true;
-                            case 2:
+                            case ACTION_MOVE:
                                 this.expandedView.setAlpha(0.5);
                                 this.collapsedView.setAlpha(0.5);
                                 this.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])

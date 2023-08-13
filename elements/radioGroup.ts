@@ -46,7 +46,7 @@ namespace Menu {
         const radioGroup = new RadioGroup(context, label, Menu.getInstance().theme);
         const savedIndex = Menu.getInstance().sharedPrefs.getInt(label);
         radioGroup.padding = [10, 5, 10, 5];
-        radioGroup.orientation = 1;
+        radioGroup.orientation = Api.VERTICAL;
         for (const button of buttons) {
             const index = buttons.indexOf(button);
             radioGroup.addButton(button, index, callback);
