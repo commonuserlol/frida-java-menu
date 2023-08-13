@@ -1,8 +1,8 @@
 namespace Menu {
     export class RadioGroup extends Object {
-        public readonly label: TextView;
         private theme: Theme;
         private unformattedText: string;
+        public readonly label: TextView;
         
         constructor(context: Java.Wrapper, text: string, theme: Theme) {
             super(context);

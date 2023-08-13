@@ -1,19 +1,19 @@
 namespace Menu {
     export class Menu {
-        private static instance: Menu;
-        private layout: Java.Wrapper;
-        private rootFrame: Java.Wrapper;
-        private rootContainer: Java.Wrapper;
-        private expandedView: Java.Wrapper;
-        private menuParams: Java.Wrapper;
-        private iconView: Object;
         private collapsedView: Java.Wrapper;
-        private titleLayout: Java.Wrapper;
-        private settingsView: Java.Wrapper;
-        private scrollView: Java.Wrapper;
-        public sharedPrefs: Api.SharedPreferences;
+        private expandedView: Java.Wrapper;
+        private iconView: Object;
         private isAlive: boolean;
+        private layout: Java.Wrapper;
+        private menuParams: Java.Wrapper;
+        private rootContainer: Java.Wrapper;
+        private rootFrame: Java.Wrapper;
+        private scrollView: Java.Wrapper;
+        private settingsView: Java.Wrapper;
+        private static instance: Menu;
+        private titleLayout: Java.Wrapper;
         public context: Java.Wrapper;
+        public sharedPrefs: Api.SharedPreferences;
         public theme: Theme;
         public windowManager: Java.Wrapper;
 

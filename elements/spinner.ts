@@ -1,7 +1,7 @@
 namespace Menu {
     export class Spinner extends Object {
-        public items: Java.Wrapper;
         private theme: Theme;
+        public items: Java.Wrapper;
 
         constructor(context: Java.Wrapper, items: string[], theme: Theme) {
             super(context);
