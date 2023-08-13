@@ -198,6 +198,10 @@ namespace Menu {
             let settingsParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             settingsParams.addRule(Api.ALIGN_PARENT_RIGHT);
             settings.layoutParams = settingsParams;
+            if (state) {
+                this.remove(this.layout, this.scrollView);
+                this.add(this.settingsView, this.scrollView);
+            }
             settings.onClickListener = () => {
                 state = !state;
                 if (state) {
