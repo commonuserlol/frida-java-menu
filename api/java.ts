@@ -1,8 +1,6 @@
 namespace Api {
-
     export const Activity = Java.use("android.app.Activity");
     export const ActivityThread = Java.use("android.app.ActivityThread");
-    export const AdapterView = Java.use("android.widget.AdapterView");
     export const AlertDialog_Builder = Java.use("android.app.AlertDialog$Builder");
     export const ArrayAdapter = Java.use("android.widget.ArrayAdapter");
     export const ArrayList = Java.use("java.util.ArrayList");
@@ -12,18 +10,15 @@ namespace Api {
     export const Build_VERSION = Java.use("android.os.Build$VERSION");
     export const Button = Java.use("android.widget.Button");
     export const Color = Java.use("android.graphics.Color");
-    export const ColorStateList = Java.use("android.content.res.ColorStateList");
     export const CompoundButton_OnCheckedChangeListener = Java.use("android.widget.CompoundButton$OnCheckedChangeListener");
     export const Configuration = Java.use("android.content.res.Configuration");
     export const DialogInterfaceOnClickListener = Java.use("android.content.DialogInterface$OnClickListener");
     export const EditText = Java.use("android.widget.EditText");
     export const FrameLayout = Java.use("android.widget.FrameLayout");
-    export const GradientDrawable = Java.use("android.graphics.drawable.GradientDrawable");
     export const Gravity = Java.use("android.view.Gravity");
     export const HTML = Java.use("android.text.Html");
     export const ImageView = Java.use("android.widget.ImageView");
     export const InputType = Java.use("android.text.InputType");
-    export const Integer = Java.use("java.lang.Integer");
     export const Intent = Java.use("android.content.Intent");
     export const JavaString = Java.use("java.lang.String")
     export const LinearLayout = Java.use("android.widget.LinearLayout");
