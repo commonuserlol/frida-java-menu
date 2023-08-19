@@ -6,6 +6,10 @@ namespace Menu {
         public constructor (context: Java.Wrapper) {
             this.context = context;
         }
+        /** Gets alpha */
+        get alpha() {
+            return this.instance.getAlpha();
+        }
         /** Gets background */
         get background(): Java.Wrapper {
             return this.instance.getBackground();
@@ -30,6 +34,14 @@ namespace Menu {
         get textColor(): Java.Wrapper {
             return this.instance.getTextColors();
         }
+        /** Gets visibility */
+        get visibility(): number {
+            return this.instance.getVisibility();
+        }
+        /** Sets alpha */
+        set alpha(alpha: number) {
+            this.instance.setAlpha(alpha);
+        }
         /** Sets background color */
         set backgroundColor(color: Java.Wrapper | number) {
             this.instance.setBackgroundColor(color);
@@ -53,6 +65,10 @@ namespace Menu {
         /** Sets text color */
         set textColor(color: Java.Wrapper | number) {
             this.instance.setTextColor(color);
+        }
+        /** Sets visibility */
+        set visibility(visibility: number) {
+            this.instance.setVisibility(visibility);
         }
         /** Sets onClickListener callback */
         set onClickListener(callback: () => void) {

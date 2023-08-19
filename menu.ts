@@ -1,17 +1,17 @@
 namespace Menu {
     export class Menu {
-        private collapsedView: Java.Wrapper;
-        private expandedView: Java.Wrapper;
+        private collapsedView: Layout;
+        private expandedView: Layout;
         private iconView: Object;
         private isAlive: boolean;
-        private layout: Java.Wrapper;
+        private layout: Layout;
         private menuParams: Java.Wrapper;
-        private rootContainer: Java.Wrapper;
-        private rootFrame: Java.Wrapper;
-        private scrollView: Java.Wrapper;
-        private settingsView: Java.Wrapper;
+        private rootContainer: Layout;
+        private rootFrame: Layout;
+        private scrollView: Layout;
+        private settingsView: Layout;
         private static instance: Menu;
-        private titleLayout: Java.Wrapper;
+        private titleLayout: Layout;
         public context: Java.Wrapper;
         public sharedPrefs: Api.SharedPreferences;
         public theme: Theme;
@@ -29,14 +29,14 @@ namespace Menu {
             }
             this.sharedPrefs = new Api.SharedPreferences(this.context);
             this.windowManager = Java.retain(Java.cast(this.context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager));
-            this.rootFrame = Api.FrameLayout.$new(this.context);
-            this.rootContainer = Api.RelativeLayout.$new(this.context);
+            this.rootFrame = new Layout(this.context, Api.FrameLayout);
+            this.rootContainer = new Layout(this.context, Api.RelativeLayout);
             this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, getApiLevel() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
-            this.collapsedView = Api.RelativeLayout.$new(this.context);
-            this.expandedView = Api.LinearLayout.$new(this.context);
-            this.layout = Api.LinearLayout.$new(this.context);
-            this.titleLayout = Api.RelativeLayout.$new(this.context);
-            this.scrollView = Api.ScrollView.$new(this.context);
+            this.collapsedView = new Layout(this.context, Api.RelativeLayout);
+            this.expandedView = new Layout(this.context, Api.LinearLayout);
+            this.layout = new Layout(this.context, Api.LinearLayout);
+            this.titleLayout = new Layout(this.context, Api.RelativeLayout);
+            this.scrollView = new Layout(this.context, Api.ScrollView);
             let titleText = new TextView(this.context, title);
             let titleParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let subtitleText = new TextView(this.context, subtitle);
@@ -51,16 +51,16 @@ namespace Menu {
             this.menuParams.x.value = this.theme.menuXPosition;
             this.menuParams.y.value = this.theme.menuYPosition;
             
-            this.collapsedView.setVisibility(Api.VISIBLE);
-            this.collapsedView.setAlpha(this.theme.iconAlpha);
+            this.collapsedView.visibility = Api.VISIBLE;
+            this.collapsedView.alpha = this.theme.iconAlpha;
             
-            this.expandedView.setVisibility(Api.GONE);
-            this.expandedView.setBackgroundColor(this.theme.bgColor);
-            this.expandedView.setOrientation(Api.VERTICAL);
-            this.expandedView.setLayoutParams(Api.LinearLayout_Params.$new(Math.floor(dp(this.context, this.theme.menuWidth)), Api.WRAP_CONTENT));
+            this.expandedView.visibility = Api.GONE;
+            this.expandedView.visibility = this.theme.bgColor;
+            this.expandedView.orientation = Api.VERTICAL;
+            this.expandedView.layoutParams = Api.LinearLayout_Params.$new(Math.floor(dp(this.context, this.theme.menuWidth)), Api.WRAP_CONTENT);
             
-            this.titleLayout.setPadding(10, 5, 10, 5);
-            this.titleLayout.setVerticalGravity(16);
+            this.titleLayout.padding = [10, 5, 10, 5];
+            this.titleLayout.verticalGravity = 16;
             
             titleText.textColor = this.theme.primaryTextColor;
             titleText.textSize = 18;
@@ -78,9 +78,9 @@ namespace Menu {
             subtitleText.gravity = Api.CENTER;
             subtitleText.padding = [0, 0, 0, 5];
             
-            this.scrollView.setLayoutParams(scrollParams);
-            this.scrollView.setBackgroundColor(this.theme.layoutColor);
-            this.layout.setOrientation(Api.VERTICAL);
+            this.scrollView.layoutParams = scrollParams;
+            this.scrollView.backgroundColor = this.theme.layoutColor;
+            this.layout.orientation = Api.VERTICAL;
             
             buttonView.setPadding(10, 3, 10, 3);
             buttonView.setVerticalGravity(Api.CENTER);
@@ -91,9 +91,9 @@ namespace Menu {
             hideButton.text = this.theme.hideButtonText;
             hideButton.textColor = this.theme.primaryTextColor;
             hideButton.onClickListener = () => {
-                this.collapsedView.setVisibility(Api.VISIBLE);
-                this.collapsedView.setAlpha(0);
-                this.expandedView.setVisibility(Api.GONE);
+                this.collapsedView.visibility = Api.VISIBLE;
+                this.collapsedView.alpha = 0;
+                this.expandedView.visibility = Api.GONE;
                 toast(this.context, this.theme.iconHiddenText, 1);
             }
             hideButton.onLongClickListener = () => {
@@ -111,12 +111,12 @@ namespace Menu {
             closeButton.text = this.theme.closeText;
             closeButton.textColor = this.theme.primaryTextColor;
             closeButton.onClickListener = () => {
-                this.collapsedView.setVisibility(Api.VISIBLE);
-                this.collapsedView.setAlpha(this.theme.iconAlpha);
-                this.expandedView.setVisibility(Api.GONE);
+                this.collapsedView.visibility = Api.VISIBLE;
+                this.collapsedView.alpha = this.theme.iconAlpha;
+                this.expandedView.visibility = Api.GONE;
             }
 
-            new Api.OnTouch(this.windowManager, this.collapsedView, this.expandedView, this.rootFrame, this.menuParams).setUser(this.rootFrame);
+            new Api.OnTouch(this.windowManager, this.collapsedView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.rootFrame.instance);
             
             this.add(this.collapsedView, this.rootContainer);
             this.add(this.expandedView, this.rootContainer);
@@ -155,8 +155,8 @@ namespace Menu {
                         this.iconView.instance = Api.ImageView.$new(this.context);
                         this.iconView.instance.setScaleType(Api.ScaleType.FIT_XY.value);
                         this.iconView.onClickListener = () => {
-                            this.collapsedView.setVisibility(Api.GONE);
-                            this.expandedView.setVisibility(Api.VISIBLE);
+                            this.collapsedView.visibility = Api.GONE;
+                            this.expandedView.visibility = Api.VISIBLE;
                         }
                         this.iconView.instance.setImageBitmap(bitmap(value));
                         break;
@@ -174,7 +174,7 @@ namespace Menu {
                 let applyDimension = Math.floor(dp(this.context, this.theme.iconSize));
                 this.iconView.instance.getLayoutParams().height.value = applyDimension;
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
-                new Api.OnTouch(this.windowManager, this.collapsedView, this.expandedView, this.rootFrame, this.menuParams).setUser(this.iconView.instance);
+                new Api.OnTouch(this.windowManager, this.collapsedView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.iconView.instance);
                 
                 this.add(this.iconView, this.collapsedView);
             });
@@ -188,10 +188,10 @@ namespace Menu {
          * @param {boolean} state
          * @returns {Java.Wrapper}
          */
-        public settings(text: string, state: boolean): Java.Wrapper {
+        public settings(text: string, state: boolean): Layout {
             let settings = new TextView(this.context, text);
             this.settingsView = Api.LinearLayout.$new(this.context);
-            this.settingsView.setOrientation(Api.VERTICAL);
+            this.settingsView.orientation = Api.VERTICAL;
             settings.textColor = this.theme.primaryTextColor;
             settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
             settings.textSize = 20;
@@ -226,7 +226,7 @@ namespace Menu {
             Java.scheduleOnMainThread(() => {
                 try {
                     this.remove(this.rootContainer, this.rootFrame);
-                    this.rootFrame.setVisibility(Api.GONE);
+                    this.rootFrame.visibility = Api.GONE;
                     this.remove(this.rootFrame, this.windowManager);
                 }
                 catch (e) {
@@ -246,7 +246,7 @@ namespace Menu {
                 try {
                     this.windowManager.addView(this.rootFrame, this.menuParams);
                     this.add(this.rootContainer, this.rootFrame);
-                    this.rootFrame.setVisibility(Api.VISIBLE);
+                    this.rootFrame.visibility = Api.VISIBLE;
                 }
                 catch (e) {
                     console.warn("Menu already showed, ignoring `show` call");
