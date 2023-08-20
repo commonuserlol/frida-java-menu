@@ -97,8 +97,7 @@ namespace Menu {
             }).$new());
         }
         destroy() {
-            //If we call directly `$dispose()` without timeout, the errror `Error: removeView(): argument types do not match any of` occur 
-            setTimeout(() => this.instance.$dispose(), 100);
+            sleep().then(() => this.instance.$dispose());
         }
     }
 }

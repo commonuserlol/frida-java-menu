@@ -15,12 +15,12 @@ namespace Menu {
             return this.instance.getChildAt(index);
         }
         override destroy() {
-            setTimeout(() => {
+            sleep().then(() => {
                 for (let i = 0; i < this.childCount; i++) {
                     this.child(i)!.$dispose();
                 }
                 (this as Object).destroy();
-            }, 100);
+            });
         }
     }
 }

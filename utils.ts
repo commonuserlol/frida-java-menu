@@ -70,4 +70,8 @@ namespace Menu {
     export function raise(text: string) {
         throw new Error(text);
     }
+
+    export async function sleep(ms: number = 50) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
