@@ -3,8 +3,9 @@ namespace Menu {
         public context: Java.Wrapper;
         public instance: Java.Wrapper;
 
-        public constructor (context: Java.Wrapper) {
+        public constructor (context: Java.Wrapper, handleOrInstance?: NativePointerValue | Java.Wrapper) {
             this.context = context;
+            handleOrInstance ? this.instance = Java.cast(handleOrInstance, Api.View) : null;
         }
         /** Gets alpha */
         get alpha() {
@@ -94,6 +95,10 @@ namespace Menu {
                     }
                 }
             }).$new());
+        }
+        destroy() {
+            //If we call directly `$dispose()` without timeout, the errror `Error: removeView(): argument types do not match any of` occur 
+            setTimeout(() => this.instance.$dispose(), 100);
         }
     }
 }

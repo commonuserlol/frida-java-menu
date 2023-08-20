@@ -244,7 +244,7 @@ namespace Menu {
             Java.scheduleOnMainThread(() => {
                 if (!this.isAlive) return;
                 try {
-                    this.windowManager.addView(this.rootFrame, this.menuParams);
+                    this.windowManager.addView(this.rootFrame.instance, this.menuParams);
                     this.add(this.rootContainer, this.rootFrame);
                     this.rootFrame.visibility = Api.VISIBLE;
                 }

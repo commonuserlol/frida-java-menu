@@ -14,6 +14,13 @@ namespace Menu {
         child(index: number): Java.Wrapper | null {
             return this.instance.getChildAt(index);
         }
-        
+        override destroy() {
+            setTimeout(() => {
+                for (let i = 0; i < this.childCount; i++) {
+                    this.child(i)!.$dispose();
+                }
+                (this as Object).destroy();
+            }, 100);
+        }
     }
 }
