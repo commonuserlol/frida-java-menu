@@ -130,10 +130,10 @@ namespace Menu {
             this.add(buttonView, this.expandedView);
 
             MainActivity.instance.onDestroy = () => {
-                this.destroy();
+                this.hide();
             };
             MainActivity.instance.onPause = () => {
-                this.destroy();
+                this.hide();
             };
             MainActivity.instance.onResume = () => {
                 this.show();
@@ -218,11 +218,11 @@ namespace Menu {
         }
 
         /**
-         * Destroys menu
+         * Hides menu
          *
          * @public
          */
-        public destroy(): void {
+        public hide(): void {
             Java.scheduleOnMainThread(() => {
                 try {
                     this.remove(this.rootContainer, this.rootFrame);
@@ -233,6 +233,13 @@ namespace Menu {
                     console.warn("Menu already destroyed, ignoring `destroy` call");
                 }
             });
+        }
+
+        destroy() {
+            this.hide();
+            this.rootContainer.destroy();
+            this.rootFrame.destroy();
+            this.layout.destroy();
         }
 
         /**
