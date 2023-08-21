@@ -7,7 +7,6 @@ namespace Menu {
         private menuParams: Java.Wrapper;
         private rootFrame: Layout;
         private scrollView: Layout;
-        private settingsView: Layout;
         private static instance: Menu;
         private titleLayout: Layout;
         public context: Java.Wrapper;
@@ -183,8 +182,8 @@ namespace Menu {
          */
         public settings(text: string, state: boolean): Layout {
             let settings = new TextView(this.context, text);
-            this.settingsView = Api.LinearLayout.$new(this.context);
-            this.settingsView.orientation = Api.VERTICAL;
+            let settingsView = Api.LinearLayout.$new(this.context);
+            settingsView.orientation = Api.VERTICAL;
             settings.textColor = this.theme.primaryTextColor;
             settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
             settings.textSize = 20;
@@ -193,21 +192,21 @@ namespace Menu {
             settings.layoutParams = settingsParams;
             if (state) {
                 this.remove(this.layout, this.scrollView);
-                this.add(this.settingsView, this.scrollView);
+                this.add(settingsView, this.scrollView);
             }
             settings.onClickListener = () => {
                 state = !state;
                 if (state) {
                     this.remove(this.layout, this.scrollView);
-                    this.add(this.settingsView, this.scrollView);
+                    this.add(settingsView, this.scrollView);
                 }
                 else {
-                    this.remove(this.settingsView, this.scrollView);
+                    this.remove(settingsView, this.scrollView);
                     this.add(this.layout, this.scrollView);
                 }
             }
             this.add(settings, this.titleLayout);
-            return this.settingsView;
+            return settingsView;
         }
 
         /**
