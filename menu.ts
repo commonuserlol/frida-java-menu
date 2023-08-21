@@ -1,12 +1,10 @@
 namespace Menu {
     export class Menu {
-        private collapsedView: Layout;
         private expandedView: Layout;
         private iconView: Object;
         private isAlive: boolean;
         private layout: Layout;
         private menuParams: Java.Wrapper;
-        private rootContainer: Layout;
         private rootFrame: Layout;
         private scrollView: Layout;
         private settingsView: Layout;
@@ -30,9 +28,7 @@ namespace Menu {
             this.sharedPrefs = new Api.SharedPreferences(this.context);
             this.windowManager = Java.retain(Java.cast(this.context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager));
             this.rootFrame = new Layout(this.context, Api.FrameLayout);
-            this.rootContainer = new Layout(this.context, Api.RelativeLayout);
             this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, getApiLevel() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
-            this.collapsedView = new Layout(this.context, Api.RelativeLayout);
             this.expandedView = new Layout(this.context, Api.LinearLayout);
             this.layout = new Layout(this.context, Api.LinearLayout);
             this.titleLayout = new Layout(this.context, Api.RelativeLayout);
@@ -50,9 +46,6 @@ namespace Menu {
             this.menuParams.gravity.value = 51;
             this.menuParams.x.value = this.theme.menuXPosition;
             this.menuParams.y.value = this.theme.menuYPosition;
-            
-            this.collapsedView.visibility = Api.VISIBLE;
-            this.collapsedView.alpha = this.theme.iconAlpha;
             
             this.expandedView.visibility = Api.GONE;
             this.expandedView.backgroundColor = this.theme.bgColor;
@@ -91,8 +84,8 @@ namespace Menu {
             hideButton.text = this.theme.hideButtonText;
             hideButton.textColor = this.theme.primaryTextColor;
             hideButton.onClickListener = () => {
-                this.collapsedView.visibility = Api.VISIBLE;
-                this.collapsedView.alpha = 0;
+                this.iconView.visibility = Api.VISIBLE;
+                this.iconView.alpha = 0;
                 this.expandedView.visibility = Api.GONE;
                 toast(this.context, this.theme.iconHiddenText, 1);
             }
@@ -111,15 +104,12 @@ namespace Menu {
             closeButton.text = this.theme.closeText;
             closeButton.textColor = this.theme.primaryTextColor;
             closeButton.onClickListener = () => {
-                this.collapsedView.visibility = Api.VISIBLE;
-                this.collapsedView.alpha = this.theme.iconAlpha;
+                this.iconView.visibility = Api.VISIBLE;
+                this.iconView.alpha = this.theme.iconAlpha;
                 this.expandedView.visibility = Api.GONE;
             }
-
-            new Api.OnTouch(this.windowManager, this.collapsedView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.rootFrame.instance);
             
-            this.add(this.collapsedView, this.rootContainer);
-            this.add(this.expandedView, this.rootContainer);
+            this.add(this.expandedView, this.rootFrame);
             this.add(titleText, this.titleLayout);
             this.add(this.titleLayout, this.expandedView);
             this.add(subtitleText, this.expandedView);
@@ -155,7 +145,7 @@ namespace Menu {
                         this.iconView.instance = Api.ImageView.$new(this.context);
                         this.iconView.instance.setScaleType(Api.ScaleType.FIT_XY.value);
                         this.iconView.onClickListener = () => {
-                            this.collapsedView.visibility = Api.GONE;
+                            this.iconView.visibility = Api.GONE;
                             this.expandedView.visibility = Api.VISIBLE;
                         }
                         this.iconView.instance.setImageBitmap(bitmap(value));
@@ -174,9 +164,12 @@ namespace Menu {
                 let applyDimension = Math.floor(dp(this.context, this.theme.iconSize));
                 this.iconView.instance.getLayoutParams().height.value = applyDimension;
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
-                new Api.OnTouch(this.windowManager, this.collapsedView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.iconView.instance);
+                this.iconView.alpha = this.theme.iconAlpha;
+                this.iconView.visibility = Api.VISIBLE;
+                new Api.OnTouch(this.windowManager, this.iconView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.iconView.instance);
+                new Api.OnTouch(this.windowManager, this.iconView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.rootFrame.instance);
                 
-                this.add(this.iconView, this.collapsedView);
+                this.add(this.iconView, this.rootFrame);
             });
         }
 
@@ -225,7 +218,6 @@ namespace Menu {
         public hide(): void {
             Java.scheduleOnMainThread(() => {
                 try {
-                    this.remove(this.rootContainer, this.rootFrame);
                     this.rootFrame.visibility = Api.GONE;
                     this.remove(this.rootFrame, this.windowManager);
                 }
@@ -237,7 +229,6 @@ namespace Menu {
 
         destroy() {
             this.hide();
-            this.rootContainer.destroy();
             this.rootFrame.destroy();
             this.layout.destroy();
         }
@@ -252,7 +243,6 @@ namespace Menu {
                 if (!this.isAlive) return;
                 try {
                     this.windowManager.addView(this.rootFrame.instance, this.menuParams);
-                    this.add(this.rootContainer, this.rootFrame);
                     this.rootFrame.visibility = Api.VISIBLE;
                 }
                 catch (e) {
