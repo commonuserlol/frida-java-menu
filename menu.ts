@@ -55,7 +55,7 @@ namespace Menu {
             this.collapsedView.alpha = this.theme.iconAlpha;
             
             this.expandedView.visibility = Api.GONE;
-            this.expandedView.visibility = this.theme.bgColor;
+            this.expandedView.backgroundColor = this.theme.bgColor;
             this.expandedView.orientation = Api.VERTICAL;
             this.expandedView.layoutParams = Api.LinearLayout_Params.$new(Math.floor(dp(this.context, this.theme.menuWidth)), Api.WRAP_CONTENT);
             
