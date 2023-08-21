@@ -2,7 +2,6 @@ namespace Menu {
     export class Menu {
         private expandedView: Layout;
         private iconView: Object;
-        private isAlive: boolean;
         private layout: Layout;
         private menuParams: Java.Wrapper;
         private rootFrame: Layout;
@@ -18,7 +17,6 @@ namespace Menu {
             Menu.instance = this;
             this.context = Api.ActivityThread.currentApplication().getApplicationContext();
             this.theme = theme;
-            this.isAlive = true;
             if (!checkOverlayPermission(this.context)) {
                 toast(this.context, this.theme.noOverlayPermissionText, 1);
                 requestOverlayPermission(this.context);
@@ -90,11 +88,7 @@ namespace Menu {
             }
             hideButton.onLongClickListener = () => {
                 this.destroy();
-                this.isAlive = false;
                 toast(this.context, this.theme.killText, 1);
-                MainActivity.instance.onPause = null;
-                MainActivity.instance.onResume = null;
-                MainActivity.instance.onDestroy = null;
             }
 
             closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
@@ -119,7 +113,7 @@ namespace Menu {
             this.add(buttonView, this.expandedView);
 
             MainActivity.instance.onDestroy = () => {
-                this.hide();
+                this.destroy();
             };
             MainActivity.instance.onPause = () => {
                 this.hide();
@@ -227,6 +221,9 @@ namespace Menu {
         }
 
         destroy() {
+            MainActivity.instance.onPause = null;
+            MainActivity.instance.onResume = null;
+            MainActivity.instance.onDestroy = null;
             this.hide();
             this.rootFrame.destroy();
             this.layout.destroy();
@@ -239,7 +236,6 @@ namespace Menu {
          */
         public show(): void {
             Java.scheduleOnMainThread(() => {
-                if (!this.isAlive) return;
                 try {
                     this.windowManager.addView(this.rootFrame.instance, this.menuParams);
                     this.rootFrame.visibility = Api.VISIBLE;
