@@ -96,6 +96,16 @@ namespace Menu {
                 }
             }).$new());
         }
+        /** Sets onTouchListener callback */
+        set onTouchListener(callback: (view: Java.Wrapper, event: Java.Wrapper) => void) {
+            this.instance.setOnTouchListener(Java.registerClass({
+                name: randomString(35),
+                implements: [Api.OnTouchListener],
+                methods: {
+                    onTouch: callback
+                }
+            }).$new());
+        }
         destroy() {
             sleep().then(() => this.instance.$dispose());
         }

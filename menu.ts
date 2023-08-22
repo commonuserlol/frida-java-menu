@@ -86,6 +86,7 @@ namespace Menu {
                 this.expandedView.visibility = Api.GONE;
                 toast(this.context, this.theme.iconHiddenText, 1);
             }
+
             hideButton.onLongClickListener = () => {
                 this.destroy();
                 toast(this.context, this.theme.killText, 1);
@@ -159,6 +160,7 @@ namespace Menu {
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
                 this.iconView.alpha = this.theme.iconAlpha;
                 this.iconView.visibility = Api.VISIBLE;
+
                 new Api.OnTouch(this.windowManager, this.iconView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.iconView.instance);
                 new Api.OnTouch(this.windowManager, this.iconView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.rootFrame.instance);
                 
