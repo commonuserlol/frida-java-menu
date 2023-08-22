@@ -18,6 +18,8 @@ namespace Menu {
 
         constructor (title: string, subtitle: string, theme: Theme) {
             JavaMenu.instance = this;
+            getter(Menu, "instance", () => JavaMenu.instance);
+
             this.context = globalThis.Menu.context;
             this.theme = theme;
             if (!checkOverlayPermission(this.context)) {
@@ -164,6 +166,9 @@ namespace Menu {
                 this.iconView.alpha = this.theme.iconAlpha;
                 this.iconView.visibility = Api.VISIBLE;
                 
+                new OnTouch(this.rootFrame);
+                new OnTouch(this.iconView);
+
                 this.add(this.iconView, this.rootFrame);
             });
         }
@@ -363,6 +368,4 @@ namespace Menu {
             return [parentLayout, layout];
         }
     }
-
-    getter(Menu, "instance", () => JavaMenu.instance, lazy);
 }

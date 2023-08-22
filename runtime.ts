@@ -20,6 +20,10 @@ namespace Menu {
         get context(): Java.Wrapper {
             return this.instance.getApplicationContext();
         },
+
+        get orientation(): number {
+            return this.instance.getResources().getConfiguration().orientation.value;
+        }
     };
     export declare const androidVersion: string;
     getter(Menu, "androidVersion", () => Java.androidVersion, lazy);
