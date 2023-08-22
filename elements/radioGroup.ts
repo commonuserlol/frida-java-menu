@@ -24,7 +24,7 @@ namespace Menu {
             if (callback) {
                 button.onClickListener = () => {
                     this.label.text = format(this.unformattedText, label);
-                    Menu.getInstance().sharedPrefs.putInt(this.label.text, index);
+                    Menu.instance.sharedPrefs.putInt(this.label.text, index);
                     callback(index);
                 }
             }
@@ -42,9 +42,9 @@ namespace Menu {
     }
 
     export function radioGroup(label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
-        const context = Menu.getInstance().context;
-        const radioGroup = new RadioGroup(context, label, Menu.getInstance().theme);
-        const savedIndex = Menu.getInstance().sharedPrefs.getInt(label);
+        const context = Menu.instance.context;
+        const radioGroup = new RadioGroup(context, label, Menu.instance.theme);
+        const savedIndex = Menu.instance.sharedPrefs.getInt(label);
         radioGroup.padding = [10, 5, 10, 5];
         radioGroup.orientation = Api.VERTICAL;
         for (const button of buttons) {

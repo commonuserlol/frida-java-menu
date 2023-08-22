@@ -1,7 +1,9 @@
 /// <reference path="./api/java.ts" />
+/// <reference path="./utils/lazy.ts" />
+/// <reference path="./utils/getter.ts" />
+/// <reference path="./utils/decorate.ts" />
 /// <reference path="./utils.ts" />
 /// <reference path="./api/mainActivity.ts" />
-/// <reference path="./api/onTouch.ts" />
 /// <reference path="./api/sharedPreferences.ts" />
 
 /// <reference path="./elements/object.ts" />
@@ -12,6 +14,7 @@
 /// <reference path="./elements/switch.ts" />
 /// <reference path="./elements/textView.ts" />
 
+/// <reference path="./runtime.ts" />
 /// <reference path="./theme.ts" />
 /// <reference path="./menu.ts" />
 

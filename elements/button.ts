@@ -16,14 +16,14 @@ namespace Menu {
     }
 
     export function button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
-        const context = Menu.getInstance().context;
+        const context = Menu.instance.context;
         const button = new Button(context, text);
         const params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
         params.setMargins(7, 5, 7, 5);
         button.layoutParams = params;
         button.allCaps = false;
-        button.textColor = Menu.getInstance().theme.secondaryTextColor;
-        button.backgroundColor = Menu.getInstance().theme.buttonColor;
+        button.textColor = Menu.instance.theme.secondaryTextColor;
+        button.backgroundColor = Menu.instance.theme.buttonColor;
         if (callback) button.onClickListener = () => callback.call(button);
         if (longCallback) button.onLongClickListener = () => longCallback.call(button);
 

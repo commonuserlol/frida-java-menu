@@ -1,4 +1,5 @@
 namespace Menu {
+    export declare const instance: JavaMenu;
     export class JavaMenu {
         static instance: JavaMenu;
 
@@ -363,5 +364,5 @@ namespace Menu {
         }
     }
 
-    getter(JavaMenu, "instance", () => JavaMenu.instance, lazy);
+    getter(Menu, "instance", () => JavaMenu.instance, lazy);
 }

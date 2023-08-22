@@ -56,9 +56,9 @@ namespace Menu {
     }
 
     export function textView(label: string): TextView {
-        const context = Menu.getInstance().context;
+        const context = Menu.instance.context;
         const textView = new TextView(context, label);
-        textView.textColor = Menu.getInstance().theme.secondaryTextColor;
+        textView.textColor = Menu.instance.theme.secondaryTextColor;
         textView.padding = [10, 5, 10, 5];
 
         return textView;

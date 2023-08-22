@@ -47,9 +47,9 @@ namespace Menu {
     }
 
     export function spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
-        const context = Menu.getInstance().context;
-        const spinner = new Spinner(context, items, Menu.getInstance().theme);
-        const savedIndex = Menu.getInstance().sharedPrefs.getInt(items.join());
+        const context = Menu.instance.context;
+        const spinner = new Spinner(context, items, Menu.instance.theme);
+        const savedIndex = Menu.instance.sharedPrefs.getInt(items.join());
         if (callback) spinner.onItemSelectedListener;
         if (savedIndex != -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
 

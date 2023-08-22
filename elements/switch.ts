@@ -17,7 +17,7 @@ namespace Menu {
                 implements: [Api.CompoundButton_OnCheckedChangeListener],
                 methods: {
                     onCheckedChanged: (object: Java.Wrapper, state: boolean) => {
-                        Menu.getInstance().sharedPrefs.putBool(this.text, state);
+                        Menu.instance.sharedPrefs.putBool(this.text, state);
                         callback.call(this, state);
                     }
                 }
@@ -27,10 +27,10 @@ namespace Menu {
 
     export function toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
         //switch keyword already used, so we borrow the name from lgl code
-        const context = Menu.getInstance().context;
+        const context = Menu.instance.context;
         const toggle = new Switch(context, label);
-        const savedState = Menu.getInstance().sharedPrefs.getBool(label);
-        toggle.textColor = Menu.getInstance().theme.secondaryTextColor;
+        const savedState = Menu.instance.sharedPrefs.getBool(label);
+        toggle.textColor = Menu.instance.theme.secondaryTextColor;
         toggle.padding = [10, 5, 10, 5];
         if (callback) toggle.onCheckedChangeListener = callback;
         if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);

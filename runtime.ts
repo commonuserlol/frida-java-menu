@@ -3,23 +3,39 @@
 /// <reference path="./utils/getter.ts" />
 
 namespace Menu {
+    export const app = {
+
+        get instance(): Java.Wrapper {
+            return Api.ActivityThread.currentApplication();
+        },
+
+        get packageManager(): Java.Wrapper {
+            return this.instance.getPackageManager();
+        },
+
+        get packageName(): string {
+            return this.instance.getPackageName();
+        },
+        
+        get context(): Java.Wrapper {
+            return this.instance.getApplicationContext();
+        },
+    };
     export declare const androidVersion: string;
     getter(Menu, "androidVersion", () => Java.androidVersion, lazy);
 
     export declare const apiLevel: number;
     getter(Menu, "apiLevel", () => Api.Build_VERSION.SDK_INT.value, lazy);
 
-    export declare const app: Java.Wrapper;
-    getter(Menu, "app", () => Api.ActivityThread.currentApplication(), lazy);
-
     export declare const context: Java.Wrapper;
-    getter(Menu, "context", () => app.getApplicationContext(), lazy);
+    getter(Menu, "context", () => app.context, lazy);
 
     export declare const launcher: Java.Wrapper;
-    getter(Menu, "launcher", () => app.getPackageManager()
-        .getLaunchIntentForPackage(app.getPackageName())
-        .resolveActivityInfo(app.getPackageManager(), 0)
+    getter(Menu, "launcher", () => app.packageManager
+        .getLaunchIntentForPackage(app.packageName)
+        .resolveActivityInfo(app.packageManager, 0)
         .name
         .value, lazy);
 
+    decorate(app, lazy);
 }

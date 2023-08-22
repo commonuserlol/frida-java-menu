@@ -66,9 +66,9 @@ namespace Menu {
     }
 
     export function seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
-        const add = Menu.getInstance().add;
-        const context = Menu.getInstance().context;
-        const seekbar = new SeekBar(context, label, Menu.getInstance().sharedPrefs.getInt(label));
+        const add = Menu.instance.add;
+        const context = Menu.instance.context;
+        const seekbar = new SeekBar(context, label, Menu.instance.sharedPrefs.getInt(label));
         const layout = new Object(context);
         layout.instance = Api.LinearLayout.$new(context);
         layout.layoutParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
