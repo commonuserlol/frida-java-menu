@@ -1,21 +1,23 @@
 namespace Menu {
     export class Menu {
-        private expandedView: Layout;
-        private iconView: Object;
-        private layout: Layout;
-        private menuParams: Java.Wrapper;
-        private rootFrame: Layout;
-        private scrollView: Layout;
-        private static instance: Menu;
-        private titleLayout: Layout;
-        public context: Java.Wrapper;
-        public sharedPrefs: Api.SharedPreferences;
-        public theme: Theme;
-        public windowManager: Java.Wrapper;
+        static instance: Menu;
+
+        context: Java.Wrapper;
+        sharedPrefs: Api.SharedPreferences;
+        windowManager: Java.Wrapper;
+        theme: Theme;
+
+        expandedView: Layout;
+        iconView: Object;
+        layout: Layout;
+        menuParams: Java.Wrapper;
+        rootFrame: Layout;
+        scrollView: Layout;
+        titleLayout: Layout;
 
         constructor (title: string, subtitle: string, theme: Theme) {
             Menu.instance = this;
-            this.context = Api.ActivityThread.currentApplication().getApplicationContext();
+            this.context = globalThis.Menu.context;
             this.theme = theme;
             if (!checkOverlayPermission(this.context)) {
                 toast(this.context, this.theme.noOverlayPermissionText, 1);
@@ -362,9 +364,7 @@ namespace Menu {
             this.add(layout, parentLayout);
             return [parentLayout, layout];
         }
-        /** Gets instance of menu */
-        public static getInstance(): Menu {
-            return this.instance;
-        }
     }
+
+    getter(Menu, "instance", () => Menu.instance, lazy);
 }
