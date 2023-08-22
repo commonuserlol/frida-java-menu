@@ -1,6 +1,6 @@
 namespace Menu {
-    export class Menu {
-        static instance: Menu;
+    export class JavaMenu {
+        static instance: JavaMenu;
 
         context: Java.Wrapper;
         sharedPrefs: Api.SharedPreferences;
@@ -16,7 +16,7 @@ namespace Menu {
         titleLayout: Layout;
 
         constructor (title: string, subtitle: string, theme: Theme) {
-            Menu.instance = this;
+            JavaMenu.instance = this;
             this.context = globalThis.Menu.context;
             this.theme = theme;
             if (!checkOverlayPermission(this.context)) {
@@ -162,9 +162,6 @@ namespace Menu {
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
                 this.iconView.alpha = this.theme.iconAlpha;
                 this.iconView.visibility = Api.VISIBLE;
-
-                new Api.OnTouch(this.windowManager, this.iconView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.iconView.instance);
-                new Api.OnTouch(this.windowManager, this.iconView.instance, this.expandedView.instance, this.rootFrame.instance, this.menuParams).setUser(this.rootFrame.instance);
                 
                 this.add(this.iconView, this.rootFrame);
             });
@@ -366,5 +363,5 @@ namespace Menu {
         }
     }
 
-    getter(Menu, "instance", () => Menu.instance, lazy);
+    getter(JavaMenu, "instance", () => JavaMenu.instance, lazy);
 }
