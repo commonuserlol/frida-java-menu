@@ -114,4 +114,9 @@ namespace Menu {
             sleep().then(() => this.instance.$dispose());
         }
     }
+    
+    export function wrap(text: string): Java.Wrapper
+    {
+        return Api.HTML.fromHtml(Api.JavaString.$new(String(text)));
+    }
 }

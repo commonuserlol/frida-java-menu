@@ -1,21 +1,31 @@
+/* Java API */
 /// <reference path="./api/java.ts" />
-/// <reference path="./utils/lazy.ts" />
-/// <reference path="./utils/getter.ts" />
-/// <reference path="./utils/decorate.ts" />
-/// <reference path="./utils.ts" />
 /// <reference path="./api/mainActivity.ts" />
 /// <reference path="./api/sharedPreferences.ts" />
 /// <reference path="./runtime.ts" />
 /// <reference path="./api/onTouch.ts" />
 
-/// <reference path="./elements/object.ts" />
-/// <reference path="./elements/button.ts" />
-/// <reference path="./elements/radioGroup.ts" />
-/// <reference path="./elements/seekbar.ts" />
-/// <reference path="./elements/spinner.ts" />
-/// <reference path="./elements/switch.ts" />
-/// <reference path="./elements/textView.ts" />
+/* UI Objects */
+/// <reference path="./ui/common.ts" />
+/// <reference path="./ui/object.ts" />
+/// <reference path="./ui/button.ts" />
+/// <reference path="./ui/dialog.ts" />
+/// <reference path="./ui/radioGroup.ts" />
+/// <reference path="./ui/seekbar.ts" />
+/// <reference path="./ui/spinner.ts" />
+/// <reference path="./ui/switch.ts" />
+/// <reference path="./ui/textView.ts" />
+/// <reference path="./ui/toast.ts" />
 
+/* Utils */
+/// <reference path="./utils/console.ts" />
+/// <reference path="./utils/lazy.ts" />
+/// <reference path="./utils/getter.ts" />
+/// <reference path="./utils/decorate.ts" />
+/// <reference path="./utils/permission.ts" />
+/// <reference path="./utils/sleep.ts" />
+
+/* Main classes */
 /// <reference path="./theme.ts" />
 /// <reference path="./menu.ts" />
 
