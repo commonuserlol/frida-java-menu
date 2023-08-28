@@ -303,7 +303,6 @@ namespace Menu {
         }
 
         radioGroup(label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
-            const context = Menu.instance.context;
             const radioGroup = new RadioGroup(label, Menu.instance.theme);
             const savedIndex = Menu.instance.sharedPrefs.getInt(label);
             radioGroup.padding = [10, 5, 10, 5];
@@ -319,7 +318,6 @@ namespace Menu {
 
         seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
             const add = Menu.instance.add;
-            const context = Menu.instance.context;
             const seekbar = new SeekBar(label, Menu.instance.sharedPrefs.getInt(label));
             const layout = new Object(context);
             layout.instance = Api.LinearLayout.$new(context);
@@ -337,7 +335,6 @@ namespace Menu {
         }
 
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
-            const context = Menu.instance.context;
             const spinner = new Spinner(items, Menu.instance.theme);
             const savedIndex = Menu.instance.sharedPrefs.getInt(items.join());
             if (callback) spinner.onItemSelectedListener;
@@ -348,7 +345,6 @@ namespace Menu {
 
         toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
             //switch keyword already used, so we borrow the name from lgl code
-            const context = Menu.instance.context;
             const toggle = new Switch(label);
             const savedState = Menu.instance.sharedPrefs.getBool(label);
             toggle.textColor = Menu.instance.theme.secondaryTextColor;
@@ -360,7 +356,6 @@ namespace Menu {
         }
 
         textView(label: string): TextView {
-            const context = Menu.instance.context;
             const textView = new TextView(label);
             textView.textColor = Menu.instance.theme.secondaryTextColor;
             textView.padding = [10, 5, 10, 5];
