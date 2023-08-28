@@ -8,7 +8,7 @@ namespace Menu {
             super(context);
             this.instance = Api.RadioGroup.$new(context);
             this.theme = theme;
-            this.label = new TextView(context, text);
+            this.label = new TextView(text);
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             this.unformattedText = text;
             this.label.text = format(text, 0);

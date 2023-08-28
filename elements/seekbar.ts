@@ -7,7 +7,7 @@ namespace Menu {
             super(context);
             this.instance = Api.SeekBar.$new(context);
             this.unformattedText = new String(text);
-            this.label = new TextView(context, format(this.unformattedText, progress ?? 0));
+            this.label = new TextView(format(this.unformattedText, progress ?? 0));
             this.progress = progress;
         }
         /** Gets max value */
