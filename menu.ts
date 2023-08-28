@@ -16,32 +16,30 @@ namespace Menu {
         titleLayout: Layout;
 
         constructor (title: string, subtitle: string, theme: Theme) {
-            getter(Menu, "instance", () => this);
-
-            this.context = globalThis.Menu.context;
+            getter(Menu, "instance", () => this)
             this.theme = theme;
-            if (!checkOverlayPermission(this.context)) {
-                toast(this.context, this.theme.noOverlayPermissionText, 1);
-                requestOverlayPermission(this.context);
+            if (!checkOverlayPermission(context)) {
+                toast(context, this.theme.noOverlayPermissionText, 1);
+                requestOverlayPermission(context);
                 throw Error("No permission provided! Aborting...");
             }
-            this.sharedPrefs = new Api.SharedPreferences(this.context);
-            this.windowManager = Java.retain(Java.cast(this.context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager));
-            this.rootFrame = new Layout(this.context, Api.FrameLayout);
+            this.sharedPrefs = new Api.SharedPreferences(context);
+            this.windowManager = Java.retain(Java.cast(context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager));
+            this.rootFrame = new Layout(context, Api.FrameLayout);
             this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, getApiLevel() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
-            this.expandedView = new Layout(this.context, Api.LinearLayout);
-            this.layout = new Layout(this.context, Api.LinearLayout);
-            this.titleLayout = new Layout(this.context, Api.RelativeLayout);
-            this.scrollView = new Layout(this.context, Api.ScrollView);
-            let titleText = new TextView(this.context, title);
+            this.expandedView = new Layout(context, Api.LinearLayout);
+            this.layout = new Layout(context, Api.LinearLayout);
+            this.titleLayout = new Layout(context, Api.RelativeLayout);
+            this.scrollView = new Layout(context, Api.ScrollView);
+            let titleText = new TextView(context, title);
             let titleParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let subtitleText = new TextView(this.context, subtitle);
-            let scrollParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Math.floor(dp(this.context, this.theme.menuHeight)));
-            let buttonView = Api.RelativeLayout.$new(this.context);
+            let subtitleText = new TextView(context, subtitle);
+            let scrollParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Math.floor(dp(context, this.theme.menuHeight)));
+            let buttonView = Api.RelativeLayout.$new(context);
             let hideButtonParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let hideButton = new Button(this.context);
+            let hideButton = new Button(context);
             let closeButtonParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let closeButton = new Button(this.context);
+            let closeButton = new Button(context);
             
             this.menuParams.gravity.value = 51;
             this.menuParams.x.value = this.theme.menuXPosition;
@@ -50,7 +48,7 @@ namespace Menu {
             this.expandedView.visibility = Api.GONE;
             this.expandedView.backgroundColor = this.theme.bgColor;
             this.expandedView.orientation = Api.VERTICAL;
-            this.expandedView.layoutParams = Api.LinearLayout_Params.$new(Math.floor(dp(this.context, this.theme.menuWidth)), Api.WRAP_CONTENT);
+            this.expandedView.layoutParams = Api.LinearLayout_Params.$new(Math.floor(dp(context, this.theme.menuWidth)), Api.WRAP_CONTENT);
             
             this.titleLayout.padding = [10, 5, 10, 5];
             this.titleLayout.verticalGravity = 16;
@@ -87,12 +85,12 @@ namespace Menu {
                 this.iconView.visibility = Api.VISIBLE;
                 this.iconView.alpha = 0;
                 this.expandedView.visibility = Api.GONE;
-                toast(this.context, this.theme.iconHiddenText, 1);
+                toast(context, this.theme.iconHiddenText, 1);
             }
 
             hideButton.onLongClickListener = () => {
                 this.destroy();
-                toast(this.context, this.theme.killText, 1);
+                toast(context, this.theme.killText, 1);
             }
 
             closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
@@ -136,10 +134,10 @@ namespace Menu {
          */
         public icon(value: string, type: "Normal" | "Web" = "Normal"): void {
             Java.scheduleOnMainThread(() => {
-                this.iconView = new Object(this.context);
+                this.iconView = new Object(context);
                 switch (type) {
                     case "Normal":
-                        this.iconView.instance = Api.ImageView.$new(this.context);
+                        this.iconView.instance = Api.ImageView.$new(context);
                         this.iconView.instance.setScaleType(Api.ScaleType.FIT_XY.value);
                         this.iconView.onClickListener = () => {
                             this.iconView.visibility = Api.GONE;
@@ -148,7 +146,7 @@ namespace Menu {
                         this.iconView.instance.setImageBitmap(bitmap(value));
                         break;
                     case "Web":
-                        this.iconView.instance = Api.WebView.$new(this.context);
+                        this.iconView.instance = Api.WebView.$new(context);
                         this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${this.theme.iconSize}\" height=\"${this.theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
                         this.iconView.backgroundColor = Api.TRANSPARENT;
                         this.iconView.instance.setAlpha(this.theme.iconAlpha);
@@ -158,7 +156,7 @@ namespace Menu {
                         throw Error("Unsupported icon type!");
                 }
                 this.iconView.layoutParams = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-                let applyDimension = Math.floor(dp(this.context, this.theme.iconSize));
+                let applyDimension = Math.floor(dp(context, this.theme.iconSize));
                 this.iconView.instance.getLayoutParams().height.value = applyDimension;
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
                 this.iconView.alpha = this.theme.iconAlpha;
@@ -180,8 +178,8 @@ namespace Menu {
          * @returns {Java.Wrapper}
          */
         public settings(text: string, state: boolean): Layout {
-            let settings = new TextView(this.context, text);
-            let settingsView = Api.LinearLayout.$new(this.context);
+            let settings = new TextView(context, text);
+            let settingsView = Api.LinearLayout.$new(context);
             settingsView.orientation = Api.VERTICAL;
             settings.textColor = this.theme.primaryTextColor;
             settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
@@ -387,7 +385,7 @@ namespace Menu {
         }
 
         public async inputNumber(title: string, max: number, positiveCallback?: (this: Dialog, result: number) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
-            let view = Api.EditText.$new(this.context);
+            let view = Api.EditText.$new(context);
             if (max > 0) {
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
             }
@@ -420,8 +418,8 @@ namespace Menu {
          * @returns {[Java.Wrapper, Java.Wrapper]}
          */
         public collapse(text: string, state: boolean): [Java.Wrapper, Java.Wrapper] {
-            let parentLayout = Api.LinearLayout.$new(this.context);
-            let layout = Api.LinearLayout.$new(this.context);
+            let parentLayout = Api.LinearLayout.$new(context);
+            let layout = Api.LinearLayout.$new(context);
             let label = this.category(`▽ ${text} ▽`);
             let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
             label.backgroundColor = this.theme.collapseColor;
