@@ -54,13 +54,4 @@ namespace Menu {
             this.instance.setTypeface(tf);
         }
     }
-
-    export function textView(label: string): TextView {
-        const context = Menu.instance.context;
-        const textView = new TextView(context, label);
-        textView.textColor = Menu.instance.theme.secondaryTextColor;
-        textView.padding = [10, 5, 10, 5];
-
-        return textView;
-    }
 }

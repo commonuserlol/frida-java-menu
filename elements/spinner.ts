@@ -45,14 +45,4 @@ namespace Menu {
             this.instance.setSelection(position);
         }
     }
-
-    export function spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
-        const context = Menu.instance.context;
-        const spinner = new Spinner(context, items, Menu.instance.theme);
-        const savedIndex = Menu.instance.sharedPrefs.getInt(items.join());
-        if (callback) spinner.onItemSelectedListener;
-        if (savedIndex != -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
-
-        return spinner;
-    }
 }

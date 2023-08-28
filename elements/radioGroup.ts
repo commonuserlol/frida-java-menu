@@ -40,19 +40,4 @@ namespace Menu {
             return this.instance.getChildAt(index);
         }
     }
-
-    export function radioGroup(label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
-        const context = Menu.instance.context;
-        const radioGroup = new RadioGroup(context, label, Menu.instance.theme);
-        const savedIndex = Menu.instance.sharedPrefs.getInt(label);
-        radioGroup.padding = [10, 5, 10, 5];
-        radioGroup.orientation = Api.VERTICAL;
-        for (const button of buttons) {
-            const index = buttons.indexOf(button);
-            radioGroup.addButton(button, index, callback);
-        }
-        Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
-
-        return radioGroup;
-    }
 }

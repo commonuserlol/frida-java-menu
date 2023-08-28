@@ -24,17 +24,4 @@ namespace Menu {
             }).$new());
         }
     }
-
-    export function toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
-        //switch keyword already used, so we borrow the name from lgl code
-        const context = Menu.instance.context;
-        const toggle = new Switch(context, label);
-        const savedState = Menu.instance.sharedPrefs.getBool(label);
-        toggle.textColor = Menu.instance.theme.secondaryTextColor;
-        toggle.padding = [10, 5, 10, 5];
-        if (callback) toggle.onCheckedChangeListener = callback;
-        if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
-
-        return toggle;
-    }
 }

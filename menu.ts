@@ -279,6 +279,97 @@ namespace Menu {
             })
         }
 
+        button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
+            const button = new Button(context, text);
+            const params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
+            params.setMargins(7, 5, 7, 5);
+            button.layoutParams = params;
+            button.allCaps = false;
+            button.textColor = Menu.instance.theme.secondaryTextColor;
+            button.backgroundColor = Menu.instance.theme.buttonColor;
+            if (callback) button.onClickListener = () => callback.call(button);
+            if (longCallback) button.onLongClickListener = () => longCallback.call(button);
+    
+            return button;
+        }
+
+        async dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
+            //We can create a dialog only with an activity instance, the context is not suitable.
+            const instance = await MainActivity.instance.getClassInstance();
+            const dialog = new Dialog(instance, title, message);
+            view ? (view instanceof Object ? dialog.view = view.instance : dialog.view = view) : null;
+            if (positiveCallback) dialog.setPositiveButton(positiveCallback)
+            if (negativeCallback) dialog.setNegativeButton(negativeCallback);
+    
+            return dialog;
+        }
+
+        radioGroup(label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
+            const context = Menu.instance.context;
+            const radioGroup = new RadioGroup(context, label, Menu.instance.theme);
+            const savedIndex = Menu.instance.sharedPrefs.getInt(label);
+            radioGroup.padding = [10, 5, 10, 5];
+            radioGroup.orientation = Api.VERTICAL;
+            for (const button of buttons) {
+                const index = buttons.indexOf(button);
+                radioGroup.addButton(button, index, callback);
+            }
+            Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
+    
+            return radioGroup;
+        }
+
+        seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
+            const add = Menu.instance.add;
+            const context = Menu.instance.context;
+            const seekbar = new SeekBar(context, label, Menu.instance.sharedPrefs.getInt(label));
+            const layout = new Object(context);
+            layout.instance = Api.LinearLayout.$new(context);
+            layout.layoutParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
+            layout.orientation = Api.VERTICAL;
+            seekbar.padding = [25, 10, 35, 10];
+            seekbar.max = max;
+            min ? seekbar.min = min : seekbar.min = 0;
+            if (callback) seekbar.onSeekBarChangeListener = callback;
+    
+            add(seekbar.label, layout.instance);
+            add(seekbar, layout.instance);
+    
+            return layout;
+        }
+
+        spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
+            const context = Menu.instance.context;
+            const spinner = new Spinner(context, items, Menu.instance.theme);
+            const savedIndex = Menu.instance.sharedPrefs.getInt(items.join());
+            if (callback) spinner.onItemSelectedListener;
+            if (savedIndex != -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
+    
+            return spinner;
+        }
+
+        toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
+            //switch keyword already used, so we borrow the name from lgl code
+            const context = Menu.instance.context;
+            const toggle = new Switch(context, label);
+            const savedState = Menu.instance.sharedPrefs.getBool(label);
+            toggle.textColor = Menu.instance.theme.secondaryTextColor;
+            toggle.padding = [10, 5, 10, 5];
+            if (callback) toggle.onCheckedChangeListener = callback;
+            if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
+    
+            return toggle;
+        }
+
+        textView(label: string): TextView {
+            const context = Menu.instance.context;
+            const textView = new TextView(context, label);
+            textView.textColor = Menu.instance.theme.secondaryTextColor;
+            textView.padding = [10, 5, 10, 5];
+    
+            return textView;
+        }
+
         /**
          * Creates category
          *
@@ -287,7 +378,7 @@ namespace Menu {
          * @returns {TextView}
          */
         public category(text: string): TextView {
-            const label = textView(text);
+            const label = this.textView(text);
             label.backgroundColor = this.theme.categoryColor;
             label.gravity = Api.CENTER;
             label.padding = [0, 5, 0, 5];
@@ -301,7 +392,7 @@ namespace Menu {
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
             }
             view.setInputType(Api.InputType.TYPE_CLASS_NUMBER.value);
-            await dialog(title, "", function () {
+            await this.dialog(title, "", function () {
                 let result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
                 !Number.isNaN(result) ? positiveCallback?.call(this, result <= max ? result : max) : positiveCallback?.call(this, NaN);
             }, function () {
@@ -310,9 +401,9 @@ namespace Menu {
         }
 
         public async inputText(title: string, hint?: string, positiveCallback?: (this: Dialog, result: string) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
-            let view = Api.EditText.$new(this.context);
+            let view = Api.EditText.$new(context);
             if (hint) view.setHint(wrap(hint));
-            await dialog(title, "", function () {
+            await this.dialog(title, "", function () {
                 const result = Java.cast(view, Api.TextView).getText().toString();
                 positiveCallback?.call(this, result);
             }, function () {

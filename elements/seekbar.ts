@@ -64,23 +64,4 @@ namespace Menu {
             this.instance.setProgress(progress);
         }
     }
-
-    export function seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
-        const add = Menu.instance.add;
-        const context = Menu.instance.context;
-        const seekbar = new SeekBar(context, label, Menu.instance.sharedPrefs.getInt(label));
-        const layout = new Object(context);
-        layout.instance = Api.LinearLayout.$new(context);
-        layout.layoutParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
-        layout.orientation = Api.VERTICAL;
-        seekbar.padding = [25, 10, 35, 10];
-        seekbar.max = max;
-        min ? seekbar.min = min : seekbar.min = 0;
-        if (callback) seekbar.onSeekBarChangeListener = callback;
-
-        add(seekbar.label, layout.instance);
-        add(seekbar, layout.instance);
-
-        return layout;
-    }
 }
