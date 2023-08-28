@@ -1,7 +1,6 @@
 namespace Menu {
     export declare const instance: JavaMenu;
     export class JavaMenu {
-        static instance: JavaMenu;
 
         context: Java.Wrapper;
         sharedPrefs: Api.SharedPreferences;
@@ -17,8 +16,7 @@ namespace Menu {
         titleLayout: Layout;
 
         constructor (title: string, subtitle: string, theme: Theme) {
-            JavaMenu.instance = this;
-            getter(Menu, "instance", () => JavaMenu.instance);
+            getter(Menu, "instance", () => this);
 
             this.context = globalThis.Menu.context;
             this.theme = theme;
