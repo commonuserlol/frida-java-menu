@@ -51,7 +51,7 @@ namespace Menu {
         /** Shows dialog */
         public show() {
             const dialog = this.instance.create();
-            dialog.getWindow().setType(getApiLevel() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value);
+            dialog.getWindow().setType(apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value);
             dialog.show();
         }
     }

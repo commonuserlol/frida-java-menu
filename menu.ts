@@ -18,15 +18,15 @@ namespace Menu {
         constructor (title: string, subtitle: string, theme: Theme) {
             getter(Menu, "instance", () => this)
             this.theme = theme;
-            if (!checkOverlayPermission()) {
+            if (!overlay.check()) {
                 toast(this.theme.noOverlayPermissionText, 1);
-                requestOverlayPermission();
+                overlay.ask();
                 throw Error("No permission provided! Aborting...");
             }
             this.sharedPrefs = new Api.SharedPreferences();
             this.windowManager = Java.retain(Java.cast(context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager));
             this.rootFrame = new Layout(Api.FrameLayout);
-            this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, getApiLevel() >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
+            this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
             this.expandedView = new Layout(Api.LinearLayout);
             this.layout = new Layout(Api.LinearLayout);
             this.titleLayout = new Layout(Api.RelativeLayout);
