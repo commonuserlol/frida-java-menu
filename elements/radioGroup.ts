@@ -4,7 +4,7 @@ namespace Menu {
         private unformattedText: string;
         public readonly label: TextView;
         
-        constructor(context: Java.Wrapper, text: string, theme: Theme) {
+        constructor(text: string, theme: Theme) {
             super(context);
             this.instance = Api.RadioGroup.$new(context);
             this.theme = theme;

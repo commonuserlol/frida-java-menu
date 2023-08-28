@@ -1,7 +1,7 @@
 namespace Menu {
     export class Layout extends Object {
 
-        constructor(context: Java.Wrapper, type: Java.Wrapper) {
+        constructor(type: Java.Wrapper) {
             super(context);
             this.instance = type.$new(context);
         }

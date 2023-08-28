@@ -1,6 +1,6 @@
 namespace Menu {
     export class Switch extends Object {
-        constructor(context: Java.Wrapper, text?: string, state: boolean = false) {
+        constructor(text?: string, state: boolean = false) {
             super(context);
             this.instance = Api.Switch.$new(context);
             if (text) this.text = text;

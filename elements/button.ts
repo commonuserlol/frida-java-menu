@@ -1,6 +1,6 @@
 namespace Menu {
     export class Button extends Object {
-        constructor(context: Java.Wrapper, text?: string) {
+        constructor(text?: string) {
             super(context);
             this.instance = Api.Button.$new(context);
             if (text) this.text = text;

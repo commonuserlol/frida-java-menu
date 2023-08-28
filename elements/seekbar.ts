@@ -3,7 +3,7 @@ namespace Menu {
         public readonly label: TextView;
         public unformattedText: String;
 
-        constructor(context: Java.Wrapper, text: string, progress: number = 0) {
+        constructor(text: string, progress: number = 0) {
             super(context);
             this.instance = Api.SeekBar.$new(context);
             this.unformattedText = new String(text);

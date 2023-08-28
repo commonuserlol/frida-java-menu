@@ -3,7 +3,7 @@ namespace Menu {
         private theme: Theme;
         public items: Java.Wrapper;
 
-        constructor(context: Java.Wrapper, items: string[], theme: Theme) {
+        constructor(items: string[], theme: Theme) {
             super(context);
             this.instance = Api.Spinner.$new(context);
             this.theme = theme;

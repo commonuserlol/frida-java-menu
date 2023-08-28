@@ -1,6 +1,6 @@
 namespace Menu {
     export class TextView extends Object {
-        constructor(context: Java.Wrapper, text: string) {
+        constructor(text: string) {
             super(context);
             this.instance = Api.TextView.$new(context);
             this.text = text;

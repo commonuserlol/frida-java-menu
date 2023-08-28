@@ -1,6 +1,6 @@
 namespace Menu {
     /** Shows toast message */
-    export function toast(context: Java.Wrapper, text: string, length: number) : void {
+    export function toast(text: string, length: number) : void {
         Java.scheduleOnMainThread(() => Api.Toast.makeText(context, wrap(text), length).show());
     }
     /**
@@ -14,7 +14,7 @@ namespace Menu {
         return Api.HTML.fromHtml(Api.JavaString.$new(String(text)));
     }
     /** @internal */
-    export function dp(context: Java.Wrapper, i: number): number {
+    export function dp(i: number): number {
         return Api.TypedValue.applyDimension(Api.COMPLEX_UNIT_DIP, i, context.getResources().getDisplayMetrics());
     }
     /**
@@ -33,14 +33,14 @@ namespace Menu {
         return Api.BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
     /** @internal */
-    export function checkOverlayPermission(context: Java.Wrapper): boolean {
+    export function checkOverlayPermission(): boolean {
         return !!Api.Settings.canDrawOverlays(context);
     }
     /** @internal */
-    export function requestOverlayPermission(context: Java.Wrapper): void {
+    export function requestOverlayPermission(): void {
         const intent = Api.Intent.$new(Api.JavaString.$new("android.settings.action.MANAGE_OVERLAY_PERMISSION"));
         intent.setFlags(Api.Intent.FLAG_ACTIVITY_NEW_TASK.value);
-        intent.setData(Api.Uri.parse("package:" + context.getPackageName()));
+        intent.setData(Api.Uri.parse("package:" + app.packageName));
         context.startActivity(intent);
     }
     /** Generates random string */

@@ -2,8 +2,8 @@ namespace Api {
     export class SharedPreferences {
         private instance: Java.Wrapper;
         
-        constructor(context: Java.Wrapper) {
-            this.instance = context.getSharedPreferences(context.getPackageName() + "_menuprefs", context.MODE_PRIVATE.value);
+        constructor() {
+            this.instance = context.getSharedPreferences(app.packageName + "_menuprefs", context.MODE_PRIVATE.value);
         }
         /**
          * Gets string
