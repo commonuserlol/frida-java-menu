@@ -1,6 +1,7 @@
 /// <reference path="./api/java.ts" />
 /// <reference path="./utils/lazy.ts" />
 /// <reference path="./utils/getter.ts" />
+/// <reference path="./utils/decorate.ts" />
 
 namespace Menu {
     export const app = {
