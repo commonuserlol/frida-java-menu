@@ -32,7 +32,7 @@ namespace Menu {
             this.titleLayout = new Layout(Api.RelativeLayout);
             this.scrollView = new Layout(Api.ScrollView);
             let titleText = new TextView(title);
-            let titleParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            let titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let subtitleText = new TextView(subtitle);
             let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(this.theme.menuHeight)));
             let buttonView = Api.RelativeLayout.$new(context);
