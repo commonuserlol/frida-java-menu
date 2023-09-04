@@ -1,5 +1,7 @@
 namespace Menu {
     export class Layout extends Object {
+        public static LinearLayoutParams = (a: Java.Wrapper | number, b: Java.Wrapper | number) => Api.LinearLayout_Params.$new(this.arguments);
+        public static RelativeLayoutParams = (a: Java.Wrapper | number, b: Java.Wrapper | number) => Api.RelativeLayout_Params.$new(this.arguments);
 
         constructor(type: Java.Wrapper) {
             super(context);

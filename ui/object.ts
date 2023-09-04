@@ -81,9 +81,7 @@ namespace Menu {
                 name: randomString(35),
                 implements: [Api.OnClickListener],
                 methods: {
-                    onClick: (view: Java.Wrapper) => {
-                        callback();
-                    }
+                    onClick: callback
                 }
             }).$new());
         }

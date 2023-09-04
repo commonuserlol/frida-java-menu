@@ -42,9 +42,7 @@ namespace Menu {
                     getName: function() {
                         return "OnClickListenerNegative";
                     },
-                    onClick: (dialog, which) => {
-                        callback.call(this);
-                    }
+                    onClick: () => callback.call(this)
                 }
             }).$new());
         }

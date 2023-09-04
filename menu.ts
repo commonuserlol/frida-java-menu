@@ -32,13 +32,13 @@ namespace Menu {
             this.titleLayout = new Layout(Api.RelativeLayout);
             this.scrollView = new Layout(Api.ScrollView);
             let titleText = new TextView(title);
-            let titleParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            let titleParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let subtitleText = new TextView(subtitle);
-            let scrollParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Math.floor(dp(this.theme.menuHeight)));
+            let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(this.theme.menuHeight)));
             let buttonView = Api.RelativeLayout.$new(context);
-            let hideButtonParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            let hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let hideButton = new Button();
-            let closeButtonParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            let closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let closeButton = new Button();
             
             this.menuParams.gravity.value = 51;
@@ -48,7 +48,7 @@ namespace Menu {
             this.expandedView.visibility = Api.GONE;
             this.expandedView.backgroundColor = this.theme.bgColor;
             this.expandedView.orientation = Api.VERTICAL;
-            this.expandedView.layoutParams = Api.LinearLayout_Params.$new(Math.floor(dp(this.theme.menuWidth)), Api.WRAP_CONTENT);
+            this.expandedView.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(this.theme.menuWidth)), Api.WRAP_CONTENT);
             
             this.titleLayout.padding = [10, 5, 10, 5];
             this.titleLayout.verticalGravity = 16;
@@ -155,7 +155,7 @@ namespace Menu {
                     default:
                         throw Error("Unsupported icon type!");
                 }
-                this.iconView.layoutParams = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+                this.iconView.layoutParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
                 let applyDimension = Math.floor(dp(this.theme.iconSize));
                 this.iconView.instance.getLayoutParams().height.value = applyDimension;
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
@@ -184,7 +184,7 @@ namespace Menu {
             settings.textColor = this.theme.primaryTextColor;
             settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
             settings.textSize = 20;
-            let settingsParams = Api.RelativeLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            let settingsParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             settingsParams.addRule(Api.ALIGN_PARENT_RIGHT);
             settings.layoutParams = settingsParams;
             if (state) {
@@ -279,7 +279,7 @@ namespace Menu {
 
         button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
             const button = new Button(text);
-            const params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
+            const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             params.setMargins(7, 5, 7, 5);
             button.layoutParams = params;
             button.allCaps = false;
@@ -321,7 +321,7 @@ namespace Menu {
             const seekbar = new SeekBar(label, Menu.instance.sharedPrefs.getInt(label));
             const layout = new Object(context);
             layout.instance = Api.LinearLayout.$new(context);
-            layout.layoutParams = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
+            layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;
             seekbar.padding = [25, 10, 35, 10];
             seekbar.max = max;
@@ -416,7 +416,7 @@ namespace Menu {
             let parentLayout = Api.LinearLayout.$new(context);
             let layout = Api.LinearLayout.$new(context);
             let label = this.category(`▽ ${text} ▽`);
-            let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.MATCH_PARENT);
+            let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             label.backgroundColor = this.theme.collapseColor;
             params.setMargins(0, 5, 0, 0);
             parentLayout.setLayoutParams(params);
