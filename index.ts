@@ -1,9 +1,11 @@
 /* Java API */
 /// <reference path="./api.ts" />
+
+/* Helpers */
 /// <reference path="./misc/mainActivity.ts" />
 /// <reference path="./misc/sharedPreferences.ts" />
-/// <reference path="./runtime.ts" />
 /// <reference path="./misc/onTouch.ts" />
+/// <reference path="./runtime.ts" />
 
 /* UI Objects */
 /// <reference path="./ui/common.ts" />
