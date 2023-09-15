@@ -1,5 +1,5 @@
 namespace Menu {
-    export declare const instance: JavaMenu;
+    export declare let instance: JavaMenu;
     export declare let theme: Theme;
     
     export class JavaMenu {
@@ -18,8 +18,8 @@ namespace Menu {
         titleLayout: Layout;
 
         constructor (title: string, subtitle: string, theme: Theme) {
-            getter(Menu, "instance", () => this, lazy);
-            getter(Menu, "theme", () => theme, lazy);
+            Menu.instance = this;
+            Menu.theme = theme;
 
             if (!overlay.check()) {
                 toast(Menu.theme.noOverlayPermissionText, 1);
