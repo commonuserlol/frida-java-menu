@@ -7,8 +7,6 @@ namespace Menu {
         context: Java.Wrapper;
         sharedPrefs: Api.SharedPreferences;
         windowManager: Java.Wrapper;
-
-
         expandedView: Layout;
         iconView: Object;
         layout: Layout;

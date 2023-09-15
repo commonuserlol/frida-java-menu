@@ -8,6 +8,7 @@ namespace Menu {
             MainActivity.instance = this;
         }
 
+        /** @internal */
         private hook(name: string, callback: ((instance: Java.Wrapper) => void) | null, overload?: string) {
             const target = overload ? Api.Activity[name].overload(overload) : Api.Activity[name];
             callback == null ? target.implementation = null : target.implementation = function (this: Java.Wrapper, args: any) {
@@ -18,6 +19,7 @@ namespace Menu {
             }
         }
 
+        /** @internal */
         private onCreate() {
             // This actually internal cuz called very early
             // And used only by `waitForInit` to get instance
@@ -33,14 +35,17 @@ namespace Menu {
             }, "android.os.Bundle");
         }
 
+        /** Hooks `onPause` method */
         onPause(callback: (() => void) | null) {
             this.hook("onPause", callback);
         }
 
+        /** Hooks `onResume` method */
         onResume(callback: (() => void) | null) {
             this.hook("onResume", callback);
         }
 
+        /** Hooks `onDestroy` method */
         onDestroy(callback: (() => void) | null) {
             this.hook("onDestroy", callback);
         }
@@ -66,6 +71,8 @@ namespace Menu {
                 }, 10);
             });
         }
+
+        /** Gets app `MainActivity` instance */
         public async getActivityInstance(): Promise<Java.Wrapper> {
             return new Promise((resolve, reject) => {
                 if (this.appActivityInstance) {
@@ -73,9 +80,10 @@ namespace Menu {
                     return;
                 }
 
-                //`Java.choose` has strange behavior on Android 6-7 (5 and 8 not tested)
-                //sometimes an access violation accessing 0x152 may occur
-                //so it will be used only as fallback
+                // `Java.choose` has strange behavior on 32 bit Android 6-7 roms (crash) (5 and 8 not tested)
+                // sometimes an access violation accessing 0xAddr may occur on Android 12.1 (does .1 actually gives something or on just A12 same?)
+                // A9 - strange behavior
+                // so it will be used only as fallback
                 Java.choose(Api.Activity.$className, {
                     onMatch: (instance) => {
                         if (instance.getComponentName().getClassName() == launcher) {
