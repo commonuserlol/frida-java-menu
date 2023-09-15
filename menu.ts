@@ -1,11 +1,13 @@
 namespace Menu {
     export declare const instance: JavaMenu;
+    export declare let theme: Theme;
+    
     export class JavaMenu {
 
         context: Java.Wrapper;
         sharedPrefs: Api.SharedPreferences;
         windowManager: Java.Wrapper;
-        theme: Theme;
+
 
         expandedView: Layout;
         iconView: Object;
@@ -16,10 +18,11 @@ namespace Menu {
         titleLayout: Layout;
 
         constructor (title: string, subtitle: string, theme: Theme) {
-            getter(Menu, "instance", () => this)
-            this.theme = theme;
+            getter(Menu, "instance", () => this, lazy);
+            getter(Menu, "theme", () => theme, lazy);
+
             if (!overlay.check()) {
-                toast(this.theme.noOverlayPermissionText, 1);
+                toast(Menu.theme.noOverlayPermissionText, 1);
                 overlay.ask();
                 throw Error("No permission provided! Aborting...");
             }
@@ -34,7 +37,7 @@ namespace Menu {
             let titleText = new TextView(title);
             let titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let subtitleText = new TextView(subtitle);
-            let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(this.theme.menuHeight)));
+            let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(Menu.theme.menuHeight)));
             let buttonView = Api.RelativeLayout.$new(context);
             let hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let hideButton = new Button();
@@ -42,18 +45,18 @@ namespace Menu {
             let closeButton = new Button();
             
             this.menuParams.gravity.value = 51;
-            this.menuParams.x.value = this.theme.menuXPosition;
-            this.menuParams.y.value = this.theme.menuYPosition;
+            this.menuParams.x.value = Menu.theme.menuXPosition;
+            this.menuParams.y.value = Menu.theme.menuYPosition;
             
             this.expandedView.visibility = Api.GONE;
-            this.expandedView.backgroundColor = this.theme.bgColor;
+            this.expandedView.backgroundColor = Menu.theme.bgColor;
             this.expandedView.orientation = Api.VERTICAL;
-            this.expandedView.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(this.theme.menuWidth)), Api.WRAP_CONTENT);
+            this.expandedView.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(Menu.theme.menuWidth)), Api.WRAP_CONTENT);
             
             this.titleLayout.padding = [10, 5, 10, 5];
             this.titleLayout.verticalGravity = 16;
             
-            titleText.textColor = this.theme.primaryTextColor;
+            titleText.textColor = Menu.theme.primaryTextColor;
             titleText.textSize = 18;
             titleText.gravity = Api.CENTER;
             
@@ -64,13 +67,13 @@ namespace Menu {
             subtitleText.marqueeRepeatLimit = -1;
             subtitleText.singleLine = true;
             subtitleText.selected = true;
-            subtitleText.textColor = this.theme.primaryTextColor;
+            subtitleText.textColor = Menu.theme.primaryTextColor;
             subtitleText.textSize = 10;
             subtitleText.gravity = Api.CENTER;
             subtitleText.padding = [0, 0, 0, 5];
             
             this.scrollView.layoutParams = scrollParams;
-            this.scrollView.backgroundColor = this.theme.layoutColor;
+            this.scrollView.backgroundColor = Menu.theme.layoutColor;
             this.layout.orientation = Api.VERTICAL;
             
             buttonView.setPadding(10, 3, 10, 3);
@@ -79,28 +82,28 @@ namespace Menu {
             hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
             hideButton.layoutParams = hideButtonParams;
             hideButton.backgroundColor = Api.TRANSPARENT;
-            hideButton.text = this.theme.hideButtonText;
-            hideButton.textColor = this.theme.primaryTextColor;
+            hideButton.text = Menu.theme.hideButtonText;
+            hideButton.textColor = Menu.theme.primaryTextColor;
             hideButton.onClickListener = () => {
                 this.iconView.visibility = Api.VISIBLE;
                 this.iconView.alpha = 0;
                 this.expandedView.visibility = Api.GONE;
-                toast(this.theme.iconHiddenText, 1);
+                toast(Menu.theme.iconHiddenText, 1);
             }
 
             hideButton.onLongClickListener = () => {
                 this.destroy();
-                toast(this.theme.killText, 1);
+                toast(Menu.theme.killText, 1);
             }
 
             closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
             closeButton.layoutParams = closeButtonParams;
             closeButton.backgroundColor = 0;
-            closeButton.text = this.theme.closeText;
-            closeButton.textColor = this.theme.primaryTextColor;
+            closeButton.text = Menu.theme.closeText;
+            closeButton.textColor = Menu.theme.primaryTextColor;
             closeButton.onClickListener = () => {
                 this.iconView.visibility = Api.VISIBLE;
-                this.iconView.alpha = this.theme.iconAlpha;
+                this.iconView.alpha = Menu.theme.iconAlpha;
                 this.expandedView.visibility = Api.GONE;
             }
             
@@ -147,19 +150,19 @@ namespace Menu {
                         break;
                     case "Web":
                         this.iconView.instance = Api.WebView.$new(context);
-                        this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${this.theme.iconSize}\" height=\"${this.theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
+                        this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${Menu.theme.iconSize}\" height=\"${Menu.theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
                         this.iconView.backgroundColor = Api.TRANSPARENT;
-                        this.iconView.instance.setAlpha(this.theme.iconAlpha);
+                        this.iconView.instance.setAlpha(Menu.theme.iconAlpha);
                         this.iconView.instance.getSettings().setAppCacheEnabled(true);
                         break;
                     default:
                         throw Error("Unsupported icon type!");
                 }
                 this.iconView.layoutParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-                let applyDimension = Math.floor(dp(this.theme.iconSize));
+                let applyDimension = Math.floor(dp(Menu.theme.iconSize));
                 this.iconView.instance.getLayoutParams().height.value = applyDimension;
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
-                this.iconView.alpha = this.theme.iconAlpha;
+                this.iconView.alpha = Menu.theme.iconAlpha;
                 this.iconView.visibility = Api.VISIBLE;
                 
                 new OnTouch(this.rootFrame);
@@ -181,7 +184,7 @@ namespace Menu {
             let settings = new TextView(text);
             let settingsView = Api.LinearLayout.$new(context);
             settingsView.orientation = Api.VERTICAL;
-            settings.textColor = this.theme.primaryTextColor;
+            settings.textColor = Menu.theme.primaryTextColor;
             settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
             settings.textSize = 20;
             let settingsParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
@@ -283,8 +286,8 @@ namespace Menu {
             params.setMargins(7, 5, 7, 5);
             button.layoutParams = params;
             button.allCaps = false;
-            button.textColor = Menu.instance.theme.secondaryTextColor;
-            button.backgroundColor = Menu.instance.theme.buttonColor;
+            button.textColor = Menu.theme.secondaryTextColor;
+            button.backgroundColor = Menu.theme.buttonColor;
             if (callback) button.onClickListener = () => callback.call(button);
             if (longCallback) button.onLongClickListener = () => longCallback.call(button);
     
@@ -303,7 +306,7 @@ namespace Menu {
         }
 
         radioGroup(label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
-            const radioGroup = new RadioGroup(label, Menu.instance.theme);
+            const radioGroup = new RadioGroup(label, Menu.theme);
             const savedIndex = Menu.instance.sharedPrefs.getInt(label);
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
@@ -335,7 +338,7 @@ namespace Menu {
         }
 
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
-            const spinner = new Spinner(items, Menu.instance.theme);
+            const spinner = new Spinner(items, Menu.theme);
             const savedIndex = Menu.instance.sharedPrefs.getInt(items.join());
             if (callback) spinner.onItemSelectedListener;
             if (savedIndex != -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
@@ -347,7 +350,7 @@ namespace Menu {
             //switch keyword already used, so we borrow the name from lgl code
             const toggle = new Switch(label);
             const savedState = Menu.instance.sharedPrefs.getBool(label);
-            toggle.textColor = Menu.instance.theme.secondaryTextColor;
+            toggle.textColor = Menu.theme.secondaryTextColor;
             toggle.padding = [10, 5, 10, 5];
             if (callback) toggle.onCheckedChangeListener = callback;
             if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
@@ -357,7 +360,7 @@ namespace Menu {
 
         textView(label: string): TextView {
             const textView = new TextView(label);
-            textView.textColor = Menu.instance.theme.secondaryTextColor;
+            textView.textColor = Menu.theme.secondaryTextColor;
             textView.padding = [10, 5, 10, 5];
     
             return textView;
@@ -372,7 +375,7 @@ namespace Menu {
          */
         public category(text: string): TextView {
             const label = this.textView(text);
-            label.backgroundColor = this.theme.categoryColor;
+            label.backgroundColor = Menu.theme.categoryColor;
             label.gravity = Api.CENTER;
             label.padding = [0, 5, 0, 5];
             label.typeface = Api.Typeface.DEFAULT_BOLD.value;
@@ -417,7 +420,7 @@ namespace Menu {
             let layout = Api.LinearLayout.$new(context);
             let label = this.category(`▽ ${text} ▽`);
             let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-            label.backgroundColor = this.theme.collapseColor;
+            label.backgroundColor = Menu.theme.collapseColor;
             params.setMargins(0, 5, 0, 0);
             parentLayout.setLayoutParams(params);
             parentLayout.setVerticalGravity(16);
@@ -426,7 +429,7 @@ namespace Menu {
             layout.setVerticalGravity(16);
             layout.setPadding(0, 5, 0, 5);
             layout.setOrientation(Api.VERTICAL);
-            layout.setBackgroundColor(this.theme.layoutColor);
+            layout.setBackgroundColor(Menu.theme.layoutColor);
             layout.setVisibility(Api.GONE);
 
             label.padding = [0, 20, 0, 20];
