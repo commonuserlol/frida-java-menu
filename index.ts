@@ -1,9 +1,9 @@
 /* Java API */
 /// <reference path="./api/java.ts" />
-/// <reference path="./api/mainActivity.ts" />
-/// <reference path="./api/sharedPreferences.ts" />
+/// <reference path="./misc/mainActivity.ts" />
+/// <reference path="./misc/sharedPreferences.ts" />
 /// <reference path="./runtime.ts" />
-/// <reference path="./api/onTouch.ts" />
+/// <reference path="./misc/onTouch.ts" />
 
 /* UI Objects */
 /// <reference path="./ui/common.ts" />
@@ -30,4 +30,3 @@
 /// <reference path="./menu.ts" />
 
 globalThis.Menu = Menu;
-global.Api = Api;
