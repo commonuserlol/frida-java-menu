@@ -22,7 +22,6 @@ namespace Menu {
             Menu.theme = theme;
 
             if (!overlay.check()) {
-                toast(Menu.theme.noOverlayPermissionText, 1);
                 overlay.ask();
                 throw Error("No permission provided! Aborting...");
             }
