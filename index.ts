@@ -1,5 +1,5 @@
 /* Java API */
-/// <reference path="./api/java.ts" />
+/// <reference path="./api.ts" />
 /// <reference path="./misc/mainActivity.ts" />
 /// <reference path="./misc/sharedPreferences.ts" />
 /// <reference path="./runtime.ts" />
