@@ -1,91 +1,48 @@
 namespace Menu {
     export class MainActivity {
         public static instance: MainActivity;
-        public static classInstance: Java.Wrapper;
-        private readonly className: string;
-        private readonly launcherIntent: Java.Wrapper;
+        private appActivityInstance: Java.Wrapper | undefined;
 
-        constructor() {
-            let app = Api.ActivityThread.currentApplication();
-            this.launcherIntent = app.getPackageManager().getLaunchIntentForPackage(app.getPackageName());
-            this.className = this.launcherIntent.resolveActivityInfo(app.getPackageManager(), 0).name.value;
+        constructor(instance?: Java.Wrapper) {
+            this.appActivityInstance ??= instance;
+            MainActivity.instance = this;
         }
 
-        /**
-         * Hooks `onCreate` method
-         *
-         * @internal
-         * @type {() => void | null} callback which will be called when method triggered. If null it reverts original impl
-         */
-        static set onCreate(callback: (() => void ) | null) {
-            if (callback == null) {
-                Api.Activity.onCreate.overload("android.os.Bundle").implementation = null;
-            }
-            Api.Activity.onCreate.overload("android.os.Bundle").implementation = function(savedInstanceState: Java.Wrapper) {
-                this.onCreate.overload("android.os.Bundle").call(this, savedInstanceState);
-                callback?.();
-                if (!MainActivity.classInstance) {
-                    MainActivity.classInstance = Java.retain(this);
-                    setTimeout(() => MainActivity.onCreate = null, 100);
+        private hook(name: string, callback: ((instance: Java.Wrapper) => void) | null, overload?: string) {
+            const target = overload ? Api.Activity[name].overload(overload) : Api.Activity[name];
+            callback == null ? target.implementation = null : target.implementation = function (this: Java.Wrapper, args: any) {
+                if (this.getComponentName().getClassName() == Menu.launcher) {
+                    callback(this);
                 }
+                args ? target.call(this, args) : target.call(this);
             }
         }
 
-        /**
-         * Hooks `onPause` method
-         *
-         * @internal
-         * @type {() => void | null} callback which will be called when method triggered. If null it reverts original impl
-         */
-        set onPause(callback: (() => void ) | null) {
-            if (callback == null) {
-                Api.Activity.onPause.implementation = null;
-            }
-            let targetActivityName = this.className;
-            Api.Activity.onPause.implementation = function() {
-                if (this.getComponentName().getClassName() == targetActivityName) {
-                    callback?.();
-                }
-                this.onPause();
-            }
+        private onCreate() {
+            // This actually internal cuz called very early
+            // And used only by `waitForInit` to get instance
+            // So user shouldn't use it
+            // Also this won't be async since only with `Interceptor.attach`
+            // We can use async without `Promise`, so
+            // Async part will be inside `waitForInit`
+
+            this.hook("onCreate", (instance) => {
+                if (!this.appActivityInstance) this.appActivityInstance = Java.retain(instance);
+                else this.hook("onCreate", null); // Disable hook to exclude of getting wrong instance
+                                                  // Or at least calling this
+            }, "android.os.Bundle");
         }
 
-        /**
-         * Hooks `onResume` method
-         *
-         * @internal
-         * @type {() => void | null} callback which will be called when method triggered. If null it reverts original impl
-         */
-        set onResume(callback: (() => void ) | null) {
-            if (callback == null) {
-                Api.Activity.onResume.implementation = null;
-            }
-            let targetActivityName = this.className;
-            Api.Activity.onResume.implementation = function() {
-                if (this.getComponentName().getClassName() == targetActivityName) {
-                    callback?.();
-                }
-                this.onResume();
-            }
+        onPause(callback: (() => void) | null) {
+            this.hook("onPause", callback);
         }
 
-        /**
-         * Hooks `onDestroy` method
-         *
-         * @internal 
-         * @type {() => void | null} callback which will be called when method triggered. If null it reverts original impl
-         */
-        set onDestroy(callback: (() => void ) | null) {
-            if (callback == null) {
-                Api.Activity.onDestroy.implementation = null;
-            }
-            let targetActivityName = this.className;
-            Api.Activity.onDestroy.implementation = function() {
-                if (this.getComponentName().getClassName() == targetActivityName) {
-                    callback?.();
-                }
-                this.onDestroy();
-            }
+        onResume(callback: (() => void) | null) {
+            this.hook("onResume", callback);
+        }
+
+        onDestroy(callback: (() => void) | null) {
+            this.hook("onDestroy", callback);
         }
 
         /**
@@ -97,31 +54,32 @@ namespace Menu {
          * @param {() => void} callback
          * @returns {Promise<void>}
          */
-        public static async waitForContext(callback: () => void): Promise<void> {
-            MainActivity.onCreate = () => {};
+        public static async waitForInit(callback: () => void): Promise<void> {
             return new Promise((resolve, reject) => {
+                const instance = MainActivity.instance ? MainActivity.instance : new MainActivity();
+                instance.onCreate();
                 const waitInterval = setInterval(() => {
-                    if (!Api.ActivityThread.currentApplication()) return;
-                    if (!this.instance) this.instance = new MainActivity();
-                    Java.perform(callback);
+                    if (!app.instance) return;
                     clearInterval(waitInterval);
                     resolve();
-                }, 100);
+                    Java.perform(callback);
+                }, 10);
             });
         }
-        public async getClassInstance(): Promise<Java.Wrapper> {
+        public async getActivityInstance(): Promise<Java.Wrapper> {
             return new Promise((resolve, reject) => {
-                if (MainActivity.classInstance) {
-                    resolve(MainActivity.classInstance);
+                if (this.appActivityInstance) {
+                    resolve(this.appActivityInstance);
                     return;
                 }
+
                 //`Java.choose` has strange behavior on Android 6-7 (5 and 8 not tested)
                 //sometimes an access violation accessing 0x152 may occur
                 //so it will be used only as fallback
                 Java.choose(Api.Activity.$className, {
                     onMatch: (instance) => {
-                        if (instance.getComponentName().getClassName() == this.className) {
-                            MainActivity.classInstance = Java.retain(instance);
+                        if (instance.getComponentName().getClassName() == launcher) {
+                            this.appActivityInstance = Java.retain(instance);
                             resolve(instance);
                             return "stop";
                         }

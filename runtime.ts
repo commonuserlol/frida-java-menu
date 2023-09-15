@@ -41,6 +41,4 @@ namespace Menu {
         .resolveActivityInfo(app.packageManager, 0)
         .name
         .value, lazy);
-
-    decorate(app, lazy);
 }
