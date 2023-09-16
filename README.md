@@ -1,16 +1,66 @@
 # frida-java-menu
 Easily create graphical user interface for android with frida<br>
-![](https://i.imgur.com/3EoO951.gif)
+[**Get started**](https://github.com/commonuserlol/frida-java-menu/wiki/Examples)
 
 # Supported roms
-Should work with (almost) pure **aosp** like LineageOS and PixelExperience based roms<br>
+Should work with (almost) pure **AOSP** like LineageOS and PixelExperience based roms<br>
 Work is **NOT GUARANTEED** for MIUI, EMUI, RUI and other OEM-modded roms<br>
-If you see an error on such roms, then create an issue with a clear description, firmware name, android version, etc. (just fill out the template :))
+Mainly because I don’t have devices with these firmwares for testing (so if you have them and can test, please create an issue with confirmation/error)
+
+# Features
+* **Button**
+
+    <img src="https://i.imgur.com/KmxIVBw.png" alt="drawing" width="200"/>
+
+* **Category**
+
+    <img src="https://i.imgur.com/rHnm2QM.png" alt="drawing" width="200"/>
+
+* **Collapse**
+    * Closed
+    
+        <img src="https://i.imgur.com/421MOlM.png" alt="drawing" width="200"/>
+
+    * Opened
+
+        <img src="https://i.imgur.com/MJKDypW.png" alt="drawing" width="200"/>
+
+* **Radio Buttons**
+
+    <img src="https://i.imgur.com/PBrFMrN.png" alt="drawing" width="200"/>
+
+* **Seekbar**
+
+    <img src="https://i.imgur.com/OzHKguK.png" alt="drawing" width="200"/>
+
+* **Spinner**
+    * Closed
+
+        <img src="https://i.imgur.com/4Idqrvb.png" alt="drawing" width="200"/>
+
+    * Opened
+
+        <img src="https://i.imgur.com/laOQtFP.png" alt="drawing" width="200"/>
+
+* **Label**
+
+    <img src="https://i.imgur.com/onNgXRs.png" alt="drawing" width="200"/>
+
+* **Toggle**
+
+    <img src="https://i.imgur.com/x9CxHoz.png" alt="drawing" width="200"/>
+
+... many more 
+
+
+# Preview (yes, in bad quality)
+![](https://i.imgur.com/3EoO951.gif)
 
 # Credits
 
-[frida](https://github.com/frida/frida) - make this possible & js-java bridge<br>
-[lgl modmenu](https://github.com/LGLTeam/Android-Mod-Menu/) - original codebase
+[Frida](https://github.com/frida/frida/) - make this possible & js-java bridge<br>
+[LGL ModMenu](https://github.com/LGLTeam/Android-Mod-Menu/) - original codebase<br>
+[Frida IL2CPP Bridge](https://github.com/vfsfitvnm/frida-il2cpp-bridge/) - useful internal things
 
 # Need help?
-Use wiki or create issue
+Use wiki (rarely updates) or create issue
