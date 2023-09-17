@@ -27,7 +27,7 @@ namespace Menu {
                     return true;
                 case Api.ACTION_UP:
                     this.expandedView.alpha = 1.;
-                    this.iconView.alpha = 1.;
+                    this.iconView.alpha = this.iconView.instance.$className == Menu.Api.ImageView.$className ? 255 : 1.;
                     let [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition[0]), Math.floor(event.getRawX() - this.touchPosition[1])];
                     if (this.iconView.visibility == Api.VISIBLE) {
                         if (app.orientation == Api.ORIENTATION_LANDSCAPE) {
@@ -42,7 +42,8 @@ namespace Menu {
                     return true;
                 case Api.ACTION_MOVE:
                     this.expandedView.alpha = 0.5;
-                    this.iconView.alpha = 0.5;
+                    this.iconView.alpha = this.iconView.instance.$className == Menu.Api.ImageView.$className ?
+                            Math.round(Menu.theme.iconAlpha / 2) : 0.5;
                     this.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])
                     this.params.y.value = this.initialPosition[1] + Math.floor(event.getRawY() - this.touchPosition[1])
                     Java.scheduleOnMainThread(() => {

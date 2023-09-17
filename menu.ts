@@ -138,12 +138,13 @@ namespace Menu {
                             this.expandedView.visibility = Api.VISIBLE;
                         }
                         this.iconView.instance.setImageBitmap(bitmap(value));
+                        // ImageView uses alpha in range 0-255, unlike WebView (0.0 - 1.0)
+                        Menu.theme.iconAlpha = Math.round(Menu.theme.iconAlpha * 255);
                         break;
                     case "Web":
                         this.iconView.instance = Api.WebView.$new(context);
                         this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${Menu.theme.iconSize}\" height=\"${Menu.theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
                         this.iconView.backgroundColor = Api.TRANSPARENT;
-                        this.iconView.instance.setAlpha(Menu.theme.iconAlpha);
                         this.iconView.instance.getSettings().setAppCacheEnabled(true);
                         break;
                     default:
