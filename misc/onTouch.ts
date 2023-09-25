@@ -5,7 +5,6 @@ namespace Menu {
         initialPosition: [number, number];
         params: Java.Wrapper;
         touchPosition: [number, number];
-        windowManager: Java.Wrapper;
 
         constructor(target: Object) {
             const menu = Menu.instance;
@@ -14,7 +13,6 @@ namespace Menu {
             this.params = menu.menuParams;
             this.initialPosition = [0, 0];
             this.touchPosition = [0, 0];
-            this.windowManager = menu.windowManager;
 
             target.onTouchListener = (v, e) => this.callback(v, e);
         }
@@ -47,7 +45,7 @@ namespace Menu {
                     this.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])
                     this.params.y.value = this.initialPosition[1] + Math.floor(event.getRawY() - this.touchPosition[1])
                     Java.scheduleOnMainThread(() => {
-                        this.windowManager.updateViewLayout(Menu.instance.rootFrame.instance, this.params);
+                        app.windowManager.updateViewLayout(Menu.instance.rootFrame.instance, this.params);
                     })
                     return true;
                 default:
