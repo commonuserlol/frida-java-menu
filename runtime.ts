@@ -24,6 +24,10 @@ namespace Menu {
 
         get orientation(): number {
             return this.instance.getResources().getConfiguration().orientation.value;
+        },
+
+        get windowManager(): Java.Wrapper {
+            return Java.cast(context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager);
         }
     };
     export declare const androidVersion: string;

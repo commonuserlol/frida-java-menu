@@ -23,7 +23,7 @@ namespace Menu {
                 throw Error("No permission provided! Aborting...");
             }
             this.sharedPrefs = new Api.SharedPreferences();
-            this.windowManager = Java.retain(Java.cast(context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager));
+            this.windowManager = Java.retain(app.windowManager);
             this.rootFrame = new Layout(Api.FrameLayout);
             this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
             this.expandedView = new Layout(Api.LinearLayout);
