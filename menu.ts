@@ -294,7 +294,7 @@ namespace Menu {
             return dialog;
         }
 
-        radioGroup(label: string, buttons: string[], callback: (this: RadioGroup, index: number) => void): RadioGroup {
+        radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
             const radioGroup = new RadioGroup(label, Menu.theme);
             const savedIndex = Menu.instance.sharedPrefs.getInt(label);
             radioGroup.padding = [10, 5, 10, 5];
