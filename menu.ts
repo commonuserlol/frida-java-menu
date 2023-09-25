@@ -161,16 +161,9 @@ namespace Menu {
             });
         }
 
-        /**
-         * Sets menu settings
-         *
-         * @public
-         * @param {string} text 
-         * @param {boolean} state
-         * @returns {Java.Wrapper}
-         */
-        public settings(text: string, state: boolean): Layout {
-            let settings = new TextView(text);
+        /** Sets menu settings */
+        public settings(label: string, state: boolean): Layout {
+            let settings = new TextView(label);
             let settingsView = Api.LinearLayout.$new(context);
             settingsView.orientation = Api.VERTICAL;
             settings.textColor = Menu.theme.primaryTextColor;
@@ -198,11 +191,7 @@ namespace Menu {
             return settingsView;
         }
 
-        /**
-         * Hides menu
-         *
-         * @public
-         */
+        /** Hides menu */
         public hide(): void {
             Java.scheduleOnMainThread(() => {
                 try {
@@ -224,11 +213,7 @@ namespace Menu {
             this.layout.destroy();
         }
 
-        /**
-         * Shows menu
-         *
-         * @public
-         */
+        /** Shows menu */
         public show(): void {
             Java.scheduleOnMainThread(() => {
                 try {
@@ -355,20 +340,14 @@ namespace Menu {
             return textView;
         }
 
-        /**
-         * Creates category
-         *
-         * @public
-         * @param {string} text
-         * @returns {TextView}
-         */
-        public category(text: string): TextView {
-            const label = this.textView(text);
-            label.backgroundColor = Menu.theme.categoryColor;
-            label.gravity = Api.CENTER;
-            label.padding = [0, 5, 0, 5];
-            label.typeface = Api.Typeface.DEFAULT_BOLD.value;
-            return label;
+        /** Creates category */
+        public category(label: string): TextView {
+            const textView = this.textView(label);
+            textView.backgroundColor = Menu.theme.categoryColor;
+            textView.gravity = Api.CENTER;
+            textView.padding = [0, 5, 0, 5];
+            textView.typeface = Api.Typeface.DEFAULT_BOLD.value;
+            return textView;
         }
 
         public async inputNumber(title: string, max: number, positiveCallback?: (this: Dialog, result: number) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
@@ -396,20 +375,13 @@ namespace Menu {
             }, view).then((d) => d.show());     
         }
 
-        /**
-         * Creates collapse
-         *
-         * @public
-         * @param {string} text
-         * @param {boolean} state
-         * @returns {[Menu.Layout, Menu.Layout]}
-         */
-        public collapse(text: string, state: boolean): [Layout, Layout] {
+        /** Creates collapse */
+        public collapse(label: string, state: boolean): [Layout, Layout] {
             let parentLayout = new Layout(Api.LinearLayout);
             let layout = new Layout(Api.LinearLayout);
-            let label = this.category(`▽ ${text} ▽`);
+            let textView = this.category(`▽ ${label} ▽`);
             let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-            label.backgroundColor = Menu.theme.collapseColor;
+            textView.backgroundColor = Menu.theme.collapseColor;
             params.setMargins(0, 5, 0, 0);
             parentLayout.layoutParams = params;
             parentLayout.verticalGravity = 16;
@@ -421,23 +393,23 @@ namespace Menu {
             layout.backgroundColor = Menu.theme.layoutColor;
             layout.visibility = Api.GONE;
 
-            label.padding = [0, 20, 0, 20];
+            textView.padding = [0, 20, 0, 20];
             if (state) {
                 layout.visibility = Api.VISIBLE;
-                label.text = `△ ${text} △`;
+                textView.text = `△ ${label} △`;
             }
-            label.onClickListener = () => {
+            textView.onClickListener = () => {
                 state = !state;
                 if (state) {
                     layout.visibility = Api.VISIBLE;
-                    label.text = `△ ${text} △`;
+                    textView.text = `△ ${label} △`;
                 }
                 else {
                     layout.visibility = Api.GONE;
-                    label.text = `▽ ${text} ▽`;
+                    textView.text = `▽ ${label} ▽`;
                 }
             }
-            this.add(label, parentLayout);
+            this.add(textView, parentLayout);
             this.add(layout, parentLayout);
             return [parentLayout, layout];
         }
