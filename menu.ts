@@ -230,13 +230,12 @@ namespace Menu {
          * Adds view to layout
          *
          * @public
-         * @param {(Java.Wrapper | Object)} view to add
-         * @param {?Java.Wrapper} [layout] for add. If not provided general layout will be used
+         * @param {Object} view to add
+         * @param {?(Java.Wrapper | Object)} [layout] for add. If not provided general layout will be used
          */
-        public add(view: Java.Wrapper | Object, layout?: Java.Wrapper | Object): void {
+        public add(view: Object, layout?: Java.Wrapper | Object): void {
             Java.scheduleOnMainThread(() => {
-                const l = layout ?? this.layout;
-                (l instanceof Object ? l.instance : l).addView((view instanceof Object ? view.instance : view));
+                (layout ?? this.layout).instance.addView((view instanceof Object ? view.instance : view));
             })
         }
 
@@ -244,13 +243,12 @@ namespace Menu {
          * Removes view from layout
          *
          * @public
-         * @param {(Java.Wrapper | Object)} view to remove
-         * @param {?Java.Wrapper} [layout] for remove. If not provided general layout will be used
+         * @param {Object} view to remove
+         * @param {?(Java.Wrapper | Object)} [layout] for remove. If not provided general layout will be used
          */
-        public remove(view: Java.Wrapper | Object, layout?: Java.Wrapper | Object): void {
+        public remove(view: Object, layout?: Java.Wrapper | Object): void {
             Java.scheduleOnMainThread(() => {
-                const l = layout ?? this.layout;
-                (l instanceof Object ? l.instance : l).removeView((view instanceof Object ? view.instance : view));
+                (layout ?? this.layout).instance.removeView((view instanceof Object ? view.instance: view));
             })
         }
 
@@ -305,8 +303,8 @@ namespace Menu {
             min ? seekbar.min = min : seekbar.min = 0;
             if (callback) seekbar.onSeekBarChangeListener = callback;
     
-            add(seekbar.label, layout.instance);
-            add(seekbar, layout.instance);
+            add(seekbar.label, layout);
+            add(seekbar, layout);
     
             return layout;
         }
