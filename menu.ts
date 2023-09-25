@@ -405,38 +405,38 @@ namespace Menu {
          * @public
          * @param {string} text
          * @param {boolean} state
-         * @returns {[Java.Wrapper, Java.Wrapper]}
+         * @returns {[Menu.Layout, Menu.Layout]}
          */
-        public collapse(text: string, state: boolean): [Java.Wrapper, Java.Wrapper] {
-            let parentLayout = Api.LinearLayout.$new(context);
-            let layout = Api.LinearLayout.$new(context);
+        public collapse(text: string, state: boolean): [Layout, Layout] {
+            let parentLayout = new Layout(Api.LinearLayout);
+            let layout = new Layout(Api.LinearLayout);
             let label = this.category(`▽ ${text} ▽`);
             let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             label.backgroundColor = Menu.theme.collapseColor;
             params.setMargins(0, 5, 0, 0);
-            parentLayout.setLayoutParams(params);
-            parentLayout.setVerticalGravity(16);
-            parentLayout.setOrientation(Api.VERTICAL);
+            parentLayout.layoutParams = params;
+            parentLayout.verticalGravity = 16;
+            parentLayout.orientation = Api.VERTICAL;
 
-            layout.setVerticalGravity(16);
-            layout.setPadding(0, 5, 0, 5);
-            layout.setOrientation(Api.VERTICAL);
-            layout.setBackgroundColor(Menu.theme.layoutColor);
-            layout.setVisibility(Api.GONE);
+            layout.verticalGravity = 16;
+            layout.padding = [0, 5, 0, 5];
+            layout.orientation = Api.VERTICAL;
+            layout.backgroundColor = Menu.theme.layoutColor;
+            layout.visibility = Api.GONE;
 
             label.padding = [0, 20, 0, 20];
             if (state) {
-                layout.setVisibility(Api.VISIBLE);
+                layout.visibility = Api.VISIBLE;
                 label.text = `△ ${text} △`;
             }
             label.onClickListener = () => {
                 state = !state;
                 if (state) {
-                    layout.setVisibility(Api.VISIBLE);
+                    layout.visibility = Api.VISIBLE;
                     label.text = `△ ${text} △`;
                 }
                 else {
-                    layout.setVisibility(Api.GONE);
+                    layout.visibility = Api.GONE;
                     label.text = `▽ ${text} ▽`;
                 }
             }
