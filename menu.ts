@@ -4,7 +4,6 @@ namespace Menu {
     
     export class JavaMenu {
 
-        context: Java.Wrapper;
         sharedPrefs: Api.SharedPreferences;
         windowManager: Java.Wrapper;
         expandedView: Layout;
