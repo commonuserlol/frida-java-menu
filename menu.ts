@@ -5,7 +5,6 @@ namespace Menu {
     export class JavaMenu {
 
         sharedPrefs: Api.SharedPreferences;
-        windowManager: Java.Wrapper;
         expandedView: Layout;
         iconView: Object;
         layout: Layout;
@@ -23,7 +22,6 @@ namespace Menu {
                 throw Error("No permission provided! Aborting...");
             }
             this.sharedPrefs = new Api.SharedPreferences();
-            this.windowManager = Java.retain(app.windowManager);
             this.rootFrame = new Layout(Api.FrameLayout);
             this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
             this.expandedView = new Layout(Api.LinearLayout);
@@ -209,7 +207,7 @@ namespace Menu {
             Java.scheduleOnMainThread(() => {
                 try {
                     this.rootFrame.visibility = Api.GONE;
-                    this.remove(this.rootFrame, this.windowManager);
+                    this.remove(this.rootFrame, app.windowManager);
                 }
                 catch (e) {
                     console.warn("Menu already destroyed, ignoring `destroy` call");
@@ -234,7 +232,7 @@ namespace Menu {
         public show(): void {
             Java.scheduleOnMainThread(() => {
                 try {
-                    this.windowManager.addView(this.rootFrame.instance, this.menuParams);
+                    app.windowManager.addView(this.rootFrame.instance, this.menuParams);
                     this.rootFrame.visibility = Api.VISIBLE;
                 }
                 catch (e) {
