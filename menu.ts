@@ -123,7 +123,7 @@ namespace Menu {
          * @param {string} value can be base64-encoded image or link (only for Web type)
          * @param {("Normal" | "Web")} [type="Normal"] Normal accepts only base64-encoded image. Web accepts links to images/gifs, etc
          */
-        public icon(value: string, type: "Normal" | "Web" = "Normal"): void {
+        public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
                 this.iconView = new Object(context);
                 switch (type) {
@@ -192,7 +192,7 @@ namespace Menu {
         }
 
         /** Hides menu */
-        public hide(): void {
+        public hide() {
             Java.scheduleOnMainThread(() => {
                 try {
                     this.rootFrame.visibility = Api.GONE;
@@ -214,7 +214,7 @@ namespace Menu {
         }
 
         /** Shows menu */
-        public show(): void {
+        public show() {
             Java.scheduleOnMainThread(() => {
                 try {
                     app.windowManager.addView(this.rootFrame.instance, this.menuParams);
@@ -233,7 +233,7 @@ namespace Menu {
          * @param {Object} view to add
          * @param {?(Java.Wrapper | Object)} [layout] for add. If not provided general layout will be used
          */
-        public add(view: Object, layout?: Java.Wrapper | Object): void {
+        public add(view: Object, layout?: Java.Wrapper | Object) {
             Java.scheduleOnMainThread(() => {
                 (layout ?? this.layout).instance.addView((view instanceof Object ? view.instance : view));
             })
@@ -246,7 +246,7 @@ namespace Menu {
          * @param {Object} view to remove
          * @param {?(Java.Wrapper | Object)} [layout] for remove. If not provided general layout will be used
          */
-        public remove(view: Object, layout?: Java.Wrapper | Object): void {
+        public remove(view: Object, layout?: Java.Wrapper | Object) {
             Java.scheduleOnMainThread(() => {
                 (layout ?? this.layout).instance.removeView((view instanceof Object ? view.instance: view));
             })

@@ -23,7 +23,7 @@ namespace Menu {
              * @param {string} key
              * @param {string} value
              */
-            public putString(key: string, value: string): void {
+            public putString(key: string, value: string) {
                 this.instance.edit().putString(JavaString.$new(key), JavaString.$new(value)).apply();
             }
             /**
@@ -43,7 +43,7 @@ namespace Menu {
              * @param {string} key
              * @param {number} value
              */
-            public putInt(key: string, value: number): void {
+            public putInt(key: string, value: number) {
                 this.instance.edit().putInt(JavaString.$new(key), value).apply();
             }
             /**
@@ -63,7 +63,7 @@ namespace Menu {
              * @param {string} key
              * @param {number} value
              */
-            public putFloat(key: string, value: number): void {
+            public putFloat(key: string, value: number) {
                 this.instance.edit().putFloat(JavaString.$new(key), value).apply();
             }
             /**
@@ -83,7 +83,7 @@ namespace Menu {
              * @param {string} key
              * @param {number} value
              */
-            public putLong(key: string, value: number): void {
+            public putLong(key: string, value: number) {
                 this.instance.edit().putLong(JavaString.$new(key), value).apply();
             }
             /**
@@ -103,7 +103,7 @@ namespace Menu {
              * @param {string} key
              * @param {boolean} value
              */
-            public putBool(key: string, value: boolean): void {
+            public putBool(key: string, value: boolean) {
                 this.instance.edit().putBoolean(JavaString.$new(key), value).apply();
             }
             /**
