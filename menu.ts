@@ -315,9 +315,8 @@ namespace Menu {
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
             const spinner = new Spinner(items, Menu.theme);
             const savedIndex = Menu.instance.sharedPrefs.getInt(items.join());
-            if (callback) spinner.onItemSelectedListener;
-            if (savedIndex != -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
-    
+            if (savedIndex != -1 && spinner.selection != savedIndex) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
+            if (callback) spinner.onItemSelectedListener = callback;
             return spinner;
         }
 
