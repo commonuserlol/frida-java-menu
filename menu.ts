@@ -21,6 +21,7 @@ namespace Menu {
                 overlay.ask();
                 setTimeout(() => MainActivity.instance.getActivityInstance().then((instance) => instance.finish()), 3000);
             }
+
             this.sharedPrefs = new Api.SharedPreferences();
             this.rootFrame = new Layout(Api.FrameLayout);
             this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
@@ -235,7 +236,8 @@ namespace Menu {
          */
         public add(view: Object, layout?: Java.Wrapper | Object) {
             Java.scheduleOnMainThread(() => {
-                (layout ?? this.layout).instance.addView((view instanceof Object ? view.instance : view));
+                const l = layout ?? this.layout;
+                (l instanceof Object ? l.instance : l).addView((view instanceof Object ? view.instance : view));
             })
         }
 
@@ -248,7 +250,8 @@ namespace Menu {
          */
         public remove(view: Object, layout?: Java.Wrapper | Object) {
             Java.scheduleOnMainThread(() => {
-                (layout ?? this.layout).instance.removeView((view instanceof Object ? view.instance: view));
+                const l = layout ?? this.layout;
+                (l instanceof Object ? l.instance : l).removeView((view instanceof Object ? view.instance: view));
             })
         }
 
