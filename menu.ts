@@ -19,7 +19,7 @@ namespace Menu {
 
             if (!overlay.check()) {
                 overlay.ask();
-                throw Error("No permission provided! Aborting...");
+                setTimeout(() => MainActivity.instance.getActivityInstance().then((instance) => instance.finish()), 3000);
             }
             this.sharedPrefs = new Api.SharedPreferences();
             this.rootFrame = new Layout(Api.FrameLayout);
