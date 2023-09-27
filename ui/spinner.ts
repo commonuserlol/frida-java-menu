@@ -20,6 +20,10 @@ namespace Menu {
         get adapter(): Java.Wrapper {
             return this.instance.getAdapter();
         }
+        /** Gets current selection index */
+        get selection(): number {
+            return this.items.indexOf(this.instance.getSelectedView());
+        }
         /** Sets adapter */
         set adapter(adapter: Java.Wrapper) {
             this.instance.setAdapter(adapter);
