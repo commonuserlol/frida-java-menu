@@ -173,10 +173,6 @@ namespace Menu {
             let settingsParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             settingsParams.addRule(Api.ALIGN_PARENT_RIGHT);
             settings.layoutParams = settingsParams;
-            if (state) {
-                this.remove(this.layout, this.scrollView);
-                this.add(settingsView, this.scrollView);
-            }
             settings.onClickListener = () => {
                 state = !state;
                 if (state) {
@@ -187,6 +183,10 @@ namespace Menu {
                     this.remove(settingsView, this.scrollView);
                     this.add(this.layout, this.scrollView);
                 }
+            }
+            if (state) {
+                state = !state; // Small hack
+                settings.instance.performClick();
             }
             this.add(settings, this.titleLayout);
             return settingsView;
@@ -393,10 +393,6 @@ namespace Menu {
             layout.visibility = Api.GONE;
 
             textView.padding = [0, 20, 0, 20];
-            if (state) {
-                layout.visibility = Api.VISIBLE;
-                textView.text = `△ ${label} △`;
-            }
             textView.onClickListener = () => {
                 state = !state;
                 if (state) {
@@ -407,6 +403,10 @@ namespace Menu {
                     layout.visibility = Api.GONE;
                     textView.text = `▽ ${label} ▽`;
                 }
+            }
+            if (state) {
+                state = !state; // Small hack
+                textView.instance.performClick();
             }
             this.add(textView, parentLayout);
             this.add(layout, parentLayout);
