@@ -1,4 +1,5 @@
 namespace Menu {
+    /** @internal */
     export function raise(text: string) {
         throw new Error(text);
     }
@@ -11,6 +12,7 @@ namespace Menu {
         }
         return result;
     }
+    /** Formats text like `format("hi {}", "commonuserlol")` */
     export function format(str: String, ...obj: any): string {
         return str.replace(/\{\s*([^}\s]+)\s*\}/g, function(m, p1, offset, string) {
             return obj[p1]

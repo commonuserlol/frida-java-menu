@@ -4,6 +4,7 @@ namespace Menu {
         ask: () => void,
         check: () => boolean
     }
+    /** @internal */
     export const overlay: Permission = {
         name: "android.settings.action.MANAGE_OVERLAY_PERMISSION",
         ask() {

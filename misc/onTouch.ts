@@ -1,4 +1,5 @@
 namespace Menu {
+    /** @internal */
     export class OnTouch {
         expandedView: Layout;
         iconView: Object;

@@ -205,6 +205,7 @@ namespace Menu {
             });
         }
 
+        /** Disposes instance of `JavaMenu` */
         destroy() {
             MainActivity.onPause(null);
             MainActivity.onResume(null);
@@ -255,6 +256,7 @@ namespace Menu {
             })
         }
 
+        /** Creates button */
         button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
             const button = new Button(text);
             const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
@@ -269,6 +271,7 @@ namespace Menu {
             return button;
         }
 
+        /** Creates dialog */
         async dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
             //We can create a dialog only with an activity instance, the context is not suitable.
             const instance = await MainActivity.getActivityInstance();
@@ -280,6 +283,7 @@ namespace Menu {
             return dialog;
         }
 
+        /** Creates radio group */
         radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
             const radioGroup = new RadioGroup(label, theme);
             const savedIndex = sharedPreferences.getInt(label);
@@ -294,6 +298,7 @@ namespace Menu {
             return radioGroup;
         }
 
+        /** Creates seekbar */
         seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
             const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
             const layout = new Object(context);
@@ -311,6 +316,7 @@ namespace Menu {
             return layout;
         }
 
+        /** Creates spinner */
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
             const spinner = new Spinner(items, theme);
             const savedIndex = sharedPreferences.getInt(items.join());
@@ -319,6 +325,7 @@ namespace Menu {
             return spinner;
         }
 
+        /** Creates switch */
         toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
             //switch keyword already used, so we borrow the name from lgl code
             const toggle = new Switch(label);
@@ -331,6 +338,7 @@ namespace Menu {
             return toggle;
         }
 
+        /** Creates text view */
         textView(label: string): TextView {
             const textView = new TextView(label);
             textView.textColor = theme.secondaryTextColor;
@@ -349,6 +357,7 @@ namespace Menu {
             return textView;
         }
 
+        /** Creates dialog with asking number and shows it */
         public async inputNumber(title: string, max: number, positiveCallback?: (this: Dialog, result: number) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
             let view = Api.EditText.$new(context);
             if (max > 0) {
@@ -363,6 +372,7 @@ namespace Menu {
             }, view).then((d) => d.show());  
         }
 
+        /** Creates dialog with asking string and shows it */
         public async inputText(title: string, hint?: string, positiveCallback?: (this: Dialog, result: string) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
             let view = Api.EditText.$new(context);
             if (hint) view.setHint(wrap(hint));

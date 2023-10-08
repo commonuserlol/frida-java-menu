@@ -5,41 +5,52 @@
 
 namespace Menu {
     export const app = {
+        /** Returns app instance */
         get instance(): Java.Wrapper {
             return Api.ActivityThread.currentApplication();
         },
 
+        /** Returns package manager instance */
         get packageManager(): Java.Wrapper {
             return this.instance.getPackageManager();
         },
 
+        /** Returns app package name */
         get packageName(): string {
             return this.instance.getPackageName();
         },
         
+        /** Returns app context */
         get context(): Java.Wrapper {
             return this.instance.getApplicationContext();
         },
 
+        /** Returns app orientation */
         get orientation(): number {
             return this.instance.getResources().getConfiguration().orientation.value;
         },
 
+        /** Returns window manager instance */
         get windowManager(): Java.Wrapper {
             return Java.cast(context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager);
         }
     };
+    /** App activity instance */
     export declare let activityInstance: Java.Wrapper;
 
+    /** Android version */
     export declare const androidVersion: string;
     getter(Menu, "androidVersion", () => Java.androidVersion, lazy);
 
+    /** Android API level */
     export declare const apiLevel: number;
     getter(Menu, "apiLevel", () => Api.Build_VERSION.SDK_INT.value, lazy);
 
+    /** Shorthand for `app.context` */
     export declare const context: Java.Wrapper;
     getter(Menu, "context", () => app.context, lazy);
 
+    /** Determines main activity name */
     export declare const launcher: Java.Wrapper;
     getter(Menu, "launcher", () => app.packageManager
         .getLaunchIntentForPackage(app.packageName)

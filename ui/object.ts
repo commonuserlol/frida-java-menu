@@ -108,11 +108,13 @@ namespace Menu {
                 }
             }).$new());
         }
+        /** Disposes this object */
         destroy() {
             sleep().then(() => this.instance.$dispose());
         }
     }
     
+    /** Wraps text from HTML */
     export function wrap(text: string): Java.Wrapper
     {
         return Api.HTML.fromHtml(Api.JavaString.$new(String(text)));

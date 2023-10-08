@@ -7,15 +7,19 @@ namespace Menu {
             super(context);
             this.instance = type.$new(context);
         }
+        /** Returns layout child count */
         get childCount(): number {
             return this.instance.getChildCount();
         }
+        /** Sets vertical gravity */
         set verticalGravity(verticalGravity: number) {
             this.instance.setVerticalGravity(verticalGravity);
         }
+        /** Gets child at specified index */
         child(index: number): Java.Wrapper | null {
             return this.instance.getChildAt(index);
         }
+        /** Disposes this and child objects */
         override destroy() {
             sleep().then(() => {
                 for (let i = 0; i < this.childCount; i++) {
