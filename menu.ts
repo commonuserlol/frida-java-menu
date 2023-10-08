@@ -71,8 +71,8 @@ namespace Menu {
             this.scrollView.backgroundColor = Menu.theme.layoutColor;
             this.layout.orientation = Api.VERTICAL;
             
-            buttonView.setPadding(10, 3, 10, 3);
-            buttonView.setVerticalGravity(Api.CENTER);
+            buttonView.padding = [10, 3, 10, 3];
+            buttonView.verticalGravity = Api.CENTER;
             
             hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
             hideButton.layoutParams = hideButtonParams;
