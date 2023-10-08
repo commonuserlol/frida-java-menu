@@ -12,7 +12,7 @@ namespace Menu {
         private hook(name: string, callback: ((instance: Java.Wrapper) => void) | null, overload?: string) {
             const target = overload ? Api.Activity[name].overload(overload) : Api.Activity[name];
             callback == null ? target.implementation = null : target.implementation = function (this: Java.Wrapper, args: any) {
-                if (this.getComponentName().getClassName() == Menu.launcher) {
+                if (this.getComponentName().getClassName() == launcher) {
                     callback(this);
                 }
                 args ? target.call(this, args) : target.call(this);

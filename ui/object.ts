@@ -4,11 +4,11 @@ namespace Menu {
         public instance: Java.Wrapper;
 
         public constructor (context?: Java.Wrapper, handleOrInstance?: NativePointerValue | Java.Wrapper) {
-            //Context holder still required in case if this object will represent dialog
-            //Which actually uses activity instance, not context
-            //But context is nested class of activity
-            //So idk should i rename `context` to `activity`...
-            this.context = context ?? globalThis.Menu.app.context;
+            // Context holder still required in case if this object will represent dialog
+            // Which actually uses activity instance, not context
+            // But context is nested class of activity
+            // So idk should i rename `context` to `activity`...
+            this.context = context ?? app.context;
             handleOrInstance ? this.instance = Java.cast(handleOrInstance, Api.View) : null;
         }
         /** Gets alpha */

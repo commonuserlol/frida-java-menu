@@ -20,7 +20,7 @@ namespace Menu {
         }
         /** Sets positive button */
         public setPositiveButton(callback: (this: Dialog) => void) {
-            this.instance.setPositiveButton(wrap(Menu.theme.dialogPositiveText), Java.registerClass({
+            this.instance.setPositiveButton(wrap(theme.dialogPositiveText), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {
@@ -35,7 +35,7 @@ namespace Menu {
         }
         /** Sets negative button */
         public setNegativeButton(callback: (this: Dialog) => void) {
-            this.instance.setNegativeButton(wrap(Menu.theme.dialogNegativeText), Java.registerClass({
+            this.instance.setNegativeButton(wrap(theme.dialogNegativeText), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {
