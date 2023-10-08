@@ -17,9 +17,8 @@ namespace Menu {
         scrollView: Layout;
         titleLayout: Layout;
 
-        constructor (title: string, subtitle: string, theme: Theme) {
+        constructor (title: string, subtitle: string) {
             Menu.instance = this;
-            Menu.theme = theme;
 
             if (!overlay.check()) {
                 overlay.ask();
