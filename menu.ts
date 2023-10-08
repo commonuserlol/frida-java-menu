@@ -295,7 +295,6 @@ namespace Menu {
         }
 
         seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
-            const add = Menu.instance.add;
             const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
             const layout = new Object(context);
             layout.instance = Api.LinearLayout.$new(context);
@@ -306,8 +305,8 @@ namespace Menu {
             min ? seekbar.min = min : seekbar.min = 0;
             if (callback) seekbar.onSeekBarChangeListener = callback;
     
-            add(seekbar.label, layout);
-            add(seekbar, layout);
+            this.add(seekbar.label, layout);
+            this.add(seekbar, layout);
     
             return layout;
         }
