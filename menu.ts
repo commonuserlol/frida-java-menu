@@ -1,6 +1,9 @@
 namespace Menu {
+    /** `JavaMenu` class instance */
     export declare let instance: JavaMenu;
+    /** Theme instance for `JavaMenu` */
     export declare let theme: Theme;
+    /** Shared Preferences storage. Feel free to store own values */
     export declare const sharedPreferences: Api.SharedPreferences;
 
     getter(Menu, "sharedPreferences", () => new Api.SharedPreferences(), lazy);
