@@ -1,6 +1,15 @@
 # frida-java-menu
 Easily create graphical user interface for android with frida<br>
 [**Get started**](https://github.com/commonuserlol/frida-java-menu/wiki/Examples)
+## Why i should use it?
+Well, that was expected.
+* Not providing any dependencies (i.e. you wont care about .dex or .so files loading)
+* Completely ts (there is good typing)
+* Convenient API with wrappers
+* Easy to customize (no need to recompile anything except the script)
+* No need to care about jni stuff
+* Easy protect from thieves, just compile and obfuscate
+* I haven't come up with other reasons yet
 
 # Supported roms
 Should work with (almost) pure **AOSP** like LineageOS and PixelExperience based roms<br>
