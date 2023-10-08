@@ -34,26 +34,26 @@ namespace Menu {
             let titleText = new TextView(title);
             let titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let subtitleText = new TextView(subtitle);
-            let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(Menu.theme.menuHeight)));
+            let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(theme.menuHeight)));
             let buttonView = new Layout(Api.RelativeLayout);
             let hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let hideButton = new Button(Menu.theme.hideButtonText);
+            let hideButton = new Button(theme.hideButtonText);
             let closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let closeButton = new Button(Menu.theme.closeText);
+            let closeButton = new Button(theme.closeText);
             
             this.menuParams.gravity.value = 51;
-            this.menuParams.x.value = Menu.theme.menuXPosition;
-            this.menuParams.y.value = Menu.theme.menuYPosition;
+            this.menuParams.x.value = theme.menuXPosition;
+            this.menuParams.y.value = theme.menuYPosition;
             
             this.expandedView.visibility = Api.GONE;
-            this.expandedView.backgroundColor = Menu.theme.bgColor;
+            this.expandedView.backgroundColor = theme.bgColor;
             this.expandedView.orientation = Api.VERTICAL;
-            this.expandedView.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(Menu.theme.menuWidth)), Api.WRAP_CONTENT);
+            this.expandedView.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(theme.menuWidth)), Api.WRAP_CONTENT);
             
             this.titleLayout.padding = [10, 5, 10, 5];
             this.titleLayout.verticalGravity = 16;
             
-            titleText.textColor = Menu.theme.primaryTextColor;
+            titleText.textColor = theme.primaryTextColor;
             titleText.textSize = 18;
             titleText.gravity = Api.CENTER;
             
@@ -64,13 +64,13 @@ namespace Menu {
             subtitleText.marqueeRepeatLimit = -1;
             subtitleText.singleLine = true;
             subtitleText.selected = true;
-            subtitleText.textColor = Menu.theme.primaryTextColor;
+            subtitleText.textColor = theme.primaryTextColor;
             subtitleText.textSize = 10;
             subtitleText.gravity = Api.CENTER;
             subtitleText.padding = [0, 0, 0, 5];
             
             this.scrollView.layoutParams = scrollParams;
-            this.scrollView.backgroundColor = Menu.theme.layoutColor;
+            this.scrollView.backgroundColor = theme.layoutColor;
             this.layout.orientation = Api.VERTICAL;
             
             buttonView.padding = [10, 3, 10, 3];
@@ -79,26 +79,26 @@ namespace Menu {
             hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
             hideButton.layoutParams = hideButtonParams;
             hideButton.backgroundColor = Api.TRANSPARENT;
-            hideButton.textColor = Menu.theme.primaryTextColor;
+            hideButton.textColor = theme.primaryTextColor;
             hideButton.onClickListener = () => {
                 this.iconView.visibility = Api.VISIBLE;
                 this.iconView.alpha = 0;
                 this.expandedView.visibility = Api.GONE;
-                toast(Menu.theme.iconHiddenText, 1);
+                toast(theme.iconHiddenText, 1);
             }
 
             hideButton.onLongClickListener = () => {
                 this.destroy();
-                toast(Menu.theme.killText, 1);
+                toast(theme.killText, 1);
             }
 
             closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
             closeButton.layoutParams = closeButtonParams;
             closeButton.backgroundColor = 0;
-            closeButton.textColor = Menu.theme.primaryTextColor;
+            closeButton.textColor = theme.primaryTextColor;
             closeButton.onClickListener = () => {
                 this.iconView.visibility = Api.VISIBLE;
-                this.iconView.alpha = Menu.theme.iconAlpha;
+                this.iconView.alpha = theme.iconAlpha;
                 this.expandedView.visibility = Api.GONE;
             }
             
@@ -137,11 +137,11 @@ namespace Menu {
                         }
                         this.iconView.instance.setImageBitmap(bitmap(value));
                         // ImageView uses alpha in range 0-255, unlike WebView (0.0 - 1.0)
-                        Menu.theme.iconAlpha = Math.round(Menu.theme.iconAlpha * 255);
+                        theme.iconAlpha = Math.round(theme.iconAlpha * 255);
                         break;
                     case "Web":
                         this.iconView.instance = Api.WebView.$new(context);
-                        this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${Menu.theme.iconSize}\" height=\"${Menu.theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
+                        this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${theme.iconSize}\" height=\"${theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
                         this.iconView.backgroundColor = Api.TRANSPARENT;
                         this.iconView.instance.getSettings().setAppCacheEnabled(true);
                         break;
@@ -149,10 +149,10 @@ namespace Menu {
                         throw Error("Unsupported icon type!");
                 }
                 this.iconView.layoutParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-                let applyDimension = Math.floor(dp(Menu.theme.iconSize));
+                let applyDimension = Math.floor(dp(theme.iconSize));
                 this.iconView.instance.getLayoutParams().height.value = applyDimension;
                 this.iconView.instance.getLayoutParams().width.value = applyDimension;
-                this.iconView.alpha = Menu.theme.iconAlpha;
+                this.iconView.alpha = theme.iconAlpha;
                 this.iconView.visibility = Api.VISIBLE;
                 
                 new OnTouch(this.rootFrame);
@@ -167,7 +167,7 @@ namespace Menu {
             let settings = new TextView(label);
             let settingsView = Api.LinearLayout.$new(context);
             settingsView.orientation = Api.VERTICAL;
-            settings.textColor = Menu.theme.primaryTextColor;
+            settings.textColor = theme.primaryTextColor;
             settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
             settings.textSize = 20;
             let settingsParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
@@ -261,8 +261,8 @@ namespace Menu {
             params.setMargins(7, 5, 7, 5);
             button.layoutParams = params;
             button.allCaps = false;
-            button.textColor = Menu.theme.secondaryTextColor;
-            button.backgroundColor = Menu.theme.buttonColor;
+            button.textColor = theme.secondaryTextColor;
+            button.backgroundColor = theme.buttonColor;
             if (callback) button.onClickListener = () => callback.call(button);
             if (longCallback) button.onLongClickListener = () => longCallback.call(button);
     
@@ -281,8 +281,8 @@ namespace Menu {
         }
 
         radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
-            const radioGroup = new RadioGroup(label, Menu.theme);
-            const savedIndex = Menu.sharedPreferences.getInt(label);
+            const radioGroup = new RadioGroup(label, theme);
+            const savedIndex = sharedPreferences.getInt(label);
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
             for (const button of buttons) {
@@ -296,7 +296,7 @@ namespace Menu {
 
         seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
             const add = Menu.instance.add;
-            const seekbar = new SeekBar(label, Menu.sharedPreferences.getInt(label));
+            const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
             const layout = new Object(context);
             layout.instance = Api.LinearLayout.$new(context);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
@@ -313,8 +313,8 @@ namespace Menu {
         }
 
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
-            const spinner = new Spinner(items, Menu.theme);
-            const savedIndex = Menu.sharedPreferences.getInt(items.join());
+            const spinner = new Spinner(items, theme);
+            const savedIndex = sharedPreferences.getInt(items.join());
             if (savedIndex != -1 && spinner.selection != savedIndex) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
             if (callback) spinner.onItemSelectedListener = callback;
             return spinner;
@@ -323,8 +323,8 @@ namespace Menu {
         toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
             //switch keyword already used, so we borrow the name from lgl code
             const toggle = new Switch(label);
-            const savedState = Menu.sharedPreferences.getBool(label);
-            toggle.textColor = Menu.theme.secondaryTextColor;
+            const savedState = sharedPreferences.getBool(label);
+            toggle.textColor = theme.secondaryTextColor;
             toggle.padding = [10, 5, 10, 5];
             if (callback) toggle.onCheckedChangeListener = callback;
             if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
@@ -334,7 +334,7 @@ namespace Menu {
 
         textView(label: string): TextView {
             const textView = new TextView(label);
-            textView.textColor = Menu.theme.secondaryTextColor;
+            textView.textColor = theme.secondaryTextColor;
             textView.padding = [10, 5, 10, 5];
     
             return textView;
@@ -343,7 +343,7 @@ namespace Menu {
         /** Creates category */
         public category(label: string): TextView {
             const textView = this.textView(label);
-            textView.backgroundColor = Menu.theme.categoryColor;
+            textView.backgroundColor = theme.categoryColor;
             textView.gravity = Api.CENTER;
             textView.padding = [0, 5, 0, 5];
             textView.typeface = Api.Typeface.DEFAULT_BOLD.value;
@@ -381,7 +381,7 @@ namespace Menu {
             let layout = new Layout(Api.LinearLayout);
             let textView = this.category(`▽ ${label} ▽`);
             let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-            textView.backgroundColor = Menu.theme.collapseColor;
+            textView.backgroundColor = theme.collapseColor;
             params.setMargins(0, 5, 0, 0);
             parentLayout.layoutParams = params;
             parentLayout.verticalGravity = 16;
@@ -390,7 +390,7 @@ namespace Menu {
             layout.verticalGravity = 16;
             layout.padding = [0, 5, 0, 5];
             layout.orientation = Api.VERTICAL;
-            layout.backgroundColor = Menu.theme.layoutColor;
+            layout.backgroundColor = theme.layoutColor;
             layout.visibility = Api.GONE;
 
             textView.padding = [0, 20, 0, 20];

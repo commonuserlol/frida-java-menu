@@ -17,7 +17,7 @@ namespace Menu {
                 implements: [Api.CompoundButton_OnCheckedChangeListener],
                 methods: {
                     onCheckedChanged: (object: Java.Wrapper, state: boolean) => {
-                        Menu.sharedPreferences.putBool(this.text, state);
+                        sharedPreferences.putBool(this.text, state);
                         callback.call(this, state);
                     }
                 }
