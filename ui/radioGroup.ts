@@ -1,13 +1,11 @@
 namespace Menu {
     export class RadioGroup extends Object {
-        private theme: Theme;
         private unformattedText: string;
         public readonly label: TextView;
         
-        constructor(text: string, theme: Theme) {
+        constructor(text: string) {
             super(context);
             this.instance = Api.RadioGroup.$new(context);
-            this.theme = theme;
             this.label = new TextView(text);
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             this.unformattedText = text;
@@ -20,7 +18,7 @@ namespace Menu {
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             button.instance = Api.RadioButton.$new(this.context);
             button.text = label;
-            button.textColor = this.theme.secondaryTextColor;
+            button.textColor = theme.secondaryTextColor;
             if (callback) {
                 button.onClickListener = () => {
                     this.label.text = format(this.unformattedText, label);

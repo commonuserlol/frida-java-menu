@@ -285,7 +285,7 @@ namespace Menu {
 
         /** Creates radio group */
         radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
-            const radioGroup = new RadioGroup(label, theme);
+            const radioGroup = new RadioGroup(label);
             const savedIndex = sharedPreferences.getInt(label);
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
@@ -318,7 +318,7 @@ namespace Menu {
 
         /** Creates spinner */
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
-            const spinner = new Spinner(items, theme);
+            const spinner = new Spinner(items);
             const savedIndex = sharedPreferences.getInt(items.join());
             if (savedIndex != -1 && spinner.selection != savedIndex) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
             if (callback) spinner.onItemSelectedListener = callback;

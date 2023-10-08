@@ -1,12 +1,10 @@
 namespace Menu {
     export class Spinner extends Object {
-        private theme: Theme;
         public items: Java.Wrapper;
 
-        constructor(items: string[], theme: Theme) {
+        constructor(items: string[]) {
             super(context);
             this.instance = Api.Spinner.$new(context);
-            this.theme = theme;
             this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
             let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
             params.setMargins(7, 2, 7, 2);
@@ -35,7 +33,7 @@ namespace Menu {
                 implements: [Api.OnItemSelectedListener],
                 methods: {
                     onItemSelected: (parent: Java.Wrapper, selected: Java.Wrapper, index: number, id: number) => {
-                        Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(this.theme.secondaryTextColor);
+                        Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(theme.secondaryTextColor);
                         callback.call(this, index);
                     },
                     onNothingSelected: function(parent: Java.Wrapper) {
