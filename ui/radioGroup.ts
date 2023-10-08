@@ -24,7 +24,7 @@ namespace Menu {
             if (callback) {
                 button.onClickListener = () => {
                     this.label.text = format(this.unformattedText, label);
-                    Menu.instance.sharedPrefs.putInt(this.label.text, index);
+                    Menu.sharedPreferences.putInt(this.label.text, index);
                     callback(index);
                 }
             }
