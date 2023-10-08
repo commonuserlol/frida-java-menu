@@ -35,9 +35,9 @@ namespace Menu {
             let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(Menu.theme.menuHeight)));
             let buttonView = new Layout(Api.RelativeLayout);
             let hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let hideButton = new Button();
+            let hideButton = new Button(Menu.theme.hideButtonText);
             let closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let closeButton = new Button();
+            let closeButton = new Button(Menu.theme.closeText);
             
             this.menuParams.gravity.value = 51;
             this.menuParams.x.value = Menu.theme.menuXPosition;
@@ -77,7 +77,6 @@ namespace Menu {
             hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
             hideButton.layoutParams = hideButtonParams;
             hideButton.backgroundColor = Api.TRANSPARENT;
-            hideButton.text = Menu.theme.hideButtonText;
             hideButton.textColor = Menu.theme.primaryTextColor;
             hideButton.onClickListener = () => {
                 this.iconView.visibility = Api.VISIBLE;
@@ -94,7 +93,6 @@ namespace Menu {
             closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
             closeButton.layoutParams = closeButtonParams;
             closeButton.backgroundColor = 0;
-            closeButton.text = Menu.theme.closeText;
             closeButton.textColor = Menu.theme.primaryTextColor;
             closeButton.onClickListener = () => {
                 this.iconView.visibility = Api.VISIBLE;
