@@ -1,15 +1,8 @@
 namespace Menu {
-    export class MainActivity {
-        public static instance: MainActivity;
-        private appActivityInstance: Java.Wrapper | undefined;
-
-        constructor(instance?: Java.Wrapper) {
-            this.appActivityInstance ??= instance;
-            MainActivity.instance = this;
-        }
+    export abstract class MainActivity {
 
         /** @internal */
-        private hook(name: string, callback: ((instance: Java.Wrapper) => void) | null, overload?: string) {
+        static hook(name: string, callback: ((instance: Java.Wrapper) => void) | null, overload?: string) {
             const target = overload ? Api.Activity[name].overload(overload) : Api.Activity[name];
             callback == null ? target.implementation = null : target.implementation = function (this: Java.Wrapper, args: any) {
                 if (this.getComponentName().getClassName() == launcher) {
@@ -20,7 +13,7 @@ namespace Menu {
         }
 
         /** @internal */
-        private onCreate() {
+        static onCreate() {
             // This actually internal cuz called very early
             // And used only by `waitForInit` to get instance
             // So user shouldn't use it
@@ -29,40 +22,30 @@ namespace Menu {
             // Async part will be inside `waitForInit`
 
             this.hook("onCreate", (instance) => {
-                if (!this.appActivityInstance) this.appActivityInstance = Java.retain(instance);
-                else this.hook("onCreate", null); // Disable hook to exclude of getting wrong instance
-                                                  // Or at least calling this
+                if (!activityInstance) activityInstance = Java.retain(instance);
+                else this.hook("onCreate", null); // Disable hook
             }, "android.os.Bundle");
         }
 
         /** Hooks `onPause` method */
-        onPause(callback: (() => void) | null) {
+        static onPause(callback: (() => void) | null) {
             this.hook("onPause", callback);
         }
 
         /** Hooks `onResume` method */
-        onResume(callback: (() => void) | null) {
+        static onResume(callback: (() => void) | null) {
             this.hook("onResume", callback);
         }
 
         /** Hooks `onDestroy` method */
-        onDestroy(callback: (() => void) | null) {
+        static onDestroy(callback: (() => void) | null) {
             this.hook("onDestroy", callback);
         }
 
-        /**
-         * Waits until the application context is valid
-         *
-         * @public
-         * @static
-         * @async
-         * @param {() => void} callback
-         * @returns {Promise<void>}
-         */
-        public static async waitForInit(callback: () => void): Promise<void> {
+        /** Waits until the application context is valid */
+        static async waitForInit(callback: () => void): Promise<void> {
             return new Promise((resolve, reject) => {
-                const instance = MainActivity.instance ? MainActivity.instance : new MainActivity();
-                instance.onCreate();
+                MainActivity.onCreate();
                 const waitInterval = setInterval(() => {
                     if (!app.instance) return;
                     clearInterval(waitInterval);
@@ -73,10 +56,10 @@ namespace Menu {
         }
 
         /** Gets app `MainActivity` instance */
-        public async getActivityInstance(): Promise<Java.Wrapper> {
+        static async getActivityInstance(): Promise<Java.Wrapper> {
             return new Promise((resolve, reject) => {
-                if (this.appActivityInstance) {
-                    resolve(this.appActivityInstance);
+                if (activityInstance) {
+                    resolve(activityInstance);
                     return;
                 }
 
@@ -87,7 +70,7 @@ namespace Menu {
                 Java.choose(Api.Activity.$className, {
                     onMatch: (instance) => {
                         if (instance.getComponentName().getClassName() == launcher) {
-                            this.appActivityInstance = Java.retain(instance);
+                            activityInstance = Java.retain(instance);
                             resolve(instance);
                             return "stop";
                         }

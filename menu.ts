@@ -22,7 +22,7 @@ namespace Menu {
 
             if (!overlay.check()) {
                 overlay.ask();
-                setTimeout(() => MainActivity.instance.getActivityInstance().then((instance) => instance.finish()), 3000);
+                setTimeout(() => MainActivity.getActivityInstance().then((instance) => instance.finish()), 3000);
             }
 
             this.rootFrame = new Layout(Api.FrameLayout);
@@ -112,9 +112,9 @@ namespace Menu {
             this.add(closeButton, buttonView);
             this.add(buttonView, this.expandedView);
 
-            MainActivity.instance.onDestroy(() => this.destroy());
-            MainActivity.instance.onPause(() => this.hide());
-            MainActivity.instance.onResume(() => this.show());
+            MainActivity.onDestroy(() => this.destroy());
+            MainActivity.onPause(() => this.hide());
+            MainActivity.onResume(() => this.show());
         }
 
         /**
@@ -206,9 +206,9 @@ namespace Menu {
         }
 
         destroy() {
-            MainActivity.instance.onPause(null);
-            MainActivity.instance.onResume(null);
-            MainActivity.instance.onDestroy(null);
+            MainActivity.onPause(null);
+            MainActivity.onResume(null);
+            MainActivity.onDestroy(null);
             this.hide();
             this.rootFrame.destroy();
             this.layout.destroy();
@@ -271,7 +271,7 @@ namespace Menu {
 
         async dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
             //We can create a dialog only with an activity instance, the context is not suitable.
-            const instance = await MainActivity.instance.getActivityInstance();
+            const instance = await MainActivity.getActivityInstance();
             const dialog = new Dialog(instance, title, message);
             view ? (view instanceof Object ? dialog.view = view.instance : dialog.view = view) : null;
             if (positiveCallback) dialog.setPositiveButton(positiveCallback)

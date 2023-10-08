@@ -5,7 +5,6 @@
 
 namespace Menu {
     export const app = {
-
         get instance(): Java.Wrapper {
             return Api.ActivityThread.currentApplication();
         },
@@ -30,6 +29,8 @@ namespace Menu {
             return Java.cast(context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager);
         }
     };
+    export declare let activityInstance: Java.Wrapper;
+
     export declare const androidVersion: string;
     getter(Menu, "androidVersion", () => Java.androidVersion, lazy);
 
