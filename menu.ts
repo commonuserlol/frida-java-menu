@@ -33,7 +33,7 @@ namespace Menu {
             let titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let subtitleText = new TextView(subtitle);
             let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(Menu.theme.menuHeight)));
-            let buttonView = Api.RelativeLayout.$new(context);
+            let buttonView = new Layout(Api.RelativeLayout);
             let hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             let hideButton = new Button();
             let closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
