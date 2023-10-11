@@ -47,10 +47,15 @@ namespace Menu {
             return new Promise((resolve, reject) => {
                 MainActivity.onCreate();
                 const waitInterval = setInterval(() => {
-                    if (!app.instance) return;
-                    clearInterval(waitInterval);
-                    resolve();
-                    Java.perform(callback);
+                    Java.perform(() => {
+                        try {
+                            if (!app.instance) return;
+                
+                            clearInterval(waitInterval);
+                            resolve();
+                            callback();
+                        } catch (_err) {  }
+                    });
                 }, 10);
             });
         }
