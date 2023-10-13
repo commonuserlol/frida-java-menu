@@ -271,6 +271,26 @@ namespace Menu {
             return button;
         }
 
+        /** Creates switch (toggle) but in button widget with ON and OFF states */
+        buttonOnOff(text?: string, state: boolean = false, callback?: (this: Button, state: boolean) => void, longCallback?: (this: Button) => void): Button {
+            const button = this.button(text, function () {
+                state = !state;
+                this.backgroundColor = state ? theme.buttonOnOffOnColor : theme.buttonOnOffOffColor;
+                this.text = state ? `${text}: ON` : `${text}: OFF`;
+                callback?.call(this, state);
+            }, longCallback);
+
+            button.backgroundColor = state ? theme.buttonOnOffOnColor : theme.buttonOnOffOffColor;
+            button.text = state ? `${text}: ON` : `${text}: OFF`;
+
+            if (state) {
+                state = !state; // Small hack
+                button.instance.performClick();
+            }
+
+            return button;
+        }
+
         /** Creates dialog */
         async dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
             //We can create a dialog only with an activity instance, the context is not suitable.
@@ -320,7 +340,6 @@ namespace Menu {
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
             const spinner = new Spinner(items);
             const savedIndex = sharedPreferences.getInt(items.join());
-            console.warn(savedIndex);
             if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
             if (callback) spinner.onItemSelectedListener = callback;
             return spinner;

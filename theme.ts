@@ -62,6 +62,14 @@ namespace Menu {
         get secondaryTextColor(): number {
             return this.holder.get("secondaryTextColor")! as number;
         }
+        /** Gets buttonOnOff enabled state color */
+        get buttonOnOffOnColor(): number {
+            return this.holder.get("buttonOnOffOnColor")! as number;
+        }
+        /** Gets buttonOnOff disabled state color */
+        get buttonOnOffOffColor(): number {
+            return this.holder.get("buttonOnOffOffColor")! as number;
+        }
 
         /**
          * Gets menu height
@@ -226,6 +234,14 @@ namespace Menu {
         set secondaryTextColor(color: string) {
             this.holder.set("secondaryTextColor", parseColor(color));
         }
+        /** Sets buttonOnOff enabled state color */
+        set buttonOnOffOnColor(color: string) {
+            this.holder.set("buttonOnOffOnColor", parseColor(color));
+        }
+        /** Sets buttonOnOff disabled state color */
+        set buttonOnOffOffColor(color: string) {
+            this.holder.set("buttonOnOffOffColor", parseColor(color));
+        }
 
         /**
          * Sets menu height
@@ -351,6 +367,8 @@ namespace Menu {
             lglTheme.layoutColor = "#DD141C22";
             lglTheme.collapseColor = "#222D38";
             lglTheme.categoryColor = "#2F3D4C";
+            lglTheme.buttonOnOffOnColor = "#1B5E20";
+            lglTheme.buttonOnOffOffColor = "#7F0000";
 
             lglTheme.menuWidth = 290;
             lglTheme.menuHeight = 210;
