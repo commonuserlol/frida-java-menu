@@ -163,7 +163,7 @@ namespace Menu {
         }
 
         /** Sets menu settings */
-        public settings(label: string, state: boolean): Layout {
+        public settings(label: string, state: boolean = false): Layout {
             let settings = new TextView(label);
             let settingsView = Api.LinearLayout.$new(context);
             settingsView.orientation = Api.VERTICAL;
@@ -386,7 +386,7 @@ namespace Menu {
         }
 
         /** Creates collapse */
-        public collapse(label: string, state: boolean): [Layout, Layout] {
+        public collapse(label: string, state: boolean = false): [Layout, Layout] {
             let parentLayout = new Layout(Api.LinearLayout);
             let layout = new Layout(Api.LinearLayout);
             let textView = this.category(`▽ ${label} ▽`);
