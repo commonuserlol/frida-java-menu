@@ -293,7 +293,7 @@ namespace Menu {
                 const index = buttons.indexOf(button);
                 radioGroup.addButton(button, index, callback);
             }
-            Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
+            if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
     
             return radioGroup;
         }
@@ -320,7 +320,8 @@ namespace Menu {
         spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
             const spinner = new Spinner(items);
             const savedIndex = sharedPreferences.getInt(items.join());
-            if (savedIndex != -1 && spinner.selection != savedIndex) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
+            console.warn(savedIndex);
+            if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
             if (callback) spinner.onItemSelectedListener = callback;
             return spinner;
         }

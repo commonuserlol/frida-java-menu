@@ -1,11 +1,13 @@
 namespace Menu {
     export class Spinner extends Object {
         public items: Java.Wrapper;
+        private initialized: boolean;
 
         constructor(items: string[]) {
             super(context);
             this.instance = Api.Spinner.$new(context);
             this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
+            this.initialized = false;
             let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
             params.setMargins(7, 2, 7, 2);
             this.layoutParams = params;
@@ -33,6 +35,11 @@ namespace Menu {
                 implements: [Api.OnItemSelectedListener],
                 methods: {
                     onItemSelected: (parent: Java.Wrapper, selected: Java.Wrapper, index: number, id: number) => {
+                        if (!this.initialized) {
+                            this.initialized = true;
+                            return;
+                        };
+                        sharedPreferences.putInt(Api.JavaString.join(Api.JavaString.$new(", "), this.items), index);
                         Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(theme.secondaryTextColor);
                         callback.call(this, index);
                     },
