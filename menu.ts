@@ -126,7 +126,7 @@ namespace Menu {
          */
         public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.iconView = new Object(context);
+                this.iconView = new Object();
                 switch (type) {
                     case "Normal":
                         this.iconView.instance = Api.ImageView.$new(context);
@@ -321,7 +321,7 @@ namespace Menu {
         /** Creates seekbar */
         seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
             const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
-            const layout = new Object(context);
+            const layout = new Object();
             layout.instance = Api.LinearLayout.$new(context);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;

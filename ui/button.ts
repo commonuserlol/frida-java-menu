@@ -1,7 +1,7 @@
 namespace Menu {
     export class Button extends Object {
         constructor(text?: string) {
-            super(context);
+            super();
             this.instance = Api.Button.$new(context);
             if (text) this.text = text;
         }

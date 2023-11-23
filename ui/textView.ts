@@ -1,7 +1,7 @@
 namespace Menu {
     export class TextView extends Object {
         constructor(text: string) {
-            super(context);
+            super();
             this.instance = Api.TextView.$new(context);
             this.text = text;
         }

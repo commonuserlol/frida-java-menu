@@ -4,7 +4,7 @@ namespace Menu {
         public static RelativeLayoutParams = (a: Java.Wrapper | number, b: Java.Wrapper | number): Java.Wrapper => Api.RelativeLayout_Params.$new(a, b);
 
         constructor(type: Java.Wrapper) {
-            super(context);
+            super();
             this.instance = type.$new(context);
         }
         /** Returns layout child count */

@@ -4,7 +4,7 @@ namespace Menu {
         public unformattedText: String;
 
         constructor(text: string, progress: number = 0) {
-            super(context);
+            super();
             this.instance = Api.SeekBar.$new(context);
             this.unformattedText = new String(text);
             this.label = new TextView(format(this.unformattedText, progress ?? 0));

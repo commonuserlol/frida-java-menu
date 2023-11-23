@@ -1,7 +1,7 @@
 namespace Menu {
     export class Dialog extends Object {
         constructor(context: Java.Wrapper, title?: string, message?: string) {
-            super(context);
+            super();
             this.instance = Api.AlertDialog_Builder.$new(context);
             if (title) this.title = title;
             if (message) this.message = message;
