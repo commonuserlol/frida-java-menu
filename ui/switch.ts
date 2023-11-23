@@ -2,7 +2,7 @@ namespace Menu {
     export class Switch extends Object {
         constructor(text?: string, state: boolean = false) {
             super();
-            this.instance = Api.Switch.$new(context);
+            this.instance = Api.Switch.$new(app.context);
             if (text) this.text = text;
             this.checked = state;
         }

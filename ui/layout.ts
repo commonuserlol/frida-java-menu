@@ -5,7 +5,7 @@ namespace Menu {
 
         constructor(type: Java.Wrapper) {
             super();
-            this.instance = type.$new(context);
+            this.instance = type.$new(app.context);
         }
         /** Returns layout child count */
         get childCount(): number {

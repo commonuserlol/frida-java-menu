@@ -5,7 +5,7 @@ namespace Menu {
         
         constructor(text: string) {
             super();
-            this.instance = Api.RadioGroup.$new(context);
+            this.instance = Api.RadioGroup.$new(app.context);
             this.label = new TextView(text);
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             this.unformattedText = text;
@@ -16,7 +16,7 @@ namespace Menu {
         public addButton(label: string, index: number, callback?: (index: number) => void) {
             let button = new Object();
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            button.instance = Api.RadioButton.$new(context);
+            button.instance = Api.RadioButton.$new(app.context);
             button.text = label;
             button.textColor = theme.secondaryTextColor;
             if (callback) {

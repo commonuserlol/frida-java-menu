@@ -2,7 +2,7 @@ namespace Menu {
     export class Button extends Object {
         constructor(text?: string) {
             super();
-            this.instance = Api.Button.$new(context);
+            this.instance = Api.Button.$new(app.context);
             if (text) this.text = text;
         }
         /* Gets is all symbols caps */

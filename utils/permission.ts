@@ -12,10 +12,10 @@ namespace Menu {
             const intent = Api.Intent.$new(Api.JavaString.$new(this.name));
             intent.setFlags(Api.Intent.FLAG_ACTIVITY_NEW_TASK.value);
             intent.setData(Api.Uri.parse("package:" + app.packageName));
-            context.startActivity(intent);
+            app.context.startActivity(intent);
         },
         check() {
-            return !!Api.Settings.canDrawOverlays(context);
+            return !!Api.Settings.canDrawOverlays(app.context);
         }
     }
 }

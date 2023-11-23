@@ -1,7 +1,7 @@
 namespace Menu {
     /** @internal */
     export function dp(i: number): number {
-        return Api.TypedValue.applyDimension(Api.COMPLEX_UNIT_DIP, i, context.getResources().getDisplayMetrics());
+        return Api.TypedValue.applyDimension(Api.COMPLEX_UNIT_DIP, i, app.context.getResources().getDisplayMetrics());
     }
     /** @internal */
     export function bitmap(icon: string): Java.Wrapper {

@@ -32,7 +32,7 @@ namespace Menu {
 
         /** Returns window manager instance */
         get windowManager(): Java.Wrapper {
-            return Java.cast(context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager);
+            return Java.cast(app.context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager);
         }
     };
     /** App activity instance */
@@ -45,10 +45,6 @@ namespace Menu {
     /** Android API level */
     export declare const apiLevel: number;
     getter(Menu, "apiLevel", () => Api.Build_VERSION.SDK_INT.value, lazy);
-
-    /** Shorthand for `app.context` */
-    export declare const context: Java.Wrapper;
-    getter(Menu, "context", () => app.context, lazy);
 
     /** Determines main activity name */
     export declare const launcher: Java.Wrapper;

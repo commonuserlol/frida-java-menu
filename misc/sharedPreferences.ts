@@ -4,7 +4,7 @@ namespace Menu {
             private instance: Java.Wrapper;
             
             constructor() {
-                this.instance = context.getSharedPreferences(app.packageName + "_menuprefs", context.MODE_PRIVATE.value);
+                this.instance = app.context.getSharedPreferences(app.packageName + "_menuprefs", app.context.MODE_PRIVATE.value);
             }
             /**
              * Gets string

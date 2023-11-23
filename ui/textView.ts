@@ -2,7 +2,7 @@ namespace Menu {
     export class TextView extends Object {
         constructor(text: string) {
             super();
-            this.instance = Api.TextView.$new(context);
+            this.instance = Api.TextView.$new(app.context);
             this.text = text;
         }
         /** Gets ellipsize */

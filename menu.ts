@@ -129,7 +129,7 @@ namespace Menu {
                 this.iconView = new Object();
                 switch (type) {
                     case "Normal":
-                        this.iconView.instance = Api.ImageView.$new(context);
+                        this.iconView.instance = Api.ImageView.$new(app.context);
                         this.iconView.instance.setScaleType(Api.ScaleType.FIT_XY.value);
                         this.iconView.onClickListener = () => {
                             this.iconView.visibility = Api.GONE;
@@ -140,7 +140,7 @@ namespace Menu {
                         theme.iconAlpha = Math.round(theme.iconAlpha * 255);
                         break;
                     case "Web":
-                        this.iconView.instance = Api.WebView.$new(context);
+                        this.iconView.instance = Api.WebView.$new(app.context);
                         this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${theme.iconSize}\" height=\"${theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
                         this.iconView.backgroundColor = Api.TRANSPARENT;
                         this.iconView.instance.getSettings().setAppCacheEnabled(true);
@@ -165,7 +165,7 @@ namespace Menu {
         /** Sets menu settings */
         public settings(label: string, state: boolean = false): Layout {
             let settings = new TextView(label);
-            let settingsView = Api.LinearLayout.$new(context);
+            let settingsView = Api.LinearLayout.$new(app.context);
             settingsView.orientation = Api.VERTICAL;
             settings.textColor = theme.primaryTextColor;
             settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
@@ -322,7 +322,7 @@ namespace Menu {
         seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
             const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
             const layout = new Object();
-            layout.instance = Api.LinearLayout.$new(context);
+            layout.instance = Api.LinearLayout.$new(app.context);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;
             seekbar.padding = [25, 10, 35, 10];
@@ -379,7 +379,7 @@ namespace Menu {
 
         /** Creates dialog with asking number and shows it */
         public async inputNumber(title: string, max: number, positiveCallback?: (this: Dialog, result: number) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
-            let view = Api.EditText.$new(context);
+            let view = Api.EditText.$new(app.context);
             if (max > 0) {
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
             }
@@ -394,7 +394,7 @@ namespace Menu {
 
         /** Creates dialog with asking string and shows it */
         public async inputText(title: string, hint?: string, positiveCallback?: (this: Dialog, result: string) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
-            let view = Api.EditText.$new(context);
+            let view = Api.EditText.$new(app.context);
             if (hint) view.setHint(wrap(hint));
             await this.dialog(title, "", function () {
                 const result = Java.cast(view, Api.TextView).getText().toString();
