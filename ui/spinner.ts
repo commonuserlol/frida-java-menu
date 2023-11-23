@@ -1,5 +1,5 @@
 namespace Menu {
-    export class Spinner extends Object {
+    export class Spinner extends View {
         public items: Java.Wrapper;
         private initialized: boolean;
 

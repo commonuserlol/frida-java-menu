@@ -1,5 +1,5 @@
 namespace Menu {
-    export class Switch extends Object {
+    export class Switch extends View {
         constructor(text?: string, state: boolean = false) {
             super();
             this.instance = Api.Switch.$new(app.context);

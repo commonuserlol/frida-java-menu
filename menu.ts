@@ -10,7 +10,7 @@ namespace Menu {
     
     export class JavaMenu {
         expandedView: Layout;
-        iconView: Object;
+        iconView: View;
         layout: Layout;
         menuParams: Java.Wrapper;
         rootFrame: Layout;
@@ -126,7 +126,7 @@ namespace Menu {
          */
         public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.iconView = new Object();
+                this.iconView = new View();
                 switch (type) {
                     case "Normal":
                         this.iconView.instance = Api.ImageView.$new(app.context);
@@ -232,13 +232,13 @@ namespace Menu {
          * Adds view to layout
          *
          * @public
-         * @param {Object} view to add
-         * @param {?(Java.Wrapper | Object)} [layout] for add. If not provided general layout will be used
+         * @param {View} view to add
+         * @param {?(Java.Wrapper | View)} [layout] for add. If not provided general layout will be used
          */
-        public add(view: Object, layout?: Java.Wrapper | Object) {
+        public add(view: View, layout?: Java.Wrapper | View) {
             Java.scheduleOnMainThread(() => {
                 const l = layout ?? this.layout;
-                (l instanceof Object ? l.instance : l).addView((view instanceof Object ? view.instance : view));
+                (l instanceof View ? l.instance : l).addView((view instanceof View ? view.instance : view));
             })
         }
 
@@ -246,13 +246,13 @@ namespace Menu {
          * Removes view from layout
          *
          * @public
-         * @param {Object} view to remove
-         * @param {?(Java.Wrapper | Object)} [layout] for remove. If not provided general layout will be used
+         * @param {View} view to remove
+         * @param {?(Java.Wrapper | View)} [layout] for remove. If not provided general layout will be used
          */
-        public remove(view: Object, layout?: Java.Wrapper | Object) {
+        public remove(view: View, layout?: Java.Wrapper | View) {
             Java.scheduleOnMainThread(() => {
                 const l = layout ?? this.layout;
-                (l instanceof Object ? l.instance : l).removeView((view instanceof Object ? view.instance: view));
+                (l instanceof View ? l.instance : l).removeView((view instanceof View ? view.instance: view));
             })
         }
 
@@ -292,11 +292,11 @@ namespace Menu {
         }
 
         /** Creates dialog */
-        async dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | Object): Promise<Dialog> {
+        async dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | View): Promise<Dialog> {
             //We can create a dialog only with an activity instance, the context is not suitable.
             const instance = await MainActivity.getActivityInstance();
             const dialog = new Dialog(instance, title, message);
-            view ? (view instanceof Object ? dialog.view = view.instance : dialog.view = view) : null;
+            view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
             if (positiveCallback) dialog.setPositiveButton(positiveCallback)
             if (negativeCallback) dialog.setNegativeButton(negativeCallback);
     
@@ -319,9 +319,9 @@ namespace Menu {
         }
 
         /** Creates seekbar */
-        seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): Object {
+        seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): View {
             const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
-            const layout = new Object();
+            const layout = new View();
             layout.instance = Api.LinearLayout.$new(app.context);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;

@@ -1,5 +1,5 @@
 namespace Menu {
-    export class SeekBar extends Object {
+    export class SeekBar extends View {
         public readonly label: TextView;
         public unformattedText: String;
 

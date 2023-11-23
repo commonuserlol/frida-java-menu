@@ -9,7 +9,7 @@
 
 /* UI Objects */
 /// <reference path="./ui/common.ts" />
-/// <reference path="./ui/object.ts" />
+/// <reference path="./ui/view.ts" />
 /// <reference path="./ui/button.ts" />
 /// <reference path="./ui/dialog.ts" />
 /// <reference path="./ui/radioGroup.ts" />

@@ -2,12 +2,12 @@ namespace Menu {
     /** @internal */
     export class OnTouch {
         expandedView: Layout;
-        iconView: Object;
+        iconView: View;
         initialPosition: [number, number];
         params: Java.Wrapper;
         touchPosition: [number, number];
 
-        constructor(target: Object) {
+        constructor(target: View) {
             this.expandedView = instance.expandedView;
             this.iconView = instance.iconView;
             this.params = instance.menuParams;

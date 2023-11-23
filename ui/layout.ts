@@ -1,5 +1,5 @@
 namespace Menu {
-    export class Layout extends Object {
+    export class Layout extends View {
         public static LinearLayoutParams = (a: Java.Wrapper | number, b: Java.Wrapper | number): Java.Wrapper => Api.LinearLayout_Params.$new(a, b);
         public static RelativeLayoutParams = (a: Java.Wrapper | number, b: Java.Wrapper | number): Java.Wrapper => Api.RelativeLayout_Params.$new(a, b);
 
@@ -25,7 +25,7 @@ namespace Menu {
                 for (let i = 0; i < this.childCount; i++) {
                     this.child(i)!.$dispose();
                 }
-                (this as Object).destroy();
+                (this as View).destroy();
             });
         }
     }

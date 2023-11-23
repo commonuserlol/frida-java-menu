@@ -1,5 +1,5 @@
 namespace Menu {
-    export class RadioGroup extends Object {
+    export class RadioGroup extends View {
         private unformattedText: string;
         public readonly label: TextView;
         
@@ -14,7 +14,7 @@ namespace Menu {
         }
         /** Adds new `RadioButton` */
         public addButton(label: string, index: number, callback?: (index: number) => void) {
-            let button = new Object();
+            let button = new View();
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             button.instance = Api.RadioButton.$new(app.context);
             button.text = label;
