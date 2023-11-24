@@ -1,8 +1,4 @@
 namespace Menu {
-    /** @internal */
-    export function raise(text: string) {
-        throw new Error(text);
-    }
     /** Generates random string */
     export function randomString(length: number): string {
         let result = "";

@@ -35,7 +35,7 @@ namespace Menu {
                 }
             }
             catch (e) {
-                raise("App running on android lower than 8; set min value failed");
+                throw Error("App running on android lower than 8; set min value failed");
             }
         }
         /** Sets onSeekBarChangeListener callback */
