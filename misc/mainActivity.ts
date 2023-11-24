@@ -14,30 +14,23 @@ namespace Menu {
 
         /** @internal */
         static onCreate() {
-            // This actually internal cuz called very early
-            // And used only by `waitForInit` to get instance
-            // So user shouldn't use it
-            // Also this won't be async since only with `Interceptor.attach`
-            // We can use async without `Promise`, so
-            // Async part will be inside `waitForInit`
-
             this.hook("onCreate", (instance) => {
                 if (!activityInstance) activityInstance = Java.retain(instance);
                 else this.hook("onCreate", null); // Disable hook
             }, "android.os.Bundle");
         }
 
-        /** Hooks `onPause` method */
+        /** @internal */
         static onPause(callback: (() => void) | null) {
             this.hook("onPause", callback);
         }
 
-        /** Hooks `onResume` method */
+        /** @internal */
         static onResume(callback: (() => void) | null) {
             this.hook("onResume", callback);
         }
 
-        /** Hooks `onDestroy` method */
+        /** @internal */
         static onDestroy(callback: (() => void) | null) {
             this.hook("onDestroy", callback);
         }
