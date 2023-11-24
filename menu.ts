@@ -4,9 +4,9 @@ namespace Menu {
     /** Theme instance for `JavaMenu` */
     export declare let theme: Theme;
     /** Shared Preferences storage. Feel free to store own values */
-    export declare const sharedPreferences: Api.SharedPreferences;
+    export declare const sharedPreferences: SharedPreferences;
 
-    getter(Menu, "sharedPreferences", () => new Api.SharedPreferences(), lazy);
+    getter(Menu, "sharedPreferences", () => new SharedPreferences(), lazy);
     
     export class JavaMenu {
         expandedView: Layout;
