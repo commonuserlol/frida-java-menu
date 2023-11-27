@@ -126,33 +126,13 @@ namespace Menu {
          */
         public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.iconView = new View();
-                switch (type) {
-                    case "Normal":
-                        this.iconView.instance = Api.ImageView.$new(app.context);
-                        this.iconView.instance.setScaleType(Api.ScaleType.FIT_XY.value);
-                        this.iconView.onClickListener = () => {
-                            this.iconView.visibility = Api.GONE;
-                            this.expandedView.visibility = Api.VISIBLE;
-                        }
-                        this.iconView.instance.setImageBitmap(bitmap(value));
-                        // ImageView uses alpha in range 0-255, unlike WebView (0.0 - 1.0)
-                        theme.iconAlpha = Math.round(theme.iconAlpha * 255);
-                        break;
-                    case "Web":
-                        this.iconView.instance = Api.WebView.$new(app.context);
-                        this.iconView.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${value}\" width=\"${theme.iconSize}\" height=\"${theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
-                        this.iconView.backgroundColor = Api.TRANSPARENT;
-                        this.iconView.instance.getSettings().setAppCacheEnabled(true);
-                        break;
-                    default:
-                        throw Error("Unsupported icon type!");
+                this.iconView = new Icon(type, value);
+
+                this.iconView.onClickListener = () => {
+                    this.iconView.visibility = Api.GONE;
+                    this.expandedView.visibility = Api.VISIBLE;
                 }
-                this.iconView.layoutParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-                let applyDimension = Math.floor(dp(theme.iconSize));
-                this.iconView.instance.getLayoutParams().height.value = applyDimension;
-                this.iconView.instance.getLayoutParams().width.value = applyDimension;
-                this.iconView.alpha = theme.iconAlpha;
+
                 this.iconView.visibility = Api.VISIBLE;
                 
                 new OnTouch(this.rootFrame);

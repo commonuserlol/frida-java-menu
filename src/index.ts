@@ -27,6 +27,9 @@
 /// <reference path="./utils/permission.ts" />
 /// <reference path="./utils/sleep.ts" />
 
+/* Layout */
+/// <reference path="./layout/icon.ts" />
+
 /* Main classes */
 /// <reference path="./theme.ts" />
 /// <reference path="./menu.ts" />
