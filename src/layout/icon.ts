@@ -3,6 +3,7 @@ namespace Menu {
         constructor(type: "Normal" | "Web" = "Normal", value: string) {
             super();
             this.instance = type == "Normal" ? Api.ImageView.$new(app.context) : Api.WebView.$new(app.context);
+            if (value) this.image = value;
         }
 
         set _imageForImageView(image: string) {
@@ -12,9 +13,9 @@ namespace Menu {
         }
 
         set _imageForWebView(image: string) {
-            this.instance.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${image}\" width=\"${theme.iconSize}\" height=\"${theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
+            this.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${image}\" width=\"${theme.iconSize}\" height=\"${theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
             this.instance.backgroundColor = Api.TRANSPARENT;
-            this.instance.instance.getSettings().setAppCacheEnabled(true);
+            this.instance.getSettings().setAppCacheEnabled(true);
         }
 
         set image(image: string) {
