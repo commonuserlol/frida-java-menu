@@ -24,6 +24,8 @@ namespace Menu {
             this.rootFrame = new Layout(Api.FrameLayout);
             this.template = template;
             this.template.icon = this.iconView;
+            this.template.title.text = title;
+            this.template.subtitle.text = subtitle;
             
             this.add(this.template.me, this.rootFrame);
             this.template.handleAdd(this.add);
