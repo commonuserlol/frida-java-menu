@@ -3,6 +3,7 @@ namespace Menu {
         export class LGLTemplate extends GenericTemplate {
             constructor() {
                 super();
+                theme = Theme.LGL;
                 this.titleLayout = new Layout(Api.RelativeLayout);
                 this.title = new TextView();
                 this.subtitle = new TextView();
