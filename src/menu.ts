@@ -144,32 +144,10 @@ namespace Menu {
 
         /** Sets menu settings */
         public settings(label: string, state: boolean = false): Layout {
-            let settings = new TextView(label);
-            let settingsView = Api.LinearLayout.$new(app.context);
-            settingsView.orientation = Api.VERTICAL;
-            settings.textColor = theme.primaryTextColor;
-            settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
-            settings.textSize = 20;
-            let settingsParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            settingsParams.addRule(Api.ALIGN_PARENT_RIGHT);
-            settings.layoutParams = settingsParams;
-            settings.onClickListener = () => {
-                state = !state;
-                if (state) {
-                    this.remove(this.layout, this.scrollView);
-                    this.add(settingsView, this.scrollView);
-                }
-                else {
-                    this.remove(settingsView, this.scrollView);
-                    this.add(this.layout, this.scrollView);
-                }
-            }
-            if (state) {
-                state = !state; // Small hack
-                settings.instance.performClick();
-            }
-            this.add(settings, this.titleLayout);
-            return settingsView;
+            const settings = new Settings(label, state);
+            settings.orientation = Api.VERTICAL;
+            this.add(settings.settings, this.titleLayout);
+            return settings;
         }
 
         /** Hides menu */
