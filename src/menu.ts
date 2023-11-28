@@ -1,7 +1,7 @@
 namespace Menu {
-    /** `JavaMenu` class instance */
+    /** `Composer` class instance */
     export declare let instance: Composer;
-    /** Theme instance for `JavaMenu` */
+    /** Theme instance for `Composer` */
     export declare let theme: Theme;
     /** Shared Preferences storage. Feel free to store own values */
     export declare const sharedPreferences: SharedPreferences;
@@ -75,7 +75,7 @@ namespace Menu {
             });
         }
 
-        /** Disposes instance of `JavaMenu` */
+        /** Disposes instance of `Composer` */
         destroy() {
             MainActivity.onPause(null);
             MainActivity.onResume(null);
