@@ -42,14 +42,8 @@ namespace Menu {
          */
         public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.iconView = new Icon(type, value);
-
-                this.iconView.onClickListener = () => {
-                    this.iconView.visibility = Api.GONE;
-                    this.template.me.visibility = Api.VISIBLE;
-                }
-
-                this.iconView.visibility = Api.VISIBLE;
+                this.template.initIcon(value, type);
+                this.iconView = this.template.icon;
                 
                 new OnTouch(this.rootFrame);
                 new OnTouch(this.iconView);

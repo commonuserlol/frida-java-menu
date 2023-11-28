@@ -28,6 +28,9 @@ namespace Menu {
 
             /** Adds everything needed from template */
             handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void {};
+
+            /** Initializes icon */
+            initIcon(value: string, type: "Normal" | "Web" = "Normal") {}
         }
     }
 }

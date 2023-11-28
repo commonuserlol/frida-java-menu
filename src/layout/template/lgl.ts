@@ -96,6 +96,17 @@ namespace Menu {
                 add(this.close, this.buttonLayout);
                 add(this.buttonLayout, this.me);
             }
+
+            initIcon(value: string, type?: "Normal" | "Web"): void {
+                this.icon = new Icon(type, value);
+
+                this.icon.onClickListener = () => {
+                    this.icon.visibility = Api.GONE;
+                    this.me.visibility = Api.VISIBLE;
+                }
+
+                this.icon.visibility = Api.VISIBLE;
+            }
         }
     }
 }
