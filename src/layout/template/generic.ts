@@ -26,11 +26,22 @@ namespace Menu {
 
             constructor() {}
 
-            /** Adds everything needed from template */
-            abstract handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void;
+            abstract initializeParams(): void;
+
+            /** Initializes own layout */
+            abstract initializeLayout(): void;
 
             /** Initializes icon */
-            abstract initIcon(value: string, type: "Normal" | "Web"): void;
+            abstract initializeIcon(value: string, type: "Normal" | "Web"): void;
+
+            abstract initializeProxy(): void;
+
+            abstract initializeMainLayout(): void;
+
+            abstract initializeButtons(): void;
+
+            /** Adds everything needed from template */
+            abstract handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void;
         }
     }
 }

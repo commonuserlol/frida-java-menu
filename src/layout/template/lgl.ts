@@ -3,28 +3,9 @@ namespace Menu {
         export class LGLTemplate extends GenericTemplate {
             constructor() {
                 super();
-                this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
-                this.me = new Layout(Api.LinearLayout);
-                this.layout = new Layout(Api.LinearLayout);
                 this.titleLayout = new Layout(Api.RelativeLayout);
-                this.proxy = new Layout(Api.ScrollView);
                 this.title = new TextView();
                 this.subtitle = new TextView();
-                this.buttonLayout = new Layout(Api.RelativeLayout);
-                this.hide = new Button(theme.hideButtonText);
-                this.close = new Button(theme.closeText);
-
-                // Set menu params
-
-                this.params.gravity.value = 51;
-                this.params.x.value = theme.menuXPosition;
-                this.params.y.value = theme.menuYPosition;
-
-                // Configure self
-                this.me.visibility = Api.GONE;
-                this.me.backgroundColor = theme.bgColor;
-                this.me.orientation = Api.VERTICAL;
-                this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(theme.menuWidth)), Api.WRAP_CONTENT);
 
                 // Configure title & subtitle
                 const titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT); // For `this.title`
@@ -46,16 +27,41 @@ namespace Menu {
                 this.subtitle.textSize = 10;
                 this.subtitle.gravity = Api.CENTER;
                 this.subtitle.padding = [0, 0, 0, 5];
+            }
 
-                // Configure proxy & layout
+            initializeParams(): void {
+                this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
+                this.params.gravity.value = 51;
+                this.params.x.value = theme.menuXPosition;
+                this.params.y.value = theme.menuYPosition;
+            }
+
+            initializeLayout(): void {
+                this.me = new Layout(Api.LinearLayout);
+                this.me.visibility = Api.GONE;
+                this.me.backgroundColor = theme.bgColor;
+                this.me.orientation = Api.VERTICAL;
+                this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(theme.menuWidth)), Api.WRAP_CONTENT);
+            }
+
+            initializeProxy(): void {
                 const proxyParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(theme.menuHeight)));
+                this.proxy = new Layout(Api.ScrollView);
                 this.proxy.layoutParams = proxyParams;
                 this.proxy.backgroundColor = theme.layoutColor;
-                this.layout.orientation = Api.VERTICAL;
+            }
 
-                // Configure hide/kill & close buttons and their layout
+            initializeMainLayout(): void {
+                this.layout = new Layout(Api.LinearLayout);
+                this.layout.orientation = Api.VERTICAL;
+            }
+
+            initializeButtons(): void {
                 const hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
                 const closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+                this.buttonLayout = new Layout(Api.RelativeLayout);
+                this.hide = new Button(theme.hideButtonText);
+                this.close = new Button(theme.closeText);
                 this.buttonLayout.padding = [10, 3, 10, 3];
                 this.buttonLayout.verticalGravity = Api.CENTER;
                 
@@ -86,6 +92,17 @@ namespace Menu {
                 }
             }
 
+            initializeIcon(value: string, type?: "Normal" | "Web"): void {
+                this.icon = new Icon(type, value);
+
+                this.icon.onClickListener = () => {
+                    this.icon.visibility = Api.GONE;
+                    this.me.visibility = Api.VISIBLE;
+                }
+
+                this.icon.visibility = Api.VISIBLE;
+            }
+
             handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void {
                 add(this.title, this.titleLayout);
                 add(this.titleLayout, this.me);
@@ -95,17 +112,6 @@ namespace Menu {
                 add(this.hide, this.buttonLayout);
                 add(this.close, this.buttonLayout);
                 add(this.buttonLayout, this.me);
-            }
-
-            initIcon(value: string, type?: "Normal" | "Web"): void {
-                this.icon = new Icon(type, value);
-
-                this.icon.onClickListener = () => {
-                    this.icon.visibility = Api.GONE;
-                    this.me.visibility = Api.VISIBLE;
-                }
-
-                this.icon.visibility = Api.VISIBLE;
             }
         }
     }
