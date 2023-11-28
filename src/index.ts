@@ -31,6 +31,8 @@
 
 /* Layout */
 /// <reference path="./layout/icon.ts" />
+/// <reference path="./layout/template/generic.ts" />
+/// <reference path="./layout/template/lgl.ts" />
 
 /* Main classes */
 /// <reference path="./theme.ts" />
