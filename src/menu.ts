@@ -1,7 +1,7 @@
 namespace Menu {
     /** `Composer` class instance */
     export declare let instance: Composer;
-    /** Theme instance for `Composer` */
+    /** Theme instance for template */
     export declare let theme: Theme;
     /** Shared Preferences storage. Feel free to store own values */
     export declare const sharedPreferences: SharedPreferences;
@@ -9,8 +9,11 @@ namespace Menu {
     getter(Menu, "sharedPreferences", () => new SharedPreferences(), lazy);
     
     export class Composer {
+        /** @internal */
         rootFrame: Layout;
+        /** @internal */
         iconView: Icon;
+        /** Layout template */
         template: Menu.Template.GenericTemplate;
 
         constructor (title: string, subtitle: string, template: Menu.Template.GenericTemplate) {

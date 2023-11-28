@@ -1,5 +1,6 @@
 namespace Menu {
     export namespace Template {
+        /** Generic class for templates. Your template must extend this */
         export abstract class GenericTemplate {
             /** Menu props */
             params: Java.Wrapper; // TODO: Maybe i should add wrapper for *params
@@ -26,6 +27,7 @@ namespace Menu {
 
             constructor() {}
 
+            /** Initializes menu props */
             abstract initializeParams(): void;
 
             /** Initializes own layout */
@@ -34,12 +36,19 @@ namespace Menu {
             /** Initializes icon */
             abstract initializeIcon(value: string, type: "Normal" | "Web"): void;
 
+            /** Initializes proxy layout for scrolling feature */
             abstract initializeProxy(): void;
 
+            /** Initializes main layout for widgets */
             abstract initializeMainLayout(): void;
 
+            /** Initializes hide/kill & close button and their layout */
             abstract initializeButtons(): void;
 
+            /** Initializes everything needed for start
+             * 
+             * Called by constructor after title & subtitle init
+             */
             abstract ensureInitialized(): void;
 
             /** Adds everything needed from template */

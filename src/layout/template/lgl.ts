@@ -1,5 +1,6 @@
 namespace Menu {
     export namespace Template {
+        /** LGL Mod Menu template */
         export class LGLTemplate extends GenericTemplate {
             constructor() {
                 super();
