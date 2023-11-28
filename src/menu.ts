@@ -313,4 +313,11 @@ namespace Menu {
             return [parentLayout, layout];
         }
     }
+
+    /** Backwards compatible name with the new one.
+     * 
+     * Please do NOT use it for new projects
+     * 
+     * It WILL be removed after a few versions */
+    export class JavaMenu extends Composer {}
 }
