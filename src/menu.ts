@@ -1,6 +1,6 @@
 namespace Menu {
     /** `JavaMenu` class instance */
-    export declare let instance: JavaMenu;
+    export declare let instance: Composer;
     /** Theme instance for `JavaMenu` */
     export declare let theme: Theme;
     /** Shared Preferences storage. Feel free to store own values */
@@ -8,16 +8,12 @@ namespace Menu {
 
     getter(Menu, "sharedPreferences", () => new SharedPreferences(), lazy);
     
-    export class JavaMenu {
-        expandedView: Layout;
-        iconView: View;
-        layout: Layout;
-        menuParams: Java.Wrapper;
+    export class Composer {
         rootFrame: Layout;
-        scrollView: Layout;
-        titleLayout: Layout;
+        iconView: Icon;
+        template: Menu.Template.GenericTemplate;
 
-        constructor (title: string, subtitle: string) {
+        constructor (title: string, subtitle: string, template: Menu.Template.GenericTemplate) {
             Menu.instance = this;
 
             if (!overlay.check()) {
@@ -26,91 +22,10 @@ namespace Menu {
             }
 
             this.rootFrame = new Layout(Api.FrameLayout);
-            this.menuParams = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3); 
-            this.expandedView = new Layout(Api.LinearLayout);
-            this.layout = new Layout(Api.LinearLayout);
-            this.titleLayout = new Layout(Api.RelativeLayout);
-            this.scrollView = new Layout(Api.ScrollView);
-            let titleText = new TextView(title);
-            let titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let subtitleText = new TextView(subtitle);
-            let scrollParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(theme.menuHeight)));
-            let buttonView = new Layout(Api.RelativeLayout);
-            let hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let hideButton = new Button(theme.hideButtonText);
-            let closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            let closeButton = new Button(theme.closeText);
+            this.template = template;
+            this.template.icon = this.iconView;
             
-            this.menuParams.gravity.value = 51;
-            this.menuParams.x.value = theme.menuXPosition;
-            this.menuParams.y.value = theme.menuYPosition;
-            
-            this.expandedView.visibility = Api.GONE;
-            this.expandedView.backgroundColor = theme.bgColor;
-            this.expandedView.orientation = Api.VERTICAL;
-            this.expandedView.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(theme.menuWidth)), Api.WRAP_CONTENT);
-            
-            this.titleLayout.padding = [10, 5, 10, 5];
-            this.titleLayout.verticalGravity = 16;
-            
-            titleText.textColor = theme.primaryTextColor;
-            titleText.textSize = 18;
-            titleText.gravity = Api.CENTER;
-            
-            titleParams.addRule(Api.CENTER_HORIZONTAL);
-            titleText.layoutParams = titleParams;
-            
-            subtitleText.ellipsize = Api.TruncateAt.MARQUEE.value;
-            subtitleText.marqueeRepeatLimit = -1;
-            subtitleText.singleLine = true;
-            subtitleText.selected = true;
-            subtitleText.textColor = theme.primaryTextColor;
-            subtitleText.textSize = 10;
-            subtitleText.gravity = Api.CENTER;
-            subtitleText.padding = [0, 0, 0, 5];
-            
-            this.scrollView.layoutParams = scrollParams;
-            this.scrollView.backgroundColor = theme.layoutColor;
-            this.layout.orientation = Api.VERTICAL;
-            
-            buttonView.padding = [10, 3, 10, 3];
-            buttonView.verticalGravity = Api.CENTER;
-            
-            hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
-            hideButton.layoutParams = hideButtonParams;
-            hideButton.backgroundColor = Api.TRANSPARENT;
-            hideButton.textColor = theme.primaryTextColor;
-            hideButton.onClickListener = () => {
-                this.iconView.visibility = Api.VISIBLE;
-                this.iconView.alpha = 0;
-                this.expandedView.visibility = Api.GONE;
-                toast(theme.iconHiddenText, 1);
-            }
-
-            hideButton.onLongClickListener = () => {
-                this.destroy();
-                toast(theme.killText, 1);
-            }
-
-            closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
-            closeButton.layoutParams = closeButtonParams;
-            closeButton.backgroundColor = 0;
-            closeButton.textColor = theme.primaryTextColor;
-            closeButton.onClickListener = () => {
-                this.iconView.visibility = Api.VISIBLE;
-                this.iconView.alpha = theme.iconAlpha;
-                this.expandedView.visibility = Api.GONE;
-            }
-            
-            this.add(this.expandedView, this.rootFrame);
-            this.add(titleText, this.titleLayout);
-            this.add(this.titleLayout, this.expandedView);
-            this.add(subtitleText, this.expandedView);
-            this.add(this.layout, this.scrollView);
-            this.add(this.scrollView, this.expandedView);
-            this.add(hideButton, buttonView);
-            this.add(closeButton, buttonView);
-            this.add(buttonView, this.expandedView);
+            this.add(this.template.me, this.rootFrame);
 
             MainActivity.onDestroy(() => this.destroy());
             MainActivity.onPause(() => this.hide());
@@ -130,7 +45,7 @@ namespace Menu {
 
                 this.iconView.onClickListener = () => {
                     this.iconView.visibility = Api.GONE;
-                    this.expandedView.visibility = Api.VISIBLE;
+                    this.template.me.visibility = Api.VISIBLE;
                 }
 
                 this.iconView.visibility = Api.VISIBLE;
@@ -146,7 +61,7 @@ namespace Menu {
         public settings(label: string, state: boolean = false): Layout {
             const settings = new Settings(label, state);
             settings.orientation = Api.VERTICAL;
-            this.add(settings.settings, this.titleLayout);
+            this.add(settings.settings, this.template.titleLayout);
             return settings;
         }
 
@@ -170,14 +85,14 @@ namespace Menu {
             MainActivity.onDestroy(null);
             this.hide();
             this.rootFrame.destroy();
-            this.layout.destroy();
+            //this.layout.destroy();
         }
 
         /** Shows menu */
         public show() {
             Java.scheduleOnMainThread(() => {
                 try {
-                    app.windowManager.addView(this.rootFrame.instance, this.menuParams);
+                    app.windowManager.addView(this.rootFrame.instance, this.template.params);
                     this.rootFrame.visibility = Api.VISIBLE;
                 }
                 catch (e) {
@@ -195,7 +110,7 @@ namespace Menu {
          */
         public add(view: View, layout?: Java.Wrapper | View) {
             Java.scheduleOnMainThread(() => {
-                const l = layout ?? this.layout;
+                const l = layout ?? this.template.layout;
                 (l instanceof View ? l.instance : l).addView((view instanceof View ? view.instance : view));
             })
         }
@@ -209,7 +124,7 @@ namespace Menu {
          */
         public remove(view: View, layout?: Java.Wrapper | View) {
             Java.scheduleOnMainThread(() => {
-                const l = layout ?? this.layout;
+                const l = layout ?? this.template.layout;
                 (l instanceof View ? l.instance : l).removeView((view instanceof View ? view.instance: view));
             })
         }
