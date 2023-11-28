@@ -71,8 +71,8 @@ namespace Menu {
                 }
 
                 this.hide.onLongClickListener = () => {
-                    //this.destroy();
-                    //toast(theme.killText, 1);
+                    instance.destroy();
+                    toast(theme.killText, 1);
                 }
 
                 closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
