@@ -26,6 +26,7 @@ namespace Menu {
             this.template.icon = this.iconView;
             
             this.add(this.template.me, this.rootFrame);
+            this.template.handleAdd(this.add);
 
             MainActivity.onDestroy(() => this.destroy());
             MainActivity.onPause(() => this.hide());
