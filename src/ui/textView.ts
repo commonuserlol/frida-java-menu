@@ -1,9 +1,9 @@
 namespace Menu {
     export class TextView extends View {
-        constructor(text: string) {
+        constructor(text?: string) {
             super();
             this.instance = Api.TextView.$new(app.context);
-            this.text = text;
+            if (text) this.text = text;
         }
         /** Gets ellipsize */
         get ellipsize(): Java.Wrapper {
