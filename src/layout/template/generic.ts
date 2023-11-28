@@ -1,6 +1,6 @@
 namespace Menu {
     export namespace Template {
-        export abstract class GenericTemplate {
+        export class GenericTemplate {
             /** Menu props */
             params: Java.Wrapper; // TODO: Maybe i should add wrapper for *params
             /** Template as layout */
@@ -24,12 +24,10 @@ namespace Menu {
             /** Close button */
             close: Button;
 
-            constructor(icon: Icon) {
-                this.icon = icon;
-            }
+            constructor() {}
 
             /** Adds everything needed from template */
-            abstract handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void;
+            handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void {};
         }
     }
 }

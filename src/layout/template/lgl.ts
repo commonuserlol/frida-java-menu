@@ -1,8 +1,8 @@
 namespace Menu {
     export namespace Template {
         export class LGLTemplate extends GenericTemplate {
-            constructor(icon: Icon) {
-                super(icon);
+            constructor() {
+                super();
                 this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
                 this.me = new Layout(Api.LinearLayout);
                 this.layout = new Layout(Api.LinearLayout);
