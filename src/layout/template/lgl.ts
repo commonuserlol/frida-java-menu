@@ -27,6 +27,8 @@ namespace Menu {
                 this.subtitle.textSize = 10;
                 this.subtitle.gravity = Api.CENTER;
                 this.subtitle.padding = [0, 0, 0, 5];
+
+                this.ensureInitialized();
             }
 
             initializeParams(): void {
@@ -42,6 +44,17 @@ namespace Menu {
                 this.me.backgroundColor = theme.bgColor;
                 this.me.orientation = Api.VERTICAL;
                 this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(theme.menuWidth)), Api.WRAP_CONTENT);
+            }
+
+            initializeIcon(value: string, type?: "Normal" | "Web"): void {
+                this.icon = new Icon(type, value);
+
+                this.icon.onClickListener = () => {
+                    this.icon.visibility = Api.GONE;
+                    this.me.visibility = Api.VISIBLE;
+                }
+
+                this.icon.visibility = Api.VISIBLE;
             }
 
             initializeProxy(): void {
@@ -92,15 +105,12 @@ namespace Menu {
                 }
             }
 
-            initializeIcon(value: string, type?: "Normal" | "Web"): void {
-                this.icon = new Icon(type, value);
-
-                this.icon.onClickListener = () => {
-                    this.icon.visibility = Api.GONE;
-                    this.me.visibility = Api.VISIBLE;
-                }
-
-                this.icon.visibility = Api.VISIBLE;
+            ensureInitialized(): void {
+                this.initializeParams();
+                this.initializeLayout();
+                this.initializeProxy();
+                this.initializeMainLayout();
+                this.initializeButtons();
             }
 
             handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void {

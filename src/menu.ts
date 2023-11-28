@@ -44,7 +44,7 @@ namespace Menu {
          */
         public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.template.initIcon(value, type);
+                this.template.initializeIcon(value, type);
                 this.iconView = this.template.icon;
                 
                 new OnTouch(this.rootFrame);

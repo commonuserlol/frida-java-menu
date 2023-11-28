@@ -40,6 +40,8 @@ namespace Menu {
 
             abstract initializeButtons(): void;
 
+            abstract ensureInitialized(): void;
+
             /** Adds everything needed from template */
             abstract handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void;
         }
