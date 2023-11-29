@@ -125,6 +125,30 @@ namespace Menu {
                 add(this.close, this.buttonLayout);
                 add(this.buttonLayout, this.me);
             }
+
+            handleRemove(remove: (view: View, layout?: Java.Wrapper | View) => void): void {
+                remove(this.buttonLayout, this.me);
+                remove(this.close, this.buttonLayout);
+                remove(this.hide, this.buttonLayout);
+                remove(this.proxy, this.me);
+                remove(this.layout, this.proxy);
+                remove(this.subtitle, this.me);
+                remove(this.titleLayout, this.me);
+                remove(this.title, this.titleLayout);
+            }
+
+            destroy(): void {
+                this.buttonLayout.destroy();
+                this.close.destroy();
+                this.hide.destroy();
+                this.proxy.destroy();
+                this.layout.destroy();
+                this.subtitle.destroy();
+                this.titleLayout.destroy();
+                this.title.destroy();
+                this.icon.destroy();
+                this.me.destroy();
+            }
         }
     }
 }

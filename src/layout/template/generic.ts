@@ -53,6 +53,11 @@ namespace Menu {
 
             /** Adds everything needed from template */
             abstract handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void;
+
+            /** Removes template objects */
+            abstract handleRemove(remove: (view: View, layout?: Java.Wrapper | View) => void): void;
+
+            abstract destroy(): void;
         }
     }
 }
