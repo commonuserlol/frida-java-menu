@@ -8,6 +8,7 @@ namespace Menu {
 
     getter(Menu, "sharedPreferences", () => new SharedPreferences(), lazy);
     
+    /** Main class for menu */
     export class Composer {
         /** @internal */
         rootFrame: Layout;

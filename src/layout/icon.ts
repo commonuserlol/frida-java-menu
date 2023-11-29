@@ -6,18 +6,21 @@ namespace Menu {
             if (value) this.image = value;
         }
 
+        /** @internal */
         set _imageForImageView(image: string) {
             this.instance.setScaleType(Api.ScaleType.FIT_XY.value);
             this.instance.setImageBitmap(bitmap(image));
             theme.iconAlpha = Math.round(theme.iconAlpha * 255);
         }
 
+        /** @internal */
         set _imageForWebView(image: string) {
             this.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${image}\" width=\"${theme.iconSize}\" height=\"${theme.iconSize}\" ></body></html>`, "text/html", "utf-8");
             this.instance.backgroundColor = Api.TRANSPARENT;
             this.instance.getSettings().setAppCacheEnabled(true);
         }
 
+        /** Sets image */
         set image(image: string) {
             const isNormalType = this.instance.$className == Api.ImageView.$className;
             const applyDimension = Math.floor(dp(theme.iconSize));

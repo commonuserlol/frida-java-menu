@@ -23,6 +23,7 @@ namespace Menu {
             if (this.state) this.swapViews(this, Menu.instance.template.layout);
         }
 
+        /** Replaces old view with new one */
         swapViews(_new: View, old: View) {
             const add = Menu.instance.add;
             const remove = Menu.instance.remove;
@@ -32,6 +33,7 @@ namespace Menu {
             add(_new, proxy);
         }
 
+        /** Handler for state change (onClick event) */
         handleState() {
             if (this.visibility == Api.VISIBLE) this.triggered = true;
             if (this.triggered) this.state = !this.state;

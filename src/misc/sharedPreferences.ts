@@ -1,4 +1,5 @@
 namespace Menu {
+    /** App's SharedPreferences storage */
     export class SharedPreferences {
         private instance: Java.Wrapper;
         
