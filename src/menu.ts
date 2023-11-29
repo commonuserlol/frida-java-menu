@@ -86,6 +86,7 @@ namespace Menu {
             MainActivity.onDestroy(null);
             this.hide();
             this.remove(this.template.me, this.rootFrame);
+            this.template.handleRemove(this.remove);
             this.template.destroy();
             this.rootFrame.destroy();
         }
