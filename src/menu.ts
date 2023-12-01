@@ -12,8 +12,6 @@ namespace Menu {
     export class Composer {
         /** @internal */
         rootFrame: Layout;
-        /** @internal */
-        iconView: Icon;
         /** Layout template */
         template: Menu.Template.GenericTemplate;
 
@@ -27,7 +25,6 @@ namespace Menu {
 
             this.rootFrame = new Layout(Api.FrameLayout);
             this.template = template;
-            this.template.icon = this.iconView;
             this.template.title.text = title;
             this.template.subtitle.text = subtitle;
             
@@ -49,12 +46,11 @@ namespace Menu {
         public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
                 this.template.initializeIcon(value, type);
-                this.iconView = this.template.icon;
                 
                 new OnTouch(this.rootFrame);
-                new OnTouch(this.iconView);
+                new OnTouch(this.template.icon);
 
-                this.add(this.iconView, this.rootFrame);
+                this.add(this.template.icon, this.rootFrame);
             });
         }
 

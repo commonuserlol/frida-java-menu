@@ -19,22 +19,22 @@ namespace Menu {
                     return true;
                 case Api.ACTION_UP:
                     instance.template.me.alpha = 1.;
-                    instance.iconView.alpha = instance.iconView.instance.$className == Api.ImageView.$className ? 255 : 1.;
+                    instance.template.icon.alpha = instance.template.icon.instance.$className == Api.ImageView.$className ? 255 : 1.;
                     let [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition[0]), Math.floor(event.getRawX() - this.touchPosition[1])];
-                    if (instance.iconView.visibility == Api.VISIBLE) {
+                    if (instance.template.icon.visibility == Api.VISIBLE) {
                         if (app.orientation == Api.ORIENTATION_LANDSCAPE) {
-                            instance.iconView.visibility = Api.GONE;
+                            instance.template.icon.visibility = Api.GONE;
                             instance.template.me.visibility = Api.VISIBLE;
                         }
                         else if (rawX < 10 && rawY < 10) {
-                            instance.iconView.visibility = Api.GONE;
+                            instance.template.icon.visibility = Api.GONE;
                             instance.template.me.visibility = Api.VISIBLE;
                         }
                     }
                     return true;
                 case Api.ACTION_MOVE:
                     instance.template.me.alpha = 0.5;
-                    instance.iconView.alpha = instance.iconView.instance.$className == Api.ImageView.$className ?
+                    instance.template.icon.alpha = instance.template.icon.instance.$className == Api.ImageView.$className ?
                             Math.round(theme.iconAlpha / 2) : 0.5;
                     instance.template.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])
                     instance.template.params.y.value = this.initialPosition[1] + Math.floor(event.getRawY() - this.touchPosition[1])
