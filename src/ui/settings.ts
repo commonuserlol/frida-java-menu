@@ -14,7 +14,7 @@ namespace Menu {
             settingsParams.addRule(Api.ALIGN_PARENT_RIGHT);
 
             // Initialize label
-            this.settings.textColor = theme.primaryTextColor;
+            this.settings.textColor = config.primaryTextColor;
             this.settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
             this.settings.textSize = 20;
             this.settings.layoutParams = settingsParams;

@@ -19,8 +19,8 @@ namespace Menu {
             this.instance.setView(view);
         }
         /** Sets positive button */
-        public setPositiveButton(callback: (this: Dialog) => void) {
-            this.instance.setPositiveButton(wrap(theme.dialogPositiveText), Java.registerClass({
+        public setPositiveButton(label: string, callback: (this: Dialog) => void) {
+            this.instance.setPositiveButton(wrap(label), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {
@@ -34,8 +34,8 @@ namespace Menu {
             }).$new());
         }
         /** Sets negative button */
-        public setNegativeButton(callback: (this: Dialog) => void) {
-            this.instance.setNegativeButton(wrap(theme.dialogNegativeText), Java.registerClass({
+        public setNegativeButton(label: string, callback: (this: Dialog) => void) {
+            this.instance.setNegativeButton(wrap(label), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {

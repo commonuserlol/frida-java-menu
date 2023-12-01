@@ -18,7 +18,7 @@ namespace Menu {
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             button.instance = Api.RadioButton.$new(app.context);
             button.text = label;
-            button.textColor = theme.secondaryTextColor;
+            button.textColor = config.secondaryTextColor;
             if (callback) {
                 button.onClickListener = () => {
                     this.label.text = format(this.unformattedText, label);

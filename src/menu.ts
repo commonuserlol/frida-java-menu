@@ -1,8 +1,8 @@
 namespace Menu {
     /** `Composer` class instance */
     export declare let instance: Composer;
-    /** Theme instance for template */
-    export declare let theme: Theme;
+    /** Config instance for template */
+    export declare let config: Config;
     /** Shared Preferences storage. Feel free to store own values */
     export declare const sharedPreferences: SharedPreferences;
 
@@ -135,8 +135,8 @@ namespace Menu {
             params.setMargins(7, 5, 7, 5);
             button.layoutParams = params;
             button.allCaps = false;
-            button.textColor = theme.secondaryTextColor;
-            button.backgroundColor = theme.buttonColor;
+            button.textColor = config.secondaryTextColor;
+            button.backgroundColor = config.buttonColor;
             if (callback) button.onClickListener = () => callback.call(button);
             if (longCallback) button.onLongClickListener = () => longCallback.call(button);
     
@@ -147,12 +147,12 @@ namespace Menu {
         buttonOnOff(text?: string, state: boolean = false, callback?: (this: Button, state: boolean) => void, longCallback?: (this: Button) => void): Button {
             const button = this.button(text, function () {
                 state = !state;
-                this.backgroundColor = state ? theme.buttonOnOffOnColor : theme.buttonOnOffOffColor;
+                this.backgroundColor = state ? config.buttonOnOffOnColor : config.buttonOnOffOffColor;
                 this.text = state ? `${text}: ON` : `${text}: OFF`;
                 callback?.call(this, state);
             }, longCallback);
 
-            button.backgroundColor = state ? theme.buttonOnOffOnColor : theme.buttonOnOffOffColor;
+            button.backgroundColor = state ? config.buttonOnOffOnColor : config.buttonOnOffOffColor;
             button.text = state ? `${text}: ON` : `${text}: OFF`;
 
             if (state) {
@@ -164,13 +164,13 @@ namespace Menu {
         }
 
         /** Creates dialog */
-        async dialog(title: string, message: string, positiveCallback?: (this: Dialog) => void, negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | View): Promise<Dialog> {
+        async dialog(title: string, message: string, positiveLabel: string = "OK", positiveCallback?: (this: Dialog) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | View): Promise<Dialog> {
             //We can create a dialog only with an activity instance, the context is not suitable.
             const instance = await MainActivity.getActivityInstance();
             const dialog = new Dialog(instance, title, message);
             view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
-            if (positiveCallback) dialog.setPositiveButton(positiveCallback)
-            if (negativeCallback) dialog.setNegativeButton(negativeCallback);
+            if (positiveCallback) dialog.setPositiveButton(positiveLabel, positiveCallback)
+            if (negativeCallback) dialog.setNegativeButton(negativeLabel, negativeCallback);
     
             return dialog;
         }
@@ -222,7 +222,7 @@ namespace Menu {
             //switch keyword already used, so we borrow the name from lgl code
             const toggle = new Switch(label);
             const savedState = sharedPreferences.getBool(label);
-            toggle.textColor = theme.secondaryTextColor;
+            toggle.textColor = config.secondaryTextColor;
             toggle.padding = [10, 5, 10, 5];
             if (callback) toggle.onCheckedChangeListener = callback;
             if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
@@ -233,7 +233,7 @@ namespace Menu {
         /** Creates text view */
         textView(label: string): TextView {
             const textView = new TextView(label);
-            textView.textColor = theme.secondaryTextColor;
+            textView.textColor = config.secondaryTextColor;
             textView.padding = [10, 5, 10, 5];
     
             return textView;
@@ -242,7 +242,7 @@ namespace Menu {
         /** Creates category */
         public category(label: string): TextView {
             const textView = this.textView(label);
-            textView.backgroundColor = theme.categoryColor;
+            textView.backgroundColor = config.categoryColor;
             textView.gravity = Api.CENTER;
             textView.padding = [0, 5, 0, 5];
             textView.typeface = Api.Typeface.DEFAULT_BOLD.value;
@@ -250,28 +250,28 @@ namespace Menu {
         }
 
         /** Creates dialog with asking number and shows it */
-        public async inputNumber(title: string, max: number, positiveCallback?: (this: Dialog, result: number) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
+        public async inputNumber(title: string, max: number, positiveLabel: string = "OK", positiveCallback?: (this: Dialog, result: number) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void): Promise<void> {
             let view = Api.EditText.$new(app.context);
             if (max > 0) {
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
             }
             view.setInputType(Api.InputType.TYPE_CLASS_NUMBER.value);
-            await this.dialog(title, "", function () {
+            await this.dialog(title, "", positiveLabel, function () {
                 let result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
                 !Number.isNaN(result) ? positiveCallback?.call(this, result <= max ? result : max) : positiveCallback?.call(this, NaN);
-            }, function () {
+            }, negativeLabel, function () {
                 negativeCallback?.call(this);
             }, view).then((d) => d.show());  
         }
 
         /** Creates dialog with asking string and shows it */
-        public async inputText(title: string, hint?: string, positiveCallback?: (this: Dialog, result: string) => void, negativeCallback?: (this: Dialog) => void): Promise<void> {
+        public async inputText(title: string, hint?: string, positiveLabel: string = "OK", positiveCallback?: (this: Dialog, result: string) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void): Promise<void> {
             let view = Api.EditText.$new(app.context);
             if (hint) view.setHint(wrap(hint));
-            await this.dialog(title, "", function () {
+            await this.dialog(title, "", positiveLabel, function () {
                 const result = Java.cast(view, Api.TextView).getText().toString();
                 positiveCallback?.call(this, result);
-            }, function () {
+            }, negativeLabel, function () {
                 negativeCallback?.call(this);
             }, view).then((d) => d.show());     
         }
@@ -282,7 +282,7 @@ namespace Menu {
             let layout = new Layout(Api.LinearLayout);
             let textView = this.category(`▽ ${label} ▽`);
             let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-            textView.backgroundColor = theme.collapseColor;
+            textView.backgroundColor = config.collapseColor;
             params.setMargins(0, 5, 0, 0);
             parentLayout.layoutParams = params;
             parentLayout.verticalGravity = 16;
@@ -291,7 +291,7 @@ namespace Menu {
             layout.verticalGravity = 16;
             layout.padding = [0, 5, 0, 5];
             layout.orientation = Api.VERTICAL;
-            layout.backgroundColor = theme.layoutColor;
+            layout.backgroundColor = config.layoutColor;
             layout.visibility = Api.GONE;
 
             textView.padding = [0, 20, 0, 20];
