@@ -40,7 +40,7 @@ namespace Menu {
                             return;
                         };
                         sharedPreferences.putInt(Api.JavaString.join(Api.JavaString.$new(", "), this.items), index);
-                        Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(theme.secondaryTextColor);
+                        Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(config.secondaryTextColor);
                         callback.call(this, index);
                     },
                     onNothingSelected: function(parent: Java.Wrapper) {

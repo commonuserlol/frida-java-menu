@@ -10,10 +10,12 @@
 /* UI Objects */
 /// <reference path="./ui/common.ts" />
 /// <reference path="./ui/view.ts" />
+/// <reference path="./ui/layout.ts" />
 /// <reference path="./ui/button.ts" />
 /// <reference path="./ui/dialog.ts" />
 /// <reference path="./ui/radioGroup.ts" />
 /// <reference path="./ui/seekbar.ts" />
+/// <reference path="./ui/settings.ts" />
 /// <reference path="./ui/spinner.ts" />
 /// <reference path="./ui/switch.ts" />
 /// <reference path="./ui/textView.ts" />
@@ -27,8 +29,16 @@
 /// <reference path="./utils/permission.ts" />
 /// <reference path="./utils/sleep.ts" />
 
-/* Main classes */
-/// <reference path="./theme.ts" />
+/* Config */
+/// <reference path="./config/config.ts" />
+/// <reference path="./config/default.ts" />
+
+/* Layout */
+/// <reference path="./layout/icon.ts" />
+/// <reference path="./layout/template/generic.ts" />
+/// <reference path="./layout/template/lgl.ts" />
+
+/* Main class */
 /// <reference path="./menu.ts" />
 
 globalThis.Menu = Menu;

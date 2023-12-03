@@ -1,4 +1,5 @@
 namespace Menu {
+    /** For operations with app's MainActivity */
     export abstract class MainActivity {
 
         /** @internal */

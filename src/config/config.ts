@@ -1,9 +1,50 @@
 namespace Menu {
-    export class Theme {
-        private holder: Map<string, string | number>;
-        
-        constructor () {
-            this.holder = new Map<string, string | number>();
+    export class Config {
+        /** @internal */
+        holder: Map<string, string | number>;
+
+        constructor() {
+            this.holder = new Map<string, string>();
+        }
+
+        get noOverlayPermission(): string {
+            return this.holder.get("noOverlayPermission")! as string;
+        }
+
+        set noOverlayPermission(value: string) {
+            this.holder.set("noOverlayPermission", value);
+        }
+
+        get hide(): string {
+            return this.holder.get("hide")! as string;
+        }
+
+        set hide(value: string) {
+            this.holder.set("hide", value);
+        }
+
+        get close(): string {
+            return this.holder.get("close")! as string;
+        }
+
+        set close(value: string) {
+            this.holder.set("close", value);
+        }
+
+        get hideCallback(): string {
+            return this.holder.get("hideCallback")! as string;
+        }
+
+        set hideCallback(value: string) {
+            this.holder.set("hideCallback", value);
+        }
+
+        get killCallback(): string {
+            return this.holder.get("killCallback")! as string;
+        }
+
+        set killCallback(value: string) {
+            this.holder.set("killCallback", value);
         }
 
         /**
@@ -11,7 +52,7 @@ namespace Menu {
          *
          * @type {number}
          */
-        get bgColor(): number {
+         get bgColor(): number {
             return this.holder.get("bgColor")! as number;
         }
         /**
@@ -119,63 +160,6 @@ namespace Menu {
          */
         get iconSize(): number {
             return this.holder.get("iconSize")! as number;
-        }
-
-        /**
-         * Gets no overlay permission string
-         *
-         * @type {string}
-         */
-        get noOverlayPermissionText(): string {
-            return this.holder.get("noOverlay")! as string;
-        }
-        /**
-         * Gets hide button string
-         *
-         * @type {string}
-         */
-        get hideButtonText(): string {
-            return this.holder.get("hideButtonText")! as string;
-        }
-        /**
-         * Gets icon hidden string
-         *
-         * @type {string}
-         */
-        get iconHiddenText(): string {
-            return this.holder.get("iconHiddenText")! as string;
-        }
-        /**
-         * Gets menu killed string
-         *
-         * @type {string}
-         */
-        get killText(): string {
-            return this.holder.get("killText")! as string;
-        }
-        /**
-         * Gets menu closed string
-         *
-         * @type {string}
-         */
-        get closeText(): string {
-            return this.holder.get("closeText")! as string;
-        }
-        /**
-         * Gets positive button string in dialog
-         *
-         * @type {string}
-         */
-        get dialogPositiveText(): string {
-            return this.holder.get("dialogPositiveText")! as string;
-        }
-        /**
-         * Gets negative button string in dialog
-         *
-         * @type {string}
-         */
-        get dialogNegativeText(): string {
-            return this.holder.get("dialogNegativeText")! as string;
         }
 
         /**
@@ -291,102 +275,6 @@ namespace Menu {
          */
         set iconSize(iconSize: number) {
             this.holder.set("iconSize", iconSize);
-        }
-
-        /**
-         * Sets no overlay permission string
-         *
-         * @type {string}
-         */
-        set noOverlayPermissionText(text: string) {
-            this.holder.set("noOverlay", text);
-        }
-        /**
-         * Sets hide button string
-         *
-         * @type {string}
-         */
-        set hideButtonText(text: string) {
-            this.holder.set("hideButtonText", text);
-        }
-        /**
-         * Sets icon hidden string
-         *
-         * @type {string}
-         */
-        set iconHiddenText(text: string) {
-            this.holder.set("iconHiddenText", text);
-        }
-        /**
-         * Sets menu killed string
-         *
-         * @type {string}
-         */
-        set killText(text: string) {
-            this.holder.set("killText", text);
-        }
-        /**
-         * Sets menu closed string
-         *
-         * @type {string}
-         */
-        set closeText(text: string) {
-            this.holder.set("closeText", text);
-        }
-        /**
-         * Sets positive button string in dialog
-         *
-         * @type {string}
-         */
-        set dialogPositiveText(text: string) {
-            this.holder.set("dialogPositiveText", text);
-        }
-        /**
-         * Sets negative button string in dialog
-         *
-         * @type {string}
-         */
-        set dialogNegativeText(text: string) {
-            this.holder.set("dialogNegativeText", text);
-        }
-
-        /**
-         * Gets default LGL theme
-         *
-         * @static
-         * @readonly
-         * @type {Theme}
-         */
-        static get LGL(): Theme {
-            const lglTheme = new Theme();
-
-            lglTheme.primaryTextColor = "#82CAFD";
-            lglTheme.secondaryTextColor = "#FFFFFF";
-            lglTheme.buttonColor = "#1C262D";
-            lglTheme.bgColor = "#EE1C2A35";
-            lglTheme.layoutColor = "#DD141C22";
-            lglTheme.collapseColor = "#222D38";
-            lglTheme.categoryColor = "#2F3D4C";
-            lglTheme.buttonOnOffOnColor = "#1B5E20";
-            lglTheme.buttonOnOffOffColor = "#7F0000";
-
-            lglTheme.menuWidth = 290;
-            lglTheme.menuHeight = 210;
-            lglTheme.menuXPosition = 50;
-            lglTheme.menuYPosition = 100;
-
-            lglTheme.iconSize = 45;
-            lglTheme.iconAlpha = 0.7;
-
-            lglTheme.noOverlayPermissionText = "Overlay permission required to show menu";
-            lglTheme.hideButtonText = "HIDE/KILL (Hold)";
-            lglTheme.iconHiddenText = "Icon hidden. Remember the hidden icon position";
-            lglTheme.killText = "Menu killed";
-            lglTheme.closeText = "MINIMIZE";
-            lglTheme.dialogPositiveText = "OK";
-            lglTheme.dialogNegativeText = "Cancel";
-
-            return lglTheme;
         }
     }
 }
