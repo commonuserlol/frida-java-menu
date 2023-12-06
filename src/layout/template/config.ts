@@ -1,9 +1,19 @@
 namespace Menu {
     export namespace Template {
+        interface WidgetColor {
+            fg: string,
+            bg: string
+        }
+
+        interface ButtonColor extends WidgetColor {
+            on: string,
+            off: string
+        }
+
         export interface ColorConfig {
             primaryText: string,
             secondaryText: string,
-            buttonBg: string,
+            buttonBg: ButtonColor,
             layoutBg: string,
             collapseBg: string,
             categoryBg: string,
