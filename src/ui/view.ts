@@ -62,8 +62,8 @@ namespace Menu {
             this.instance.setText(wrap(text));
         }
         /** Sets text color */
-        set textColor(color: Java.Wrapper | number) {
-            this.instance.setTextColor(color);
+        set textColor(color: string) {
+            this.instance.setTextColor(parseColor(color));
         }
         /** Sets visibility */
         set visibility(visibility: number) {
