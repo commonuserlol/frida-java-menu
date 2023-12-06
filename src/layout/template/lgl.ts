@@ -6,7 +6,12 @@ namespace Menu {
                 color: {
                     primaryText: "#82CAFD",
                     secondaryText: "#FFFFFF",
-                    buttonBg: "#1C262D",
+                    buttonBg: {
+                        fg: "#FFFFFF", // TODO: Should i sync it with `secondaryText` ?
+                        bg: "#1C262D",
+                        on: "#1B5E20",
+                        off: "#7F0000"
+                    },
                     layoutBg: "#DD141C22",
                     collapseBg: "#222D38",
                     categoryBg: "#2F3D4C",
