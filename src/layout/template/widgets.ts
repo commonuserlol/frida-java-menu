@@ -3,7 +3,7 @@ namespace Menu {
         /** Widgets initialize functions */
         export namespace Widgets {
             /** Creates button */
-            function button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
+            export function button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
                 const button = new Button(text);
                 const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
                 params.setMargins(7, 5, 7, 5);
@@ -18,7 +18,7 @@ namespace Menu {
             }
 
             /** Creates switch (toggle) but in button widget with ON and OFF states */
-            function buttonOnOff(text?: string, state: boolean = false, callback?: (this: Button, state: boolean) => void, longCallback?: (this: Button) => void): Button {
+            export function buttonOnOff(text?: string, state: boolean = false, callback?: (this: Button, state: boolean) => void, longCallback?: (this: Button) => void): Button {
                 const button = this.button(text, function () {
                     state = !state;
                     this.backgroundColor = state ? config.buttonOnOffOnColor : config.buttonOnOffOffColor;
@@ -38,7 +38,7 @@ namespace Menu {
             }
 
             /** Creates dialog */
-            async function dialog(title: string, message: string, positiveLabel: string = "OK", positiveCallback?: (this: Dialog) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | View): Promise<Dialog> {
+            export async function dialog(title: string, message: string, positiveLabel: string = "OK", positiveCallback?: (this: Dialog) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | View): Promise<Dialog> {
                 //We can create a dialog only with an activity instance, the context is not suitable.
                 const instance = await MainActivity.getActivityInstance();
                 const dialog = new Dialog(instance, title, message);
@@ -50,7 +50,7 @@ namespace Menu {
             }
 
             /** Creates radio group */
-            function radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
+            export function radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
                 const radioGroup = new RadioGroup(label);
                 const savedIndex = sharedPreferences.getInt(label);
                 radioGroup.padding = [10, 5, 10, 5];
@@ -65,7 +65,7 @@ namespace Menu {
             }
 
             /** Creates seekbar */
-            function seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): View {
+            export function seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): View {
                 const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
                 const layout = new View();
                 layout.instance = Api.LinearLayout.$new(app.context);
@@ -83,7 +83,7 @@ namespace Menu {
             }
 
             /** Creates spinner */
-            function spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
+            export function spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
                 const spinner = new Spinner(items);
                 const savedIndex = sharedPreferences.getInt(items.join());
                 if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
@@ -92,7 +92,7 @@ namespace Menu {
             }
 
             /** Creates switch */
-            function toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
+            export function toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
                 //switch keyword already used, so we borrow the name from lgl code
                 const toggle = new Switch(label);
                 const savedState = sharedPreferences.getBool(label);
@@ -105,7 +105,7 @@ namespace Menu {
             }
 
             /** Creates text view */
-            function textView(label: string): TextView {
+            export function textView(label: string): TextView {
                 const textView = new TextView(label);
                 textView.textColor = config.secondaryTextColor;
                 textView.padding = [10, 5, 10, 5];
@@ -114,7 +114,7 @@ namespace Menu {
             }
 
             /** Creates category */
-            function public category(label: string): TextView {
+            export function public category(label: string): TextView {
                 const textView = this.textView(label);
                 textView.backgroundColor = config.categoryColor;
                 textView.gravity = Api.CENTER;
@@ -124,7 +124,7 @@ namespace Menu {
             }
 
             /** Creates dialog with asking number and shows it */
-            async function inputNumber(title: string, max: number, positiveLabel: string = "OK", positiveCallback?: (this: Dialog, result: number) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void): Promise<void> {
+            export async function inputNumber(title: string, max: number, positiveLabel: string = "OK", positiveCallback?: (this: Dialog, result: number) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void): Promise<void> {
                 let view = Api.EditText.$new(app.context);
                 if (max > 0) {
                     view.setHint(Api.JavaString.$new(`Max value: ${max}`));
@@ -139,7 +139,7 @@ namespace Menu {
             }
 
             /** Creates dialog with asking string and shows it */
-            async function inputText(title: string, hint?: string, positiveLabel: string = "OK", positiveCallback?: (this: Dialog, result: string) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void): Promise<void> {
+            export async function inputText(title: string, hint?: string, positiveLabel: string = "OK", positiveCallback?: (this: Dialog, result: string) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void): Promise<void> {
                 let view = Api.EditText.$new(app.context);
                 if (hint) view.setHint(wrap(hint));
                 await this.dialog(title, "", positiveLabel, function () {
@@ -151,7 +151,7 @@ namespace Menu {
             }
 
             /** Creates collapse */
-            function collapse(label: string, state: boolean = false): [Layout, Layout] {
+            export function collapse(label: string, state: boolean = false): [Layout, Layout] {
                 let parentLayout = new Layout(Api.LinearLayout);
                 let layout = new Layout(Api.LinearLayout);
                 let textView = this.category(`▽ ${label} ▽`);
