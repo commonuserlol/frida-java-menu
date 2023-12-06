@@ -42,8 +42,8 @@ namespace Menu {
             this.instance.setAlpha(alpha);
         }
         /** Sets background color */
-        set backgroundColor(color: string) {
-            this.instance.setBackgroundColor(parseColor(color));
+        set backgroundColor(color: string | number) {
+            this.instance.setBackgroundColor(typeof "color" == "string" ? parseColor(color as string) : color);
         }
         /** Sets layout params */
         set layoutParams(params: Java.Wrapper) {
@@ -62,8 +62,8 @@ namespace Menu {
             this.instance.setText(wrap(text));
         }
         /** Sets text color */
-        set textColor(color: string) {
-            this.instance.setTextColor(parseColor(color));
+        set textColor(color: string | number) {
+            this.instance.setTextColor(typeof "color" == "string" ? parseColor(color as string) : color);
         }
         /** Sets visibility */
         set visibility(visibility: number) {
