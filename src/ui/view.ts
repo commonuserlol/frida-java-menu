@@ -42,8 +42,8 @@ namespace Menu {
             this.instance.setAlpha(alpha);
         }
         /** Sets background color */
-        set backgroundColor(color: Java.Wrapper | number) {
-            this.instance.setBackgroundColor(color);
+        set backgroundColor(color: string) {
+            this.instance.setBackgroundColor(parseColor(color));
         }
         /** Sets layout params */
         set layoutParams(params: Java.Wrapper) {
