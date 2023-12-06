@@ -3,20 +3,26 @@ namespace Menu {
         export declare const LGLConfig: GenericConfig;
         getter(Menu.Template, "LGLConfig", () => {
             return {
-                primaryText: "#82CAFD",
-                secondaryText: "#FFFFFF",
-                buttonBg: "#1C262D",
-                layoutBg: "#DD141C22",
-                collapseBg: "#222D38",
-                categoryBg: "#2F3D4C",
+                color: {
+                    primaryText: "#82CAFD",
+                    secondaryText: "#FFFFFF",
+                    buttonBg: "#1C262D",
+                    layoutBg: "#DD141C22",
+                    collapseBg: "#222D38",
+                    categoryBg: "#2F3D4C",
+                },
 
-                width: 290,
-                height: 210,
-                x: 50,
-                y: 100,
+                menu: {
+                    width: 290,
+                    height: 210,
+                    x: 50,
+                    y: 100,
+                },
 
-                size: 45,
-                alpha: 0.7
+                icon: {
+                    size: 45,
+                    alpha: 0.7
+                }
             };
         }, lazy);
 

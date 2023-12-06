@@ -21,6 +21,10 @@ namespace Menu {
             alpha: number
         }
 
-        export declare type GenericConfig = ColorConfig & MenuConfig & IconConfig;
+        export declare interface GenericConfig {
+            color: ColorConfig,
+            menu: MenuConfig,
+            icon: IconConfig,
+        }
     }
 }
