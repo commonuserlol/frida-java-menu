@@ -21,10 +21,19 @@ namespace Menu {
             alpha: number
         }
 
+        export interface StringConfig {
+            noOverlayPermission: string,
+            hide: string,
+            close: string,
+            hideCallback: string,
+            killCallback: string,
+        }
+
         export declare interface GenericConfig {
             color: ColorConfig,
             menu: MenuConfig,
             icon: IconConfig,
+            strings: StringConfig
         }
     }
 }

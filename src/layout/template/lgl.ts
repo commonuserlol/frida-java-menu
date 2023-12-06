@@ -22,6 +22,14 @@ namespace Menu {
                 icon: {
                     size: 45,
                     alpha: 0.7
+                },
+
+                strings: {
+                    noOverlayPermission: "Overlay permission required to show menu",
+                    hide: "HIDE/KILL (Hold)",
+                    close: "MINIMIZE",
+                    hideCallback: "Icon hidden. Remember the hidden icon position",
+                    killCallback: "Menu killed"
                 }
             };
         }, lazy);
