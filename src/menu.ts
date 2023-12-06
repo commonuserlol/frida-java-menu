@@ -2,7 +2,7 @@ namespace Menu {
     /** `Composer` class instance */
     export declare let instance: Composer;
     /** Config instance for template */
-    export declare let config: Config;
+    export declare let config: Menu.Template.GenericConfig;
     /** Shared Preferences storage. Feel free to store own values */
     export declare const sharedPreferences: SharedPreferences;
 
