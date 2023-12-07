@@ -10,12 +10,12 @@ namespace Menu {
         set _imageForImageView(image: string) {
             this.instance.setScaleType(Api.ScaleType.FIT_XY.value);
             this.instance.setImageBitmap(bitmap(image));
-            config.iconAlpha = Math.round(config.iconAlpha * 255);
+            config.icon.alpha = Math.round(config.icon.alpha * 255);
         }
 
         /** @internal */
         set _imageForWebView(image: string) {
-            this.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${image}\" width=\"${config.iconSize}\" height=\"${config.iconSize}\" ></body></html>`, "text/html", "utf-8");
+            this.instance.loadData(`<html><head></head><body style=\"margin: 0; padding: 0\"><img src=\"${image}\" width=\"${config.icon.size}\" height=\"${config.icon.size}\" ></body></html>`, "text/html", "utf-8");
             this.instance.backgroundColor = Api.TRANSPARENT;
             this.instance.getSettings().setAppCacheEnabled(true);
         }
@@ -23,9 +23,9 @@ namespace Menu {
         /** Sets image */
         set image(image: string) {
             const isNormalType = this.instance.$className == Api.ImageView.$className;
-            const applyDimension = Math.floor(dp(config.iconSize));
+            const applyDimension = Math.floor(dp(config.icon.size));
             isNormalType ? this._imageForImageView = image : this._imageForWebView = image;
-            this.alpha = config.iconAlpha;
+            this.alpha = config.icon.alpha;
             this.layoutParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             this.instance.getLayoutParams().height.value = applyDimension;
             this.instance.getLayoutParams().width.value = applyDimension;
