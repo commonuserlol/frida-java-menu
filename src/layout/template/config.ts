@@ -13,7 +13,7 @@ namespace Menu {
         export interface ColorConfig {
             primaryText: string,
             secondaryText: string,
-            buttonBg: ButtonColor,
+            button: ButtonColor,
             layoutBg: string,
             collapseBg: string,
             categoryBg: string,
