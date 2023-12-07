@@ -127,8 +127,6 @@ namespace Menu {
                 (l instanceof View ? l.instance : l).removeView((view instanceof View ? view.instance: view));
             })
         }
-
-        
     }
 
     /** Backwards compatible name with the new one.
