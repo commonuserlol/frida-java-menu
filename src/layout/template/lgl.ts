@@ -205,7 +205,7 @@ namespace Menu {
                 layout.orientation = Api.VERTICAL;
                 seekbar.padding = [25, 10, 35, 10];
 
-                Menu.instance.add(seekbar.label, layout);
+                Menu.instance.add((seekbar as SeekBar).label, layout);
                 Menu.instance.add(seekbar, layout);
 
                 return layout;
