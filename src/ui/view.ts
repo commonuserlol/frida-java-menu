@@ -43,7 +43,7 @@ namespace Menu {
         }
         /** Sets background color */
         set backgroundColor(color: string | number) {
-            this.instance.setBackgroundColor(typeof "color" == "string" ? parseColor(color as string) : color);
+            this.instance.setBackgroundColor(parseColor(color));
         }
         /** Sets layout params */
         set layoutParams(params: Java.Wrapper) {
@@ -63,7 +63,7 @@ namespace Menu {
         }
         /** Sets text color */
         set textColor(color: string | number) {
-            this.instance.setTextColor(typeof "color" == "string" ? parseColor(color as string) : color);
+            this.instance.setTextColor(parseColor(color));
         }
         /** Sets visibility */
         set visibility(visibility: number) {

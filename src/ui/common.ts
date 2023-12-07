@@ -9,7 +9,7 @@ namespace Menu {
         return Api.BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
     /** Parses color from #AARRGGBB or #RRGGBB */
-    export function parseColor(color: string): number {
-        return Api.Color.parseColor(color);
+    export function parseColor(color: string | number): number {
+        return typeof color == "number" ? color : Api.Color.parseColor(`${color}`);
     }
 }
