@@ -17,6 +17,7 @@ namespace Menu {
             layoutBg: string,
             collapseBg: string,
             categoryBg: string,
+            menu: string
         }
 
         export interface MenuConfig {
@@ -36,7 +37,7 @@ namespace Menu {
             hide: string,
             close: string,
             hideCallback: string,
-            killCallback: string,
+            killCallback: string
         }
 
         export declare interface GenericConfig {

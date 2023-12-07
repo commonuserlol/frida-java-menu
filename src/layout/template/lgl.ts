@@ -15,6 +15,7 @@ namespace Menu {
                     layoutBg: "#DD141C22",
                     collapseBg: "#222D38",
                     categoryBg: "#2F3D4C",
+                    menu: "#EE1C2A35"
                 },
 
                 menu: {
@@ -55,7 +56,7 @@ namespace Menu {
                 this.titleLayout.padding = [10, 5, 10, 5];
                 this.titleLayout.verticalGravity = 16;
                 
-                this.title.textColor = config.primaryTextColor;
+                this.title.textColor = config.color.primaryText;
                 this.title.textSize = 18;
                 this.title.gravity = Api.CENTER;
                 this.title.layoutParams = titleParams;
@@ -64,7 +65,7 @@ namespace Menu {
                 this.subtitle.marqueeRepeatLimit = -1;
                 this.subtitle.singleLine = true;
                 this.subtitle.selected = true;
-                this.subtitle.textColor = config.primaryTextColor;
+                this.subtitle.textColor = config.color.primaryText;
                 this.subtitle.textSize = 10;
                 this.subtitle.gravity = Api.CENTER;
                 this.subtitle.padding = [0, 0, 0, 5];
@@ -75,16 +76,16 @@ namespace Menu {
             initializeParams(): void {
                 this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
                 this.params.gravity.value = 51;
-                this.params.x.value = config.menuXPosition;
-                this.params.y.value = config.menuYPosition;
+                this.params.x.value = config.menu.x;
+                this.params.y.value = config.menu.y;
             }
 
             initializeLayout(): void {
                 this.me = new Layout(Api.LinearLayout);
                 this.me.visibility = Api.GONE;
-                this.me.backgroundColor = config.bgColor;
+                this.me.backgroundColor = config.color.menu;
                 this.me.orientation = Api.VERTICAL;
-                this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(config.menuWidth)), Api.WRAP_CONTENT);
+                this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(config.menu.width)), Api.WRAP_CONTENT);
             }
 
             initializeIcon(value: string, type?: "Normal" | "Web"): void {
@@ -99,10 +100,10 @@ namespace Menu {
             }
 
             initializeProxy(): void {
-                const proxyParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menuHeight)));
+                const proxyParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
                 this.proxy = new Layout(Api.ScrollView);
                 this.proxy.layoutParams = proxyParams;
-                this.proxy.backgroundColor = config.layoutColor;
+                this.proxy.backgroundColor = config.color.layoutBg;
             }
 
             initializeMainLayout(): void {
@@ -114,34 +115,34 @@ namespace Menu {
                 const hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
                 const closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
                 this.buttonLayout = new Layout(Api.RelativeLayout);
-                this.hide = new Button(config.hide);
-                this.close = new Button(config.close);
+                this.hide = new Button(config.strings.hide);
+                this.close = new Button(config.strings.close);
                 this.buttonLayout.padding = [10, 3, 10, 3];
                 this.buttonLayout.verticalGravity = Api.CENTER;
                 
                 hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
                 this.hide.layoutParams = hideButtonParams;
                 this.hide.backgroundColor = Api.TRANSPARENT;
-                this.hide.textColor = config.primaryTextColor;
+                this.hide.textColor = config.color.primaryText;
                 this.hide.onClickListener = () => {
                     this.icon.visibility = Api.VISIBLE;
                     this.icon.alpha = 0;
                     this.me.visibility = Api.GONE;
-                    toast(config.hideCallback, 1);
+                    toast(config.strings.hideCallback, 1);
                 }
 
                 this.hide.onLongClickListener = () => {
                     instance.destroy();
-                    toast(config.killCallback, 1);
+                    toast(config.strings.killCallback, 1);
                 }
 
                 closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
                 this.close.layoutParams = closeButtonParams;
                 this.close.backgroundColor = 0;
-                this.close.textColor = config.primaryTextColor;
+                this.close.textColor = config.color.primaryText;
                 this.close.onClickListener = () => {
                     this.icon.visibility = Api.VISIBLE;
-                    this.icon.alpha = config.iconAlpha;
+                    this.icon.alpha = config.icon.alpha;
                     this.me.visibility = Api.GONE;
                 }
             }
