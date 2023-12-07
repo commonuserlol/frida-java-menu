@@ -100,8 +100,8 @@ namespace Menu {
                 min ? seekbar.min = min : seekbar.min = 0;
                 if (callback) seekbar.onSeekBarChangeListener = callback;
         
-                this.add(seekbar.label, layout);
-                this.add(seekbar, layout);
+                Menu.instance.add(seekbar.label, layout);
+                Menu.instance.add(seekbar, layout);
         
                 return layout;
             }
@@ -200,8 +200,8 @@ namespace Menu {
                     state = !state; // Small hack
                     textView.instance.performClick();
                 }
-                this.add(textView, parentLayout);
-                this.add(layout, parentLayout);
+                Menu.instance.add(textView, parentLayout);
+                Menu.instance.add(layout, parentLayout);
                 return [parentLayout, layout];
             }
 
