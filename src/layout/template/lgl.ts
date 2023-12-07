@@ -176,6 +176,104 @@ namespace Menu {
                 remove(this.title, this.titleLayout);
             }
 
+            button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
+                const button = super.button(text, callback, longCallback);
+                const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
+                params.setMargins(7, 5, 7, 5);
+                button.layoutParams = params;
+                button.allCaps = false;
+                button.textColor = config.color.secondaryText;
+                button.backgroundColor = config.color.buttonBg.bg;
+
+                return button;
+            }
+
+            radioGroup(label: string, buttons: string[], callback?: ((this: RadioGroup, index: number) => void) | undefined): RadioGroup {
+                const radioGroup = super.radioGroup(label, buttons, callback);
+                radioGroup.padding = [10, 5, 10, 5];
+                radioGroup.orientation = Api.VERTICAL;
+
+                return radioGroup;
+            }
+
+            seekbar(label: string, max: number, min?: number | undefined, callback?: ((this: SeekBar, progress: number) => void) | undefined): View {
+                const seekbar = super.seekbar(label, max, min, callback);
+                const layout = new View();
+                layout.instance = Api.LinearLayout.$new(app.context);
+                layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
+                layout.orientation = Api.VERTICAL;
+                seekbar.padding = [25, 10, 35, 10];
+
+                Menu.instance.add(seekbar.label, layout);
+                Menu.instance.add(seekbar, layout);
+
+                return layout;
+            }
+
+            toggle(label: string, callback?: ((this: Switch, state: boolean) => void) | undefined): Switch {
+                const toggle = super.toggle(label, callback);
+                toggle.textColor = config.color.secondaryText;
+                toggle.padding = [10, 5, 10, 5];
+
+                return toggle;
+            }
+
+            textView(label: string): TextView {
+                const textView = super.textView(label);
+                textView.textColor = config.color.secondaryText;
+                textView.padding = [10, 5, 10, 5];
+
+                return textView;
+            }
+
+            category(label: string): TextView {
+                const textView = super.textView(label);
+                textView.backgroundColor = config.color.categoryBg;
+                textView.gravity = Api.CENTER;
+                textView.padding = [0, 5, 0, 5];
+                textView.typeface = Api.Typeface.DEFAULT_BOLD.value;
+
+                return textView;
+            }
+
+            collapse(label: string, state: boolean): [Layout, Layout] {
+                let parentLayout = new Layout(Api.LinearLayout);
+                let layout = new Layout(Api.LinearLayout);
+                let textView = this.category(`▽ ${label} ▽`);
+                let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
+                textView.backgroundColor = config.color.collapseBg;
+                params.setMargins(0, 5, 0, 0);
+                parentLayout.layoutParams = params;
+                parentLayout.verticalGravity = 16;
+                parentLayout.orientation = Api.VERTICAL;
+
+                layout.verticalGravity = 16;
+                layout.padding = [0, 5, 0, 5];
+                layout.orientation = Api.VERTICAL;
+                layout.backgroundColor = config.color.layoutBg;
+                layout.visibility = Api.GONE;
+
+                textView.padding = [0, 20, 0, 20];
+                textView.onClickListener = () => {
+                    state = !state;
+                    if (state) {
+                        layout.visibility = Api.VISIBLE;
+                        textView.text = `△ ${label} △`;
+                    }
+                    else {
+                        layout.visibility = Api.GONE;
+                        textView.text = `▽ ${label} ▽`;
+                    }
+                }
+                if (state) {
+                    state = !state; // Small hack
+                    textView.instance.performClick();
+                }
+                Menu.instance.add(textView, parentLayout);
+                Menu.instance.add(layout, parentLayout);
+                return [parentLayout, layout];
+            }
+
             destroy(): void {
                 this.buttonLayout.destroy();
                 this.close.destroy();

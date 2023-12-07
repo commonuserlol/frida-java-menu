@@ -78,8 +78,6 @@ namespace Menu {
             radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
                 const radioGroup = new RadioGroup(label);
                 const savedIndex = sharedPreferences.getInt(label);
-                radioGroup.padding = [10, 5, 10, 5];
-                radioGroup.orientation = Api.VERTICAL;
                 for (const button of buttons) {
                     const index = buttons.indexOf(button);
                     radioGroup.addButton(button, index, callback);
@@ -91,19 +89,11 @@ namespace Menu {
 
             seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): View {
                 const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
-                const layout = new View();
-                layout.instance = Api.LinearLayout.$new(app.context);
-                layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-                layout.orientation = Api.VERTICAL;
-                seekbar.padding = [25, 10, 35, 10];
                 seekbar.max = max;
                 min ? seekbar.min = min : seekbar.min = 0;
                 if (callback) seekbar.onSeekBarChangeListener = callback;
         
-                Menu.instance.add(seekbar.label, layout);
-                Menu.instance.add(seekbar, layout);
-        
-                return layout;
+                return seekbar;
             }
 
             spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
@@ -117,8 +107,6 @@ namespace Menu {
             toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
                 const toggle = new Switch(label);
                 const savedState = sharedPreferences.getBool(label);
-                toggle.textColor = config.color.secondaryText;
-                toggle.padding = [10, 5, 10, 5];
                 if (callback) toggle.onCheckedChangeListener = callback;
                 if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
         
@@ -127,18 +115,7 @@ namespace Menu {
 
             textView(label: string): TextView {
                 const textView = new TextView(label);
-                textView.textColor = config.color.secondaryText;
-                textView.padding = [10, 5, 10, 5];
         
-                return textView;
-            }
-
-            category(label: string): TextView {
-                const textView = this.textView(label);
-                textView.backgroundColor = config.color.categoryBg;
-                textView.gravity = Api.CENTER;
-                textView.padding = [0, 5, 0, 5];
-                textView.typeface = Api.Typeface.DEFAULT_BOLD.value;
                 return textView;
             }
 
@@ -165,44 +142,6 @@ namespace Menu {
                 }, negativeLabel, function () {
                     negativeCallback?.call(this);
                 }, view).then((d) => d.show());
-            }
-
-            collapse(label: string, state: boolean): [Layout, Layout] {
-                let parentLayout = new Layout(Api.LinearLayout);
-                let layout = new Layout(Api.LinearLayout);
-                let textView = this.category(`▽ ${label} ▽`);
-                let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-                textView.backgroundColor = config.color.collapseBg;
-                params.setMargins(0, 5, 0, 0);
-                parentLayout.layoutParams = params;
-                parentLayout.verticalGravity = 16;
-                parentLayout.orientation = Api.VERTICAL;
-
-                layout.verticalGravity = 16;
-                layout.padding = [0, 5, 0, 5];
-                layout.orientation = Api.VERTICAL;
-                layout.backgroundColor = config.color.layoutBg;
-                layout.visibility = Api.GONE;
-
-                textView.padding = [0, 20, 0, 20];
-                textView.onClickListener = () => {
-                    state = !state;
-                    if (state) {
-                        layout.visibility = Api.VISIBLE;
-                        textView.text = `△ ${label} △`;
-                    }
-                    else {
-                        layout.visibility = Api.GONE;
-                        textView.text = `▽ ${label} ▽`;
-                    }
-                }
-                if (state) {
-                    state = !state; // Small hack
-                    textView.instance.performClick();
-                }
-                Menu.instance.add(textView, parentLayout);
-                Menu.instance.add(layout, parentLayout);
-                return [parentLayout, layout];
             }
 
             abstract destroy(): void;
