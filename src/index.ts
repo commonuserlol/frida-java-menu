@@ -29,12 +29,9 @@
 /// <reference path="./utils/permission.ts" />
 /// <reference path="./utils/sleep.ts" />
 
-/* Config */
-/// <reference path="./config/config.ts" />
-/// <reference path="./config/default.ts" />
-
 /* Layout */
 /// <reference path="./layout/icon.ts" />
+/// <reference path="./layout/template/config.ts" />
 /// <reference path="./layout/template/generic.ts" />
 /// <reference path="./layout/template/lgl.ts" />
 
