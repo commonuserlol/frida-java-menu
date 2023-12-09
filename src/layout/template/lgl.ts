@@ -200,8 +200,7 @@ namespace Menu {
 
             seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
                 const seekbar = super.seekbar(label, max, min, callback);
-                const layout = new View();
-                layout.instance = Api.LinearLayout.$new(app.context);
+                const layout = new Layout(Api.LinearLayout);
                 layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
                 layout.orientation = Api.VERTICAL;
                 seekbar.padding = [25, 10, 35, 10];
