@@ -28,6 +28,7 @@
 /// <reference path="./utils/decorate.ts" />
 /// <reference path="./utils/permission.ts" />
 /// <reference path="./utils/sleep.ts" />
+/// <reference path="./utils/stateHolder.ts" />
 
 /* Layout */
 /// <reference path="./layout/icon.ts" />
