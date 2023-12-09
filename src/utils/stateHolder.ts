@@ -1,7 +1,7 @@
 namespace Menu {
     export function stateHolder(state: boolean, onStateChange: (state: boolean) => void) {
         let firstSkipped = false;
-        return function() {
+        const manager = () => {
             if (!firstSkipped && state) {
                 onStateChange(true);
                 firstSkipped = true;
@@ -10,6 +10,8 @@ namespace Menu {
             if (!firstSkipped) firstSkipped = true;
             state = !state;
             onStateChange(state);
-        }
+        };
+        if (state) manager();
+        return manager;
     }
 }
