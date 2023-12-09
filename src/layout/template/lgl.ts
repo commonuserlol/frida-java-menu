@@ -178,7 +178,7 @@ namespace Menu {
                 remove(this.title, this.titleLayout);
             }
 
-            button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
+            button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
                 const button = super.button(text, callback, longCallback);
                 const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
                 params.setMargins(7, 5, 7, 5);
@@ -190,7 +190,7 @@ namespace Menu {
                 return button;
             }
 
-            radioGroup(label: string, buttons: string[], callback?: ((this: RadioGroup, index: number) => void) | undefined): RadioGroup {
+            radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
                 const radioGroup = super.radioGroup(label, buttons, callback);
                 radioGroup.padding = [10, 5, 10, 5];
                 radioGroup.orientation = Api.VERTICAL;
@@ -198,7 +198,7 @@ namespace Menu {
                 return radioGroup;
             }
 
-            seekbar(label: string, max: number, min?: number | undefined, callback?: ((this: SeekBar, progress: number) => void) | undefined): View {
+            seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
                 const seekbar = super.seekbar(label, max, min, callback);
                 const layout = new View();
                 layout.instance = Api.LinearLayout.$new(app.context);
@@ -212,7 +212,7 @@ namespace Menu {
                 return layout;
             }
 
-            toggle(label: string, callback?: ((this: Switch, state: boolean) => void) | undefined): Switch {
+            toggle(label: string, callback?: SwitchCallback): Switch {
                 const toggle = super.toggle(label, callback);
                 toggle.textColor = config.color.secondaryText;
                 toggle.padding = [10, 5, 10, 5];

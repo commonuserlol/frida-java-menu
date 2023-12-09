@@ -1,4 +1,5 @@
 namespace Menu {
+
     export class RadioGroup extends View {
         private unformattedText: string;
         public readonly label: TextView;

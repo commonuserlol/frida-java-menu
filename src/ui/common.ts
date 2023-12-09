@@ -1,4 +1,7 @@
 namespace Menu {
+    export declare type ThisCallback<T extends View> = (this: T) => void;
+    export declare type ThisWithIndexCallback<T extends View> = (this: T, index: number) => void;
+
     /** @internal */
     export function dp(i: number): number {
         return Api.TypedValue.applyDimension(Api.COMPLEX_UNIT_DIP, i, app.context.getResources().getDisplayMetrics());

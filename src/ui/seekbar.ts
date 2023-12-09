@@ -1,4 +1,6 @@
 namespace Menu {
+    export declare type SeekBarCallback = (this: SeekBar, progress: number) => void;
+
     export class SeekBar extends View {
         public readonly label: TextView;
         public unformattedText: String;

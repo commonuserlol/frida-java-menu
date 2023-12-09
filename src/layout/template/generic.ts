@@ -57,7 +57,7 @@ namespace Menu {
             /** Removes template objects */
             abstract handleRemove(remove: (view: View, layout?: Java.Wrapper | View) => void): void;
 
-            button(text?: string, callback?: (this: Button) => void, longCallback?: (this: Button) => void): Button {
+            button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
                 const button = new Button(text);
                 if (callback) button.onClickListener = () => callback.call(button);
                 if (longCallback) button.onLongClickListener = () => longCallback.call(button);
@@ -75,7 +75,7 @@ namespace Menu {
                 return dialog;
             }
 
-            radioGroup(label: string, buttons: string[], callback?: (this: RadioGroup, index: number) => void): RadioGroup {
+            radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
                 const radioGroup = new RadioGroup(label);
                 const savedIndex = sharedPreferences.getInt(label);
                 for (const button of buttons) {
@@ -87,7 +87,7 @@ namespace Menu {
                 return radioGroup;
             }
 
-            seekbar(label: string, max: number, min?: number, callback?: (this: SeekBar, progress: number) => void): View {
+            seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
                 const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
                 seekbar.max = max;
                 min ? seekbar.min = min : seekbar.min = 0;
@@ -96,7 +96,7 @@ namespace Menu {
                 return seekbar;
             }
 
-            spinner(items: string[], callback?: (this: Spinner, index: number) => void): Spinner {
+            spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
                 const spinner = new Spinner(items);
                 const savedIndex = sharedPreferences.getInt(items.join());
                 if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
@@ -104,7 +104,7 @@ namespace Menu {
                 return spinner;
             }
 
-            toggle(label: string, callback?: (this: Switch, state: boolean) => void): Switch {
+            toggle(label: string, callback?: SwitchCallback): Switch {
                 const toggle = new Switch(label);
                 const savedState = sharedPreferences.getBool(label);
                 if (callback) toggle.onCheckedChangeListener = callback;
