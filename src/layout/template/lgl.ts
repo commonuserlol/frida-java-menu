@@ -256,9 +256,8 @@ namespace Menu {
                 layout.visibility = Api.GONE;
 
                 textView.padding = [0, 20, 0, 20];
-                textView.onClickListener = () => {
-                    state = !state;
-                    if (state) {
+                textView.onClickListener = stateHolder(state, (s: boolean) => {
+                    if (s) {
                         layout.visibility = Api.VISIBLE;
                         textView.text = `△ ${label} △`;
                     }
@@ -266,11 +265,7 @@ namespace Menu {
                         layout.visibility = Api.GONE;
                         textView.text = `▽ ${label} ▽`;
                     }
-                }
-                if (state) {
-                    state = !state; // Small hack
-                    textView.instance.performClick();
-                }
+                });
                 Menu.instance.add(textView, parentLayout);
                 Menu.instance.add(layout, parentLayout);
                 return [parentLayout, layout];
