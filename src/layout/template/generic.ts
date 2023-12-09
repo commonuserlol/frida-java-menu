@@ -65,12 +65,12 @@ namespace Menu {
                 return button;
             }
 
-            async dialog(title: string, message: string, positiveLabel: string = "OK", positiveCallback?: (this: Dialog) => void, negativeLabel: string = "Cancel", negativeCallback?: (this: Dialog) => void, view?: Java.Wrapper | View): Promise<Dialog> {
+            async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog> {
                 const instance = await MainActivity.getActivityInstance();
                 const dialog = new Dialog(instance, title, message);
                 view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
-                if (positiveCallback) dialog.setPositiveButton(positiveLabel, positiveCallback)
-                if (negativeCallback) dialog.setNegativeButton(negativeLabel, negativeCallback);
+                if (positiveCallback) dialog.setPositiveButton(positiveCallback)
+                if (negativeCallback) dialog.setNegativeButton(negativeCallback);
         
                 return dialog;
             }
@@ -119,29 +119,33 @@ namespace Menu {
                 return textView;
             }
 
-            async inputNumber(title: string, max: number, positiveLabel: string, positiveCallback?: (this: Dialog, result: number) => void, negativeLabel?: string, negativeCallback?: (this: Dialog) => void): Promise<void> {
+            async inputNumber(title: string, max: number, positiveCallback: DialogInputCallback<number>, negativeCallback: DialogCallback): Promise<void> {
                 let view = Api.EditText.$new(app.context);
                 if (max > 0) {
                     view.setHint(Api.JavaString.$new(`Max value: ${max}`));
                 }
                 view.setInputType(Api.InputType.TYPE_CLASS_NUMBER.value);
-                await this.dialog(title, "", positiveLabel, function () {
-                    let result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
-                    !Number.isNaN(result) ? positiveCallback?.call(this, result <= max ? result : max) : positiveCallback?.call(this, NaN);
-                }, negativeLabel, function () {
-                    negativeCallback?.call(this);
-                }, view).then((d) => d.show());
+
+                await this.dialog(title, "", {
+                    label: positiveCallback?.label,
+                    fn: function () {
+                        let result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
+                        !Number.isNaN(result) ? positiveCallback?.fn.call(this, result <= max ? result : max) : positiveCallback?.fn.call(this, NaN);
+                    },
+                },
+                negativeCallback, view).then((d) => d.show());
             }
 
-            async inputText(title: string, hint?: string, positiveLabel?: string, positiveCallback?: (this: Dialog, result: string) => void, negativeLabel?: string, negativeCallback?: (this: Dialog) => void): Promise<void> {
+            async inputText(title: string, positiveCallback: DialogInputCallback<string>, negativeCallback: DialogCallback, hint?: string): Promise<void> {
                 let view = Api.EditText.$new(app.context);
                 if (hint) view.setHint(wrap(hint));
-                await this.dialog(title, "", positiveLabel, function () {
-                    const result = Java.cast(view, Api.TextView).getText().toString();
-                    positiveCallback?.call(this, result);
-                }, negativeLabel, function () {
-                    negativeCallback?.call(this);
-                }, view).then((d) => d.show());
+                await this.dialog(title, "", {
+                    label: positiveCallback.label,
+                    fn: function () {
+                        const result = Java.cast(view, Api.TextView).getText().toString();
+                        positiveCallback?.fn.call(this, result);
+                    }
+                }, negativeCallback, view).then((d) => d.show());
             }
 
             abstract destroy(): void;

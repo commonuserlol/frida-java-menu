@@ -1,4 +1,14 @@
 namespace Menu {
+    export declare type DialogCallback = {
+        label: string,
+        fn: (this: Dialog) => void
+    };
+
+    export declare type DialogInputCallback<T extends string | number> = {
+        label: string,
+        fn: (this: Dialog, result: T) => void
+    }
+
     export class Dialog extends View {
         constructor(context: Java.Wrapper, title?: string, message?: string) {
             super();
@@ -19,8 +29,8 @@ namespace Menu {
             this.instance.setView(view);
         }
         /** Sets positive button */
-        public setPositiveButton(label: string, callback: (this: Dialog) => void) {
-            this.instance.setPositiveButton(wrap(label), Java.registerClass({
+        public setPositiveButton(callback: DialogCallback) {
+            this.instance.setPositiveButton(wrap(callback.label), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {
@@ -28,21 +38,21 @@ namespace Menu {
                         return "OnClickListenerPositive";
                     },
                     onClick: (dialog: Java.Wrapper, which: Java.Wrapper) => {
-                        callback.call(this);
+                        callback.fn.call(this);
                     }
                 }
             }).$new());
         }
         /** Sets negative button */
-        public setNegativeButton(label: string, callback: (this: Dialog) => void) {
-            this.instance.setNegativeButton(wrap(label), Java.registerClass({
+        public setNegativeButton(callback: DialogCallback) {
+            this.instance.setNegativeButton(wrap(callback.label), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
                 methods: {
                     getName: function() {
                         return "OnClickListenerNegative";
                     },
-                    onClick: () => callback.call(this)
+                    onClick: () => callback.fn.call(this)
                 }
             }).$new());
         }
