@@ -156,7 +156,7 @@ namespace Menu {
                 this.initializeButtons();
             }
 
-            handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void {
+            handleAdd(add: ComposerHandler): void {
                 add(this.title, this.titleLayout);
                 add(this.titleLayout, this.me);
                 add(this.subtitle, this.me);
@@ -167,7 +167,7 @@ namespace Menu {
                 add(this.buttonLayout, this.me);
             }
 
-            handleRemove(remove: (view: View, layout?: Java.Wrapper | View) => void): void {
+            handleRemove(remove: ComposerHandler): void {
                 remove(this.buttonLayout, this.me);
                 remove(this.close, this.buttonLayout);
                 remove(this.hide, this.buttonLayout);

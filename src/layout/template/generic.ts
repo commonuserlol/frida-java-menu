@@ -1,5 +1,7 @@
 namespace Menu {
     export namespace Template {
+        export declare type ComposerHandler = (view: View, layout?: Java.Wrapper | View) => void;
+
         /** Generic class for templates. Your template must extend this */
         export abstract class GenericTemplate {
             /** Menu props */
@@ -52,10 +54,10 @@ namespace Menu {
             abstract ensureInitialized(): void;
 
             /** Adds everything needed from template */
-            abstract handleAdd(add: (view: View, layout?: Java.Wrapper | View) => void): void;
+            abstract handleAdd(add: ComposerHandler): void;
 
             /** Removes template objects */
-            abstract handleRemove(remove: (view: View, layout?: Java.Wrapper | View) => void): void;
+            abstract handleRemove(remove: ComposerHandler): void;
 
             button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
                 const button = new Button(text);
