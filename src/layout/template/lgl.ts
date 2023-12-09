@@ -1,5 +1,6 @@
 namespace Menu {
     export namespace Template {
+        /** LGL Template configuration */
         export declare const LGLConfig: GenericConfig;
         getter(Menu.Template, "LGLConfig", () => {
             return {
