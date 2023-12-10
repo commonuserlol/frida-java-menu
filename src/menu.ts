@@ -134,5 +134,5 @@ namespace Menu {
      * Please do NOT use it for new projects
      * 
      * It WILL be removed after a few versions */
-    export class JavaMenu extends Composer {}
+    export class JavaMenu<T extends Menu.Template.GenericTemplate = Menu.Template.GenericTemplate> extends Composer<T> {}
 }
