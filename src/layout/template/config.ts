@@ -1,22 +1,10 @@
 namespace Menu {
     export namespace Template {
-        /** Widget color configuration */
-        interface WidgetColor {
-            fg: string,
-            bg: string
-        }
-
-        /** Button color configuration */
-        interface ButtonColor extends WidgetColor {
-            on: string,
-            off: string
-        }
-
         /** Color configuration */
         export interface ColorConfig {
             primaryText: string,
             secondaryText: string,
-            button: ButtonColor,
+            buttonBg: string,
             layoutBg: string,
             collapseBg: string,
             categoryBg: string,

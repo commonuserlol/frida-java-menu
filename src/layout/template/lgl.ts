@@ -7,12 +7,7 @@ namespace Menu {
                 color: {
                     primaryText: "#82CAFD",
                     secondaryText: "#FFFFFF",
-                    button: {
-                        fg: "#FFFFFF", // TODO: Should i sync it with `secondaryText` ?
-                        bg: "#1C262D",
-                        on: "#1B5E20",
-                        off: "#7F0000"
-                    },
+                    buttonBg: "#1C262D",
                     layoutBg: "#DD141C22",
                     collapseBg: "#222D38",
                     categoryBg: "#2F3D4C",
@@ -185,7 +180,7 @@ namespace Menu {
                 button.layoutParams = params;
                 button.allCaps = false;
                 button.textColor = config.color.secondaryText;
-                button.backgroundColor = config.color.button.bg;
+                button.backgroundColor = config.color.buttonBg;
 
                 return button;
             }
