@@ -9,13 +9,13 @@ namespace Menu {
     getter(Menu, "sharedPreferences", () => new SharedPreferences(), lazy);
     
     /** Main class for menu */
-    export class Composer {
+    export class Composer<T extends Menu.Template.GenericTemplate = Menu.Template.GenericTemplate> {
         /** @internal */
         rootFrame: Layout;
         /** Layout template */
-        template: Menu.Template.GenericTemplate;
+        template: T;
 
-        constructor (title: string, subtitle: string, template: Menu.Template.GenericTemplate) {
+        constructor (title: string, subtitle: string, template: T) {
             Menu.instance = this;
 
             if (!overlay.check()) {
