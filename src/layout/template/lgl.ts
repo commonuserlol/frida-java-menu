@@ -38,9 +38,8 @@ namespace Menu {
 
         /** LGL Mod Menu template */
         export class LGLTemplate extends GenericTemplate {
-            constructor() {
-                super();
-                config = LGLConfig;
+            constructor(cfg?: GenericConfig) {
+                super(cfg ?? LGLConfig);
                 this.titleLayout = new Layout(Api.RelativeLayout);
                 this.title = new TextView();
                 this.subtitle = new TextView();

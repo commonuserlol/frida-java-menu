@@ -27,7 +27,9 @@ namespace Menu {
             /** Close button */
             close: Button;
 
-            constructor() {}
+            constructor(cfg: GenericConfig) {
+                config = cfg;
+            }
 
             /** Initializes menu props */
             abstract initializeParams(): void;
