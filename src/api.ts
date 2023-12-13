@@ -16,6 +16,7 @@ namespace Menu {
         export const DialogInterfaceOnClickListener = Java.use("android.content.DialogInterface$OnClickListener");
         export const EditText = Java.use("android.widget.EditText");
         export const FrameLayout = Java.use("android.widget.FrameLayout");
+        export const GradientDrawable = Java.use("android.graphics.drawable.GradientDrawable");
         export const Gravity = Java.use("android.view.Gravity");
         export const HTML = Java.use("android.text.Html");
         export const ImageView = Java.use("android.widget.ImageView");
@@ -70,6 +71,7 @@ namespace Menu {
         export const simple_spinner_dropdown_item = R_Layout.simple_spinner_dropdown_item.value;
         export const TRANSPARENT = Color.TRANSPARENT.value;
         export const VERTICAL = LinearLayout.VERTICAL.value;
+        export const HORIZONTAL = LinearLayout.HORIZONTAL.value;
         export const VISIBLE = View.VISIBLE.value;
         export const WINDOW_SERVICE = Activity.WINDOW_SERVICE.value;
         export const WRAP_CONTENT = ViewGroup.WRAP_CONTENT.value;
