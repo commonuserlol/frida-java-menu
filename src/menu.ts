@@ -2,14 +2,14 @@ namespace Menu {
     /** `Composer` class instance */
     export declare let instance: Composer;
     /** Config instance for template */
-    export declare let config: Menu.Template.GenericConfig;
+    export declare let config: Menu.GenericConfig;
     /** Shared Preferences storage. Feel free to store own values */
     export declare const sharedPreferences: SharedPreferences;
 
     getter(Menu, "sharedPreferences", () => new SharedPreferences(), lazy);
     
     /** Main class for menu */
-    export class Composer<T extends Menu.Template.GenericTemplate = Menu.Template.GenericTemplate> {
+    export class Composer<T extends Menu.GenericTemplate = Menu.GenericTemplate> {
         /** @internal */
         rootFrame: Layout;
         /** Layout template */
@@ -134,5 +134,5 @@ namespace Menu {
      * Please do NOT use it for new projects
      * 
      * It WILL be removed after a few versions */
-    export class JavaMenu<T extends Menu.Template.GenericTemplate = Menu.Template.GenericTemplate> extends Composer<T> {}
+    export class JavaMenu<T extends Menu.GenericTemplate = Menu.GenericTemplate> extends Composer<T> {}
 }
