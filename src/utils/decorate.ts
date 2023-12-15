@@ -1,6 +1,6 @@
 namespace Menu {
     /** @internal */
-    export function decorate<T extends View>(
+    export function decorate<T extends Object>(
         target: T,
         decorator: (target: T, key: string, descriptor: PropertyDescriptor) => PropertyDescriptor,
         descriptors = globalThis.Object.getOwnPropertyDescriptors(target as any)
