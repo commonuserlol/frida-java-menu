@@ -28,15 +28,13 @@
 /// <reference path="./utils/decorate.ts" />
 /// <reference path="./utils/permission.ts" />
 /// <reference path="./utils/sleep.ts" />
-
-/* Config */
-/// <reference path="./config/config.ts" />
-/// <reference path="./config/default.ts" />
+/// <reference path="./utils/stateHolder.ts" />
 
 /* Layout */
 /// <reference path="./layout/icon.ts" />
-/// <reference path="./layout/template/generic.ts" />
-/// <reference path="./layout/template/lgl.ts" />
+/// <reference path="./layout/config.ts" />
+/// <reference path="./layout/generic.ts" />
+/// <reference path="./layout/lgl.ts" />
 
 /* Main class */
 /// <reference path="./menu.ts" />

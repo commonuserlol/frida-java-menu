@@ -1,4 +1,6 @@
 namespace Menu {
+    export declare type SeekBarCallback = (this: SeekBar, progress: number) => void;
+
     export class SeekBar extends View {
         public readonly label: TextView;
         public unformattedText: String;
@@ -8,7 +10,7 @@ namespace Menu {
             this.instance = Api.SeekBar.$new(app.context);
             this.unformattedText = new String(text);
             this.label = new TextView(format(this.unformattedText, progress ?? 0));
-            this.label.textColor = config.secondaryTextColor;
+            this.label.textColor = config.color.secondaryText;
             this.progress = progress;
         }
         /** Gets max value */

@@ -1,4 +1,5 @@
 namespace Menu {
+
     export class RadioGroup extends View {
         private unformattedText: string;
         public readonly label: TextView;
@@ -18,7 +19,7 @@ namespace Menu {
             let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             button.instance = Api.RadioButton.$new(app.context);
             button.text = label;
-            button.textColor = config.secondaryTextColor;
+            button.textColor = config.color.secondaryText;
             if (callback) {
                 button.onClickListener = () => {
                     this.label.text = format(this.unformattedText, label);

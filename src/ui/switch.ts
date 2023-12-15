@@ -1,4 +1,6 @@
 namespace Menu {
+    export declare type SwitchCallback = (this: Switch, state: boolean) => void;
+
     export class Switch extends View {
         constructor(text?: string, state: boolean = false) {
             super();

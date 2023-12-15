@@ -35,7 +35,7 @@ namespace Menu {
                 case Api.ACTION_MOVE:
                     instance.template.me.alpha = 0.5;
                     instance.template.icon.alpha = instance.template.icon.instance.$className == Api.ImageView.$className ?
-                            Math.round(config.iconAlpha / 2) : 0.5;
+                            Math.round(config.icon.alpha / 2) : 0.5;
                     instance.template.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])
                     instance.template.params.y.value = this.initialPosition[1] + Math.floor(event.getRawY() - this.touchPosition[1])
                     Java.scheduleOnMainThread(() => {

@@ -41,9 +41,13 @@ namespace Menu {
         set alpha(alpha: number) {
             this.instance.setAlpha(alpha);
         }
+        /** Sets background */
+        set background(background: Java.Wrapper | View) {
+            this.instance.setBackground(background instanceof View ? background.instance : background);
+        }
         /** Sets background color */
-        set backgroundColor(color: Java.Wrapper | number) {
-            this.instance.setBackgroundColor(color);
+        set backgroundColor(color: string | number) {
+            this.instance.setBackgroundColor(parseColor(color));
         }
         /** Sets layout params */
         set layoutParams(params: Java.Wrapper) {
@@ -62,8 +66,8 @@ namespace Menu {
             this.instance.setText(wrap(text));
         }
         /** Sets text color */
-        set textColor(color: Java.Wrapper | number) {
-            this.instance.setTextColor(color);
+        set textColor(color: string | number) {
+            this.instance.setTextColor(parseColor(color));
         }
         /** Sets visibility */
         set visibility(visibility: number) {
