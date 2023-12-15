@@ -2,10 +2,10 @@ namespace Menu {
     export declare type ComposerHandler = (view: View, layout?: Java.Wrapper | View) => void;
 
     /** Generic class for templates. Your template must extend this */
-    export abstract class GenericTemplate {
+    export abstract class GenericLayout {
         /** Menu props */
         params: Java.Wrapper; // TODO: Maybe i should add wrapper for *params
-        /** Template as layout */
+        /** Layout as layout */
         me: Layout;
         /** Icon holder */
         icon: Icon;

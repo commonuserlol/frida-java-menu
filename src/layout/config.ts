@@ -42,7 +42,7 @@ namespace Menu {
      * 
      * This defines only **REQUIRED** configuration, not final
      * 
-     * Template can have other options which not documented or have poorly understood names
+     * Layout can have other options which not documented or have poorly understood names
      */
     export declare interface GenericConfig {
         color: ColorConfig,

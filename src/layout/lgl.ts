@@ -1,5 +1,5 @@
 namespace Menu {
-    /** LGL Template configuration */
+    /** LGL Layout configuration */
     export declare const LGLConfig: GenericConfig;
     getter(Menu, "LGLConfig", () => {
         return {
@@ -36,7 +36,7 @@ namespace Menu {
     }, lazy);
 
     /** LGL Mod Menu template */
-    export class LGLTemplate extends GenericTemplate {
+    export class LGLLayout extends GenericLayout {
         constructor(cfg?: GenericConfig) {
             super(cfg ?? LGLConfig);
             this.titleLayout = new Layout(Api.RelativeLayout);
