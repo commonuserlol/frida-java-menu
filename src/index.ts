@@ -32,9 +32,9 @@
 
 /* Layout */
 /// <reference path="./layout/icon.ts" />
-/// <reference path="./layout/template/config.ts" />
-/// <reference path="./layout/template/generic.ts" />
-/// <reference path="./layout/template/lgl.ts" />
+/// <reference path="./layout/config.ts" />
+/// <reference path="./layout/generic.ts" />
+/// <reference path="./layout/lgl.ts" />
 
 /* Main class */
 /// <reference path="./menu.ts" />
