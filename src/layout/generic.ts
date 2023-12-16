@@ -80,7 +80,7 @@ namespace Menu {
         }
 
         async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog> {
-            const instance = await MainActivity.getActivityInstance();
+            const instance = await activityInstance;
             const dialog = new Dialog(instance, title, message);
             view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
             if (positiveCallback) dialog.setPositiveButton(positiveCallback)

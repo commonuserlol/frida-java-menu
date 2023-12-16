@@ -20,7 +20,7 @@ namespace Menu {
 
             if (!overlay.check()) {
                 overlay.ask();
-                setTimeout(() => MainActivity.getActivityInstance().then((instance) => instance.finish()), 3000);
+                setTimeout(async () => (await activityInstance).finish(), 3000);
             }
 
             this.rootFrame = new Layout(Api.FrameLayout);
@@ -31,9 +31,9 @@ namespace Menu {
             this.add(this.template.me, this.rootFrame);
             this.template.handleAdd(this.add);
 
-            MainActivity.onDestroy(() => this.destroy());
-            MainActivity.onPause(() => this.hide());
-            MainActivity.onResume(() => this.show());
+            onDestroy(() => this.destroy());
+            onPause(() => this.hide());
+            onResume(() => this.show());
         }
 
         /**
@@ -77,9 +77,9 @@ namespace Menu {
 
         /** Disposes instance of `Composer` */
         destroy() {
-            MainActivity.onPause(null);
-            MainActivity.onResume(null);
-            MainActivity.onDestroy(null);
+            onPause();
+            onResume();
+            onDestroy();
             this.hide();
             this.remove(this.template.me, this.rootFrame);
             this.template.handleRemove(this.remove);

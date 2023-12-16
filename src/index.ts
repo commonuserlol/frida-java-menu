@@ -2,7 +2,6 @@
 /// <reference path="./api.ts" />
 
 /* Helpers */
-/// <reference path="./misc/mainActivity.ts" />
 /// <reference path="./misc/sharedPreferences.ts" />
 /// <reference path="./misc/onTouch.ts" />
 /// <reference path="./runtime.ts" />
@@ -29,6 +28,7 @@
 /// <reference path="./utils/permission.ts" />
 /// <reference path="./utils/sleep.ts" />
 /// <reference path="./utils/stateHolder.ts" />
+/// <reference path="./utils/wait.ts" />
 
 /* Layout */
 /// <reference path="./layout/icon.ts" />

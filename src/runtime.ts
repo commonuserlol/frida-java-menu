@@ -35,8 +35,22 @@ namespace Menu {
             return Java.cast(app.context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager);
         }
     };
-    /** App activity instance */
-    export declare let activityInstance: Java.Wrapper;
+
+    export declare const activityInstance: Promise<Java.Wrapper>;
+    getter(Menu, "activityInstance", () => {
+        return new Promise((resolve, reject) => {
+            Java.choose(Api.Activity.$className, {
+                onMatch: (instance) => {
+                    if (instance.getComponentName().getClassName() == launcher) {
+                        console.log("java.choose got activity");
+                        resolve(Java.retain(instance));
+                        return "stop";
+                    }
+                },
+                onComplete() {}
+            });
+        });
+    }, lazy);
 
     /** Android version */
     export declare const androidVersion: string;
