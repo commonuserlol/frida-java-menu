@@ -21,7 +21,6 @@
 /// <reference path="./ui/toast.ts" />
 
 /* Utils */
-/// <reference path="./utils/console.ts" />
 /// <reference path="./utils/lazy.ts" />
 /// <reference path="./utils/getter.ts" />
 /// <reference path="./utils/decorate.ts" />
