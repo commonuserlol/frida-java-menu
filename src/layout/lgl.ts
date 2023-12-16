@@ -68,6 +68,7 @@ namespace Menu {
         }
 
         initializeParams(): void {
+            super.initializeParams();
             this.params.gravity.value = 51;
             this.params.x.value = config.menu.x;
             this.params.y.value = config.menu.y;
@@ -81,11 +82,13 @@ namespace Menu {
             this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(config.menu.width)), Api.WRAP_CONTENT);
         }
 
-        initializeIcon(value: string, type?: "Normal" | "Web"): void {
+        initializeIcon(value: string, type: "Normal" | "Web"): void {
+            super.initializeIcon(value, type);
             this.icon.visibility = Api.VISIBLE;
         }
 
         initializeProxy(): void {
+            super.initializeProxy();
             const proxyParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
             this.proxy.layoutParams = proxyParams;
             this.proxy.backgroundColor = config.color.layoutBg;
