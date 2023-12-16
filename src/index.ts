@@ -1,6 +1,15 @@
 /* Java API */
 /// <reference path="./api.ts" />
 
+/* Utils */
+/// <reference path="./utils/lazy.ts" />
+/// <reference path="./utils/getter.ts" />
+/// <reference path="./utils/decorate.ts" />
+/// <reference path="./utils/permission.ts" />
+/// <reference path="./utils/sleep.ts" />
+/// <reference path="./utils/stateHolder.ts" />
+/// <reference path="./utils/wait.ts" />
+
 /* Helpers */
 /// <reference path="./misc/sharedPreferences.ts" />
 /// <reference path="./misc/onTouch.ts" />
@@ -19,15 +28,6 @@
 /// <reference path="./ui/switch.ts" />
 /// <reference path="./ui/textView.ts" />
 /// <reference path="./ui/toast.ts" />
-
-/* Utils */
-/// <reference path="./utils/lazy.ts" />
-/// <reference path="./utils/getter.ts" />
-/// <reference path="./utils/decorate.ts" />
-/// <reference path="./utils/permission.ts" />
-/// <reference path="./utils/sleep.ts" />
-/// <reference path="./utils/stateHolder.ts" />
-/// <reference path="./utils/wait.ts" />
 
 /* Layout */
 /// <reference path="./layout/icon.ts" />
