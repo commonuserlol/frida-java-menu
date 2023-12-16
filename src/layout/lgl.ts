@@ -68,7 +68,6 @@ namespace Menu {
         }
 
         initializeParams(): void {
-            this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
             this.params.gravity.value = 51;
             this.params.x.value = config.menu.x;
             this.params.y.value = config.menu.y;
@@ -83,19 +82,11 @@ namespace Menu {
         }
 
         initializeIcon(value: string, type?: "Normal" | "Web"): void {
-            this.icon = new Icon(type, value);
-
-            this.icon.onClickListener = () => {
-                this.icon.visibility = Api.GONE;
-                this.me.visibility = Api.VISIBLE;
-            }
-
             this.icon.visibility = Api.VISIBLE;
         }
 
         initializeProxy(): void {
             const proxyParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
-            this.proxy = new Layout(Api.ScrollView);
             this.proxy.layoutParams = proxyParams;
             this.proxy.backgroundColor = config.color.layoutBg;
         }

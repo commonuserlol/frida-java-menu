@@ -31,16 +31,27 @@ namespace Menu {
         }
 
         /** Initializes menu props */
-        abstract initializeParams(): void;
+        initializeParams(): void {
+            this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
+        };
 
         /** Initializes own layout */
         abstract initializeLayout(): void;
 
         /** Initializes icon */
-        abstract initializeIcon(value: string, type: "Normal" | "Web"): void;
+        initializeIcon(value: string, type: "Normal" | "Web"): void {
+            this.icon = new Icon(type, value);
+
+            this.icon.onClickListener = () => {
+                this.icon.visibility = Api.GONE;
+                this.me.visibility = Api.VISIBLE;
+            }
+        };
 
         /** Initializes proxy layout for scrolling feature */
-        abstract initializeProxy(): void;
+        initializeProxy(): void {
+            this.proxy = new Layout(Api.ScrollView);
+        };
 
         /** Initializes main layout for widgets */
         abstract initializeMainLayout(): void;
