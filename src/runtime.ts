@@ -1,8 +1,3 @@
-/// <reference path="./api.ts" />
-/// <reference path="./utils/lazy.ts" />
-/// <reference path="./utils/getter.ts" />
-/// <reference path="./utils/decorate.ts" />
-
 namespace Menu {
     export const app = {
         /** Returns app instance */
