@@ -28,8 +28,8 @@ namespace Menu {
             this.template.title.text = title;
             this.template.subtitle.text = subtitle;
             
-            this.add(this.template.me, this.rootFrame);
-            this.template.handleAdd(this.add);
+            add(this.template.me, this.rootFrame);
+            this.template.handleAdd(add);
 
             onDestroy(() => this.destroy());
             onPause(() => this.hide());
@@ -50,7 +50,7 @@ namespace Menu {
                 new OnTouch(this.rootFrame);
                 new OnTouch(this.template.icon);
 
-                this.add(this.template.icon, this.rootFrame);
+                add(this.template.icon, this.rootFrame);
             });
         }
 
@@ -58,7 +58,7 @@ namespace Menu {
         public settings(label: string, state: boolean = false): Layout {
             const settings = new Settings(label, state);
             settings.orientation = Api.VERTICAL;
-            this.add(settings.settings, this.template.titleLayout);
+            add(settings.settings, this.template.titleLayout);
             return settings;
         }
 
@@ -67,7 +67,7 @@ namespace Menu {
             Java.scheduleOnMainThread(() => {
                 try {
                     this.rootFrame.visibility = Api.GONE;
-                    this.remove(this.rootFrame, app.windowManager);
+                    remove(this.rootFrame, app.windowManager);
                 }
                 catch (e) {
                     console.warn("Menu already destroyed, ignoring `destroy` call");
@@ -81,8 +81,8 @@ namespace Menu {
             onResume();
             onDestroy();
             this.hide();
-            this.remove(this.template.me, this.rootFrame);
-            this.template.handleRemove(this.remove);
+            remove(this.template.me, this.rootFrame);
+            this.template.handleRemove(remove);
             this.template.destroy();
             this.rootFrame.destroy();
         }
@@ -98,34 +98,6 @@ namespace Menu {
                     console.warn("Menu already showed, ignoring `show` call");
                 }
             });
-        }
-
-        /**
-         * Adds view to layout
-         *
-         * @public
-         * @param {View} view to add
-         * @param {?(Java.Wrapper | View)} [layout] for add. If not provided general layout will be used
-         */
-        public add(view: View, layout?: Java.Wrapper | View) {
-            Java.scheduleOnMainThread(() => {
-                const l = layout ?? this.template.layout;
-                (l instanceof View ? l.instance : l).addView((view instanceof View ? view.instance : view));
-            })
-        }
-
-        /**
-         * Removes view from layout
-         *
-         * @public
-         * @param {View} view to remove
-         * @param {?(Java.Wrapper | View)} [layout] for remove. If not provided general layout will be used
-         */
-        public remove(view: View, layout?: Java.Wrapper | View) {
-            Java.scheduleOnMainThread(() => {
-                const l = layout ?? this.template.layout;
-                (l instanceof View ? l.instance : l).removeView((view instanceof View ? view.instance: view));
-            })
         }
     }
 

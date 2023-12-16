@@ -7,7 +7,6 @@ namespace Menu {
         
                     clearInterval(waitInterval);
                     resolve();
-                    console.log("hacc init");
                     Java.perform(callback);
                 } catch (e) {}
             }, 10);

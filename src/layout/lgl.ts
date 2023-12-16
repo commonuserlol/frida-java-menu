@@ -192,8 +192,8 @@ namespace Menu {
             layout.orientation = Api.VERTICAL;
             seekbar.padding = [25, 10, 35, 10];
 
-            Menu.instance.add((seekbar as SeekBar).label, layout);
-            Menu.instance.add(seekbar, layout);
+            add((seekbar as SeekBar).label, layout);
+            add(seekbar, layout);
 
             return layout;
         }
@@ -252,8 +252,8 @@ namespace Menu {
                     textView.text = `▽ ${label} ▽`;
                 }
             });
-            Menu.instance.add(textView, parentLayout);
-            Menu.instance.add(layout, parentLayout);
+            add(textView, parentLayout);
+            add(layout, parentLayout);
             return [parentLayout, layout];
         }
 

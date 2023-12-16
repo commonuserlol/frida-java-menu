@@ -25,8 +25,6 @@ namespace Menu {
 
         /** Replaces old view with new one */
         swapViews(_new: View, old: View) {
-            const add = Menu.instance.add;
-            const remove = Menu.instance.remove;
             const proxy = Menu.instance.template.proxy;
             
             remove(old, proxy);

@@ -42,7 +42,6 @@ namespace Menu {
             Java.choose(Api.Activity.$className, {
                 onMatch: (instance) => {
                     if (instance.getComponentName().getClassName() == launcher) {
-                        console.log("java.choose got activity");
                         resolve(Java.retain(instance));
                         return "stop";
                     }
