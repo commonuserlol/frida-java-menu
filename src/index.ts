@@ -2,10 +2,14 @@
 /// <reference path="./api.ts" />
 
 /* Utils */
-/// <reference path="./utils/lazy.ts" />
-/// <reference path="./utils/getter.ts" />
 /// <reference path="./utils/decorate.ts" />
+/// <reference path="./utils/format.ts" />
+/// <reference path="./utils/getter.ts" />
+/// <reference path="./utils/hook.ts" />
+/// <reference path="./utils/lazy.ts" />
+/// <reference path="./utils/operations.ts" />
 /// <reference path="./utils/permission.ts" />
+/// <reference path="./utils/random.ts" />
 /// <reference path="./utils/sleep.ts" />
 /// <reference path="./utils/stateHolder.ts" />
 /// <reference path="./utils/wait.ts" />
