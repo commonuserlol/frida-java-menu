@@ -1,7 +1,7 @@
 namespace Menu {
     /** `Composer` class instance */
     export declare let instance: Composer;
-    /** Config instance for template */
+    /** Config instance for layout */
     export declare let config: Menu.GenericConfig;
     /** Shared Preferences storage. Feel free to store own values */
     export declare const sharedPreferences: SharedPreferences;
@@ -12,10 +12,10 @@ namespace Menu {
     export class Composer<T extends Menu.GenericLayout = Menu.GenericLayout> {
         /** @internal */
         rootFrame: Layout;
-        /** Layout template */
-        template: T;
+        /** Layout layout */
+        layout: T;
 
-        constructor (title: string, subtitle: string, template: T) {
+        constructor (title: string, subtitle: string, layout: T) {
             Menu.instance = this;
 
             if (!overlay.check()) {
@@ -24,12 +24,12 @@ namespace Menu {
             }
 
             this.rootFrame = new Layout(Api.FrameLayout);
-            this.template = template;
-            this.template.title.text = title;
-            this.template.subtitle.text = subtitle;
+            this.layout = layout;
+            this.layout.title.text = title;
+            this.layout.subtitle.text = subtitle;
             
-            add(this.template.me, this.rootFrame);
-            this.template.handleAdd(add);
+            add(this.layout.me, this.rootFrame);
+            this.layout.handleAdd(add);
 
             onDestroy(() => this.destroy());
             onPause(() => this.hide());
@@ -45,12 +45,12 @@ namespace Menu {
          */
         public icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.template.initializeIcon(value, type);
+                this.layout.initializeIcon(value, type);
                 
                 new OnTouch(this.rootFrame);
-                new OnTouch(this.template.icon);
+                new OnTouch(this.layout.icon);
 
-                add(this.template.icon, this.rootFrame);
+                add(this.layout.icon, this.rootFrame);
             });
         }
 
@@ -58,7 +58,7 @@ namespace Menu {
         public settings(label: string, state: boolean = false): Layout {
             const settings = new Settings(label, state);
             settings.orientation = Api.VERTICAL;
-            add(settings.settings, this.template.titleLayout);
+            add(settings.settings, this.layout.titleLayout);
             return settings;
         }
 
@@ -81,9 +81,9 @@ namespace Menu {
             onResume();
             onDestroy();
             this.hide();
-            remove(this.template.me, this.rootFrame);
-            this.template.handleRemove(remove);
-            this.template.destroy();
+            remove(this.layout.me, this.rootFrame);
+            this.layout.handleRemove(remove);
+            this.layout.destroy();
             this.rootFrame.destroy();
         }
 
@@ -91,7 +91,7 @@ namespace Menu {
         public show() {
             Java.scheduleOnMainThread(() => {
                 try {
-                    app.windowManager.addView(this.rootFrame.instance, this.template.params);
+                    app.windowManager.addView(this.rootFrame.instance, this.layout.params);
                     this.rootFrame.visibility = Api.VISIBLE;
                 }
                 catch (e) {
