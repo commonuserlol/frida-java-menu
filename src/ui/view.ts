@@ -74,7 +74,7 @@ namespace Menu {
             this.instance.setVisibility(visibility);
         }
         /** Sets onClickListener callback */
-        set onClickListener(callback: () => void) {
+        set onClickListener(callback: EmptyCallback) {
             this.instance.setOnClickListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnClickListener],
@@ -84,7 +84,7 @@ namespace Menu {
             }).$new());
         }
         /** Sets onLongClickListener callback */
-        set onLongClickListener(callback: () => void) {
+        set onLongClickListener(callback: EmptyCallback) {
             this.instance.setOnLongClickListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnLongClickListener],

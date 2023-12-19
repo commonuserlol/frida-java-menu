@@ -1,6 +1,9 @@
 /* Java API */
 /// <reference path="./api.ts" />
 
+/* Types */
+/// <reference path="./types.ts" />
+
 /* Utils */
 /// <reference path="./utils/decorate.ts" />
 /// <reference path="./utils/format.ts" />

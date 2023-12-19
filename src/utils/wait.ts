@@ -1,5 +1,5 @@
 namespace Menu {
-    export async function waitForInit(callback: () => void): Promise<void> {
+    export async function waitForInit(callback: EmptyCallback): Promise<void> {
         return new Promise((resolve, reject) => {
             const waitInterval = setInterval(() => {
                 try {

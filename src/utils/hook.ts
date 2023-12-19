@@ -11,17 +11,17 @@ namespace Menu {
     }
 
     /** @internal */
-    export function onPause(callback?: (() => void)) {
+    export function onPause(callback?: (EmptyCallback)) {
         hook("onPause", callback);
     }
 
     /** @internal */
-    export function onResume(callback?: (() => void)) {
+    export function onResume(callback?: (EmptyCallback)) {
         hook("onResume", callback);
     }
 
     /** @internal */
-    export function onDestroy(callback?: (() => void)) {
+    export function onDestroy(callback?: (EmptyCallback)) {
         hook("onDestroy", callback);
     }
 }
