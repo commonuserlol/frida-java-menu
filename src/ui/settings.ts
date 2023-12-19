@@ -20,12 +20,12 @@ namespace Menu {
             this.settings.layoutParams = settingsParams;
             this.settings.onClickListener = () => this.handleState();
 
-            if (this.state) this.swapViews(this, Menu.instance.template.layout);
+            if (this.state) this.swapViews(this, Menu.instance.layout.layout);
         }
 
         /** Replaces old view with new one */
         swapViews(_new: View, old: View) {
-            const proxy = Menu.instance.template.proxy;
+            const proxy = Menu.instance.layout.proxy;
             
             remove(old, proxy);
             add(_new, proxy);
@@ -35,7 +35,7 @@ namespace Menu {
         handleState() {
             if (this.visibility == Api.VISIBLE) this.triggered = true;
             if (this.triggered) this.state = !this.state;
-            this.state ? this.swapViews(this, Menu.instance.template.layout) : (this.triggered ? this.swapViews(Menu.instance.template.layout, this) : null);
+            this.state ? this.swapViews(this, Menu.instance.layout.layout) : (this.triggered ? this.swapViews(Menu.instance.layout.layout, this) : null);
         }
     }
 }

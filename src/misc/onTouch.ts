@@ -14,32 +14,32 @@ namespace Menu {
         callback(view: Java.Wrapper, event: Java.Wrapper) {
             switch(event.getAction()) {
                 case Api.ACTION_DOWN:
-                    this.initialPosition = [Math.floor(instance.template.params.x.value), Math.floor(instance.template.params.y.value)];
+                    this.initialPosition = [Math.floor(instance.layout.params.x.value), Math.floor(instance.layout.params.y.value)];
                     this.touchPosition = [Math.floor(event.getRawX()), Math.floor(event.getRawY())];
                     return true;
                 case Api.ACTION_UP:
-                    instance.template.me.alpha = 1.;
-                    instance.template.icon.alpha = instance.template.icon.instance.$className == Api.ImageView.$className ? 255 : 1.;
+                    instance.layout.me.alpha = 1.;
+                    instance.layout.icon.alpha = instance.layout.icon.instance.$className == Api.ImageView.$className ? 255 : 1.;
                     let [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition[0]), Math.floor(event.getRawX() - this.touchPosition[1])];
-                    if (instance.template.icon.visibility == Api.VISIBLE) {
+                    if (instance.layout.icon.visibility == Api.VISIBLE) {
                         if (app.orientation == Api.ORIENTATION_LANDSCAPE) {
-                            instance.template.icon.visibility = Api.GONE;
-                            instance.template.me.visibility = Api.VISIBLE;
+                            instance.layout.icon.visibility = Api.GONE;
+                            instance.layout.me.visibility = Api.VISIBLE;
                         }
                         else if (rawX < 10 && rawY < 10) {
-                            instance.template.icon.visibility = Api.GONE;
-                            instance.template.me.visibility = Api.VISIBLE;
+                            instance.layout.icon.visibility = Api.GONE;
+                            instance.layout.me.visibility = Api.VISIBLE;
                         }
                     }
                     return true;
                 case Api.ACTION_MOVE:
-                    instance.template.me.alpha = 0.5;
-                    instance.template.icon.alpha = instance.template.icon.instance.$className == Api.ImageView.$className ?
+                    instance.layout.me.alpha = 0.5;
+                    instance.layout.icon.alpha = instance.layout.icon.instance.$className == Api.ImageView.$className ?
                             Math.round(config.icon.alpha / 2) : 0.5;
-                    instance.template.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])
-                    instance.template.params.y.value = this.initialPosition[1] + Math.floor(event.getRawY() - this.touchPosition[1])
+                    instance.layout.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])
+                    instance.layout.params.y.value = this.initialPosition[1] + Math.floor(event.getRawY() - this.touchPosition[1])
                     Java.scheduleOnMainThread(() => {
-                        app.windowManager.updateViewLayout(instance.rootFrame.instance, instance.template.params);
+                        app.windowManager.updateViewLayout(instance.rootFrame.instance, instance.layout.params);
                     })
                     return true;
                 default:
