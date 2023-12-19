@@ -1,5 +1,5 @@
 namespace Menu {
-    export type Permission = {
+    export interface Permission {
         name: string,
         ask: () => void,
         check: () => boolean
