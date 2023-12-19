@@ -1,4 +1,6 @@
 namespace Menu {
+    /** First layout - to add to the layout; Second - for your widgets */
+    export declare type CollapseReturn = [Layout, Layout];
     /** LGL Layout configuration */
     export declare const LGLConfig: GenericConfig;
     getter(Menu, "LGLConfig", () => {
@@ -224,7 +226,7 @@ namespace Menu {
             return textView;
         }
 
-        collapse(label: string, state: boolean): [Layout, Layout] {
+        collapse(label: string, state: boolean): CollapseReturn {
             let parentLayout = new Layout(Api.LinearLayout);
             let layout = new Layout(Api.LinearLayout);
             let textView = this.category(`▽ ${label} ▽`);
