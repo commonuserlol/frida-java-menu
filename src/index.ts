@@ -20,7 +20,7 @@
 /// <reference path="./runtime.ts" />
 
 /* UI Objects */
-/// <reference path="./ui/common.ts" />
+/// <reference path="./ui/misc.ts" />
 /// <reference path="./ui/view.ts" />
 /// <reference path="./ui/layout.ts" />
 /// <reference path="./ui/button.ts" />
