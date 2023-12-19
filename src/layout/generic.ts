@@ -73,8 +73,8 @@ namespace Menu {
 
         button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
             const button = new Button(text);
-            if (callback) button.onClickListener = () => callback.call(button);
-            if (longCallback) button.onLongClickListener = () => longCallback.call(button);
+            if (callback) button.onClickListener = callback as ThisCallback<View>;
+            if (longCallback) button.onLongClickListener = longCallback as ThisCallback<View>;
     
             return button;
         }

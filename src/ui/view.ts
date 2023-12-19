@@ -74,23 +74,23 @@ namespace Menu {
             this.instance.setVisibility(visibility);
         }
         /** Sets onClickListener callback */
-        set onClickListener(callback: EmptyCallback) {
+        set onClickListener(callback: ThisCallback<View>) {
             this.instance.setOnClickListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnClickListener],
                 methods: {
-                    onClick: callback
+                    onClick: () => callback.call(this)
                 }
             }).$new());
         }
         /** Sets onLongClickListener callback */
-        set onLongClickListener(callback: EmptyCallback) {
+        set onLongClickListener(callback: ThisCallback<View>) {
             this.instance.setOnLongClickListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnLongClickListener],
                 methods: {
                     onLongClick: (view: Java.Wrapper) => {
-                        callback();
+                        callback.call(this);
                         return true;
                     }
                 }
