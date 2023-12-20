@@ -10,8 +10,8 @@ namespace Menu {
         }
         /** Adds new `RadioButton` */
         public addButton(label: string, index: number, callback?: (index: number) => void) {
-            let button = new View(Api.RadioButton.$new(app.context));
-            let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            const button = new View(Api.RadioButton.$new(app.context));
+            const params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             button.text = label;
             button.textColor = config.color.secondaryText;
             if (callback) {
@@ -37,7 +37,7 @@ namespace Menu {
         const radioGroup = new RadioGroup(buttons);
         const savedIndex = sharedPreferences.getInt(buttons.join());
         for (const button of buttons) {
-            let index = buttons.indexOf(button);
+            const index = buttons.indexOf(button);
             radioGroup.addButton(button, index, callback);
         }
         if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex).getId()));

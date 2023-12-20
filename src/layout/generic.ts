@@ -86,7 +86,7 @@ namespace Menu {
         abstract textView(label: string): TextView;
 
         async inputNumber(title: string, max: number, positiveCallback: DialogInputCallback<number>, negativeCallback: DialogCallback): Promise<Dialog> {
-            let view = Api.EditText.$new(app.context);
+            const view = Api.EditText.$new(app.context);
             if (max > 0) {
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
             }
@@ -95,7 +95,7 @@ namespace Menu {
             return await this.dialog(title, "", {
                 label: positiveCallback?.label,
                 fn: function () {
-                    let result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
+                    const result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
                     !Number.isNaN(result) ? positiveCallback?.fn.call(this, result <= max ? result : max) : positiveCallback?.fn.call(this, NaN);
                 },
             },
@@ -103,7 +103,7 @@ namespace Menu {
         }
 
         async inputText(title: string, positiveCallback: DialogInputCallback<string>, negativeCallback: DialogCallback, hint?: string): Promise<Dialog> {
-            let view = Api.EditText.$new(app.context);
+            const view = Api.EditText.$new(app.context);
             if (hint) view.setHint(wrap(hint));
             return await this.dialog(title, "", {
                 label: positiveCallback.label,

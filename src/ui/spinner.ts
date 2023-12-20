@@ -8,11 +8,11 @@ namespace Menu {
             this.instance = Api.Spinner.$new(app.context);
             this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
             this.initialized = false;
-            let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
+            const params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
             params.setMargins(7, 2, 7, 2);
             this.layoutParams = params;
             this.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
-            let arrayAdapter = Api.ArrayAdapter.$new(app.context, Api.simple_spinner_dropdown_item, this.items);
+            const arrayAdapter = Api.ArrayAdapter.$new(app.context, Api.simple_spinner_dropdown_item, this.items);
             arrayAdapter.setDropDownViewResource(Api.simple_spinner_dropdown_item);
             this.adapter = arrayAdapter;
         }

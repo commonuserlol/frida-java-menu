@@ -20,7 +20,7 @@ namespace Menu {
                 case Api.ACTION_UP:
                     instance.layout.me.alpha = 1.;
                     instance.layout.icon.alpha = instance.layout.icon.instance.$className == Api.ImageView.$className ? 255 : 1.;
-                    let [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition[0]), Math.floor(event.getRawX() - this.touchPosition[1])];
+                    const [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition[0]), Math.floor(event.getRawX() - this.touchPosition[1])];
                     if (instance.layout.icon.visibility == Api.VISIBLE) {
                         if (app.orientation == Api.ORIENTATION_LANDSCAPE) {
                             instance.layout.icon.visibility = Api.GONE;

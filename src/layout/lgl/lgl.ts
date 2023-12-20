@@ -252,10 +252,10 @@ namespace Menu {
         }
 
         collapse(label: string, state: boolean): CollapseReturn {
-            let parentLayout = new Layout(Api.LinearLayout);
-            let layout = new Layout(Api.LinearLayout);
-            let textView = this.category(`▽ ${label} ▽`);
-            let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
+            const parentLayout = new Layout(Api.LinearLayout);
+            const layout = new Layout(Api.LinearLayout);
+            const textView = this.category(`▽ ${label} ▽`);
+            const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             textView.backgroundColor = config.color.collapseBg;
             params.setMargins(0, 5, 0, 0);
             parentLayout.layoutParams = params;
