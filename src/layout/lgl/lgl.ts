@@ -188,9 +188,16 @@ namespace Menu {
         }
 
         radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-            const radioGroup = Menu.radioGroup(label, buttons, callback);
+            const radioGroup = Menu.radioGroup(buttons, function (index: number) {
+                const button = new View(this.getChildAt(index));
+                radioGroupLabel.text = format(label, button.text);
+                callback?.call(radioGroup, index);
+            });
+            const radioGroupLabel = this.textView(format(label, ""));
+            const radioGroupLabelParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
+            radioGroup.instance.addView(Java.cast(radioGroupLabel.instance, Api.View), buttons.length, radioGroupLabelParams);
 
             return radioGroup;
         }

@@ -1,17 +1,12 @@
 namespace Menu {
 
     export class RadioGroup extends View {
-        private unformattedText: string;
-        public readonly label: TextView;
-        
-        constructor(text: string) {
+        buttons: string[];
+
+        constructor(buttons: string[]) {
             super();
             this.instance = Api.RadioGroup.$new(app.context);
-            this.label = new TextView(text);
-            let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            this.unformattedText = text;
-            this.label.text = format(text, 0);
-            this.instance.addView(Java.cast(this.label.instance, Api.View), 0, params);
+            this.buttons = buttons;
         }
         /** Adds new `RadioButton` */
         public addButton(label: string, index: number, callback?: (index: number) => void) {
@@ -21,16 +16,14 @@ namespace Menu {
             button.textColor = config.color.secondaryText;
             if (callback) {
                 button.onClickListener = () => {
-                    this.label.text = format(this.unformattedText, label);
-                    sharedPreferences.putInt(this.label.text, index);
-                    callback(index);
+                    sharedPreferences.putInt(this.buttons.join(), index);
+                    callback.call(this, index);
                 }
             }
-            this.instance.addView(Java.cast(button.instance, Api.View), index+1, params);
+            this.instance.addView(Java.cast(button.instance, Api.View), index, params);
         }
         /** Checks object with given id */
         public check(id: number) {
-            this.label.text = format(this.unformattedText, Java.cast(this.instance.findViewById(id), Api.TextView).getText().toString());
             this.instance.check(id);
         }
         /** Gets child at ginen index */
@@ -40,11 +33,11 @@ namespace Menu {
     }
 
     /** @internal Initializes new `android.widget.RadioGroup` wrapper with default parameters */
-    export function radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-        const radioGroup = new RadioGroup(label);
-        const savedIndex = sharedPreferences.getInt(label);
+    export function radioGroup(buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
+        const radioGroup = new RadioGroup(buttons);
+        const savedIndex = sharedPreferences.getInt(buttons.join());
         for (const button of buttons) {
-            const index = buttons.indexOf(button);
+            let index = buttons.indexOf(button);
             radioGroup.addButton(button, index, callback);
         }
         if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
