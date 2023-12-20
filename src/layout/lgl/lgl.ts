@@ -179,6 +179,14 @@ namespace Menu {
             return button;
         }
 
+        async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper): Promise<Dialog> {
+            const dialog = await Menu.dialog(title, message, positiveCallback, negativeCallback, view);
+            // I have no idea should I show dialog
+            // But let user care about this
+            // Reference: https://github.com/LGLTeam/Android-Mod-Menu/blob/2e6095c7cb85458fff07f413d95d98a22e195cfa/app/src/main/java/com/android/support/Menu.java#L812
+            return dialog;
+        }
+
         radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
             const radioGroup = Menu.radioGroup(label, buttons, callback);
             radioGroup.padding = [10, 5, 10, 5];
@@ -198,6 +206,12 @@ namespace Menu {
             add(seekbar, layout);
 
             return layout;
+        }
+
+        spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
+            const spinner = Menu.spinner(items, callback);
+
+            return spinner;
         }
 
         toggle(label: string, callback?: SwitchCallback): Switch {

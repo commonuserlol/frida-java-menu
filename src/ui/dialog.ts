@@ -56,9 +56,14 @@ namespace Menu {
                 }
             }).$new());
         }
+        /** Creates dialog */
+        public create() {
+            return this.instance.create();
+        }
+
         /** Shows dialog */
         public show() {
-            const dialog = this.instance.create();
+            const dialog = this.create();
             dialog.getWindow().setType(apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value);
             dialog.show();
         }
