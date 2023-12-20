@@ -40,7 +40,7 @@ namespace Menu {
             let index = buttons.indexOf(button);
             radioGroup.addButton(button, index, callback);
         }
-        if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
+        if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex).getId()));
 
         return radioGroup;
     }
