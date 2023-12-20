@@ -196,13 +196,17 @@ namespace Menu {
         }
 
         seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
-            const seekbar = Menu.seekbar(label, max, min, callback);
+            const seekbar = Menu.seekbar(label, max, min, (progress: number) => {
+                seekbarLabel.text = format(label, progress);
+                callback?.call(seekbar, progress);
+            });
+            const seekbarLabel = this.textView(format(label, seekbar.progress));
             const layout = new Layout(Api.LinearLayout);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;
             seekbar.padding = [25, 10, 35, 10];
 
-            add((seekbar as SeekBar).label, layout);
+            add(seekbarLabel, layout);
             add(seekbar, layout);
 
             return layout;
