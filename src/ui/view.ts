@@ -63,11 +63,11 @@ namespace Menu {
         }
         /** Sets text */
         set text(text: string) {
-            this.instance.setText(wrap(text));
+            Java.cast(this.instance, Api.TextView).setText(wrap(text));
         }
         /** Sets text color */
         set textColor(color: string | number) {
-            this.instance.setTextColor(parseColor(color));
+            Java.cast(this.instance, Api.TextView).setTextColor(parseColor(color));
         }
         /** Sets visibility */
         set visibility(visibility: number) {
