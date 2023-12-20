@@ -54,4 +54,14 @@ namespace Menu {
             this.instance.setSelection(position);
         }
     }
+
+    /** @internal Initializes new `android.widget.Spinner` wrapper with default parameters */
+    export function spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
+        const spinner = new Spinner(items);
+        const savedIndex = sharedPreferences.getInt(items.join());
+        if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
+        if (callback) spinner.onItemSelectedListener = callback;
+
+        return spinner;
+    }
 }

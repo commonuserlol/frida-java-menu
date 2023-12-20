@@ -14,4 +14,13 @@ namespace Menu {
             this.instance.setAllCaps(allCaps);
         }
     }
+
+    /** @internal Initializes new `android.widget.Button` wrapper with default parameters */
+    export function button(label: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>) {
+        const button = new Button(label);
+        if (callback) button.onClickListener = callback as ThisCallback<View>;
+        if (longCallback) button.onLongClickListener = longCallback as ThisCallback<View>;
+
+        return button;
+    }
 }

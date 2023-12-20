@@ -63,4 +63,14 @@ namespace Menu {
             dialog.show();
         }
     }
+
+    /** @internal Initializes new `android.app.AlertDialog(.Builder)` wrapper with default parameters */
+    export async function dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog> {
+        const dialog = new Dialog(await activityInstance, title, message);
+        view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
+        if (positiveCallback) dialog.setPositiveButton(positiveCallback)
+        if (negativeCallback) dialog.setNegativeButton(negativeCallback);
+
+        return dialog;
+    }
 }

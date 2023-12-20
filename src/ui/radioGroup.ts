@@ -39,4 +39,17 @@ namespace Menu {
             return this.instance.getChildAt(index);
         }
     }
+
+    /** @internal Initializes new `android.widget.RadioGroup` wrapper with default parameters */
+    export function radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
+        const radioGroup = new RadioGroup(label);
+        const savedIndex = sharedPreferences.getInt(label);
+        for (const button of buttons) {
+            const index = buttons.indexOf(button);
+            radioGroup.addButton(button, index, callback);
+        }
+        if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
+
+        return radioGroup;
+    }
 }

@@ -71,67 +71,19 @@ namespace Menu {
         /** Removes template objects */
         abstract handleRemove(remove: ComposerHandler): void;
 
-        button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
-            const button = new Button(text);
-            if (callback) button.onClickListener = callback as ThisCallback<View>;
-            if (longCallback) button.onLongClickListener = longCallback as ThisCallback<View>;
-    
-            return button;
-        }
+        abstract button(label: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button;
 
-        async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog> {
-            const instance = await activityInstance;
-            const dialog = new Dialog(instance, title, message);
-            view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
-            if (positiveCallback) dialog.setPositiveButton(positiveCallback)
-            if (negativeCallback) dialog.setNegativeButton(negativeCallback);
-    
-            return dialog;
-        }
+        abstract dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog>;
 
-        radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-            const radioGroup = new RadioGroup(label);
-            const savedIndex = sharedPreferences.getInt(label);
-            for (const button of buttons) {
-                const index = buttons.indexOf(button);
-                radioGroup.addButton(button, index, callback);
-            }
-            if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
-    
-            return radioGroup;
-        }
+        abstract radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup;
 
-        seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
-            const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
-            seekbar.max = max;
-            min ? seekbar.min = min : seekbar.min = 0;
-            if (callback) seekbar.onSeekBarChangeListener = callback;
-    
-            return seekbar;
-        }
+        abstract seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View;
 
-        spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
-            const spinner = new Spinner(items);
-            const savedIndex = sharedPreferences.getInt(items.join());
-            if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
-            if (callback) spinner.onItemSelectedListener = callback;
-            return spinner;
-        }
+        abstract spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner;
 
-        toggle(label: string, callback?: SwitchCallback): Switch {
-            const toggle = new Switch(label);
-            const savedState = sharedPreferences.getBool(label);
-            if (callback) toggle.onCheckedChangeListener = callback;
-            if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
-    
-            return toggle;
-        }
+        abstract toggle(label: string, callback?: SwitchCallback): Switch;
 
-        textView(label: string): TextView {
-            const textView = new TextView(label);
-    
-            return textView;
-        }
+        abstract textView(label: string): TextView;
 
         async inputNumber(title: string, max: number, positiveCallback: DialogInputCallback<number>, negativeCallback: DialogCallback): Promise<Dialog> {
             let view = Api.EditText.$new(app.context);

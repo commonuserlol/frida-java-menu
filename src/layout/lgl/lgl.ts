@@ -167,8 +167,8 @@ namespace Menu {
             remove(this.title, this.titleLayout);
         }
 
-        button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
-            const button = super.button(text, callback, longCallback);
+        button(text: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
+            const button = Menu.button(text, callback, longCallback);
             const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             params.setMargins(7, 5, 7, 5);
             button.layoutParams = params;
@@ -180,7 +180,7 @@ namespace Menu {
         }
 
         radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-            const radioGroup = super.radioGroup(label, buttons, callback);
+            const radioGroup = Menu.radioGroup(label, buttons, callback);
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
 
@@ -188,7 +188,7 @@ namespace Menu {
         }
 
         seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
-            const seekbar = super.seekbar(label, max, min, callback);
+            const seekbar = Menu.seekbar(label, max, min, callback);
             const layout = new Layout(Api.LinearLayout);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;
@@ -201,7 +201,7 @@ namespace Menu {
         }
 
         toggle(label: string, callback?: SwitchCallback): Switch {
-            const toggle = super.toggle(label, callback);
+            const toggle = Menu.toggle(label, callback);
             toggle.textColor = config.color.secondaryText;
             toggle.padding = [10, 5, 10, 5];
 
@@ -209,7 +209,7 @@ namespace Menu {
         }
 
         textView(label: string): TextView {
-            const textView = super.textView(label);
+            const textView = Menu.textView(label);
             textView.textColor = config.color.secondaryText;
             textView.padding = [10, 5, 10, 5];
 
@@ -217,7 +217,7 @@ namespace Menu {
         }
 
         category(label: string): TextView {
-            const textView = super.textView(label);
+            const textView = Menu.textView(label);
             textView.backgroundColor = config.color.categoryBg;
             textView.gravity = Api.CENTER;
             textView.padding = [0, 5, 0, 5];

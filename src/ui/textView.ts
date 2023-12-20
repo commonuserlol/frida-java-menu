@@ -54,4 +54,11 @@ namespace Menu {
             this.instance.setTypeface(tf);
         }
     }
+
+    /** @internal Initializes new `android.widget.TextView` wrapper with default parameters */
+    export function textView(label: string): TextView {
+        const textView = new TextView(label);
+
+        return textView;
+    }
 }

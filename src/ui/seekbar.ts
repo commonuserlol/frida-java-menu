@@ -67,4 +67,14 @@ namespace Menu {
             this.instance.setProgress(progress);
         }
     }
+
+    /** @internal Initializes new `android.widget.SeekBar` wrapper with default parameters */
+    export function seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): SeekBar {
+        const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
+        seekbar.max = max;
+        min ? seekbar.min = min : seekbar.min = 0;
+        if (callback) seekbar.onSeekBarChangeListener = callback;
+
+        return seekbar;
+    }
 }
