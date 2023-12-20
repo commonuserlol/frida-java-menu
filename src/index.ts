@@ -30,7 +30,6 @@
 /// <reference path="./ui/dialog.ts" />
 /// <reference path="./ui/radioGroup.ts" />
 /// <reference path="./ui/seekbar.ts" />
-/// <reference path="./ui/settings.ts" />
 /// <reference path="./ui/spinner.ts" />
 /// <reference path="./ui/switch.ts" />
 /// <reference path="./ui/textView.ts" />
@@ -40,7 +39,8 @@
 /// <reference path="./layout/icon.ts" />
 /// <reference path="./layout/config.ts" />
 /// <reference path="./layout/generic.ts" />
-/// <reference path="./layout/lgl.ts" />
+/// <reference path="./layout/lgl/lgl.ts" />
+/// <reference path="./layout/lgl/settings.ts" />
 
 /* Main class */
 /// <reference path="./menu.ts" />
