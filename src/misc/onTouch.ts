@@ -1,12 +1,24 @@
 namespace Menu {
     /** @internal */
+    type InitialPosition = {
+        x: number,
+        y: number
+    };
+
+    /** @internal */
+    type TouchPosition = {
+        x: number,
+        y: number
+    };
+
+    /** @internal */
     export class OnTouch {
-        initialPosition: [number, number];
-        touchPosition: [number, number];
+        initialPosition: InitialPosition;
+        touchPosition: TouchPosition;
 
         constructor(target: View) {
-            this.initialPosition = [0, 0];
-            this.touchPosition = [0, 0];
+            this.initialPosition = {x: 0, y: 0};
+            this.touchPosition = {x: 0, y: 0};
 
             target.onTouchListener = (v, e) => this.callback(v, e);
         }
@@ -14,13 +26,16 @@ namespace Menu {
         callback(view: Java.Wrapper, event: Java.Wrapper) {
             switch(event.getAction()) {
                 case Api.ACTION_DOWN:
-                    this.initialPosition = [Math.floor(instance.layout.params.x.value), Math.floor(instance.layout.params.y.value)];
-                    this.touchPosition = [Math.floor(event.getRawX()), Math.floor(event.getRawY())];
+                    this.initialPosition.x = Math.floor(instance.layout.params.x.value);
+                    this.initialPosition.y = Math.floor(instance.layout.params.y.value);
+
+                    this.touchPosition.x = Math.floor(event.getRawX());
+                    this.touchPosition.y = Math.floor(event.getRawY());
                     return true;
                 case Api.ACTION_UP:
                     instance.layout.me.alpha = 1.;
                     instance.layout.icon.alpha = instance.layout.icon.instance.$className == Api.ImageView.$className ? 255 : 1.;
-                    const [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition[0]), Math.floor(event.getRawX() - this.touchPosition[1])];
+                    const [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition.x), Math.floor(event.getRawX() - this.touchPosition.y)];
                     if (instance.layout.icon.visibility == Api.VISIBLE) {
                         if (app.orientation == Api.ORIENTATION_LANDSCAPE) {
                             instance.layout.icon.visibility = Api.GONE;
@@ -36,8 +51,8 @@ namespace Menu {
                     instance.layout.me.alpha = 0.5;
                     instance.layout.icon.alpha = instance.layout.icon.instance.$className == Api.ImageView.$className ?
                             Math.round(config.icon.alpha / 2) : 0.5;
-                    instance.layout.params.x.value = this.initialPosition[0] + Math.floor(event.getRawX() - this.touchPosition[0])
-                    instance.layout.params.y.value = this.initialPosition[1] + Math.floor(event.getRawY() - this.touchPosition[1])
+                    instance.layout.params.x.value = this.initialPosition.x + Math.floor(event.getRawX() - this.touchPosition.x);
+                    instance.layout.params.y.value = this.initialPosition.y + Math.floor(event.getRawY() - this.touchPosition.y);
                     Java.scheduleOnMainThread(() => {
                         app.windowManager.updateViewLayout(instance.rootFrame.instance, instance.layout.params);
                     })
