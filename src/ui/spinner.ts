@@ -1,7 +1,7 @@
 namespace Menu {
     export class Spinner extends View {
-        public items: Java.Wrapper;
-        private initialized: boolean;
+        items: Java.Wrapper;
+        initialized: boolean;
 
         constructor(items: string[]) {
             super();

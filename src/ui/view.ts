@@ -1,8 +1,8 @@
 namespace Menu {
     export class View {
-        public instance: Java.Wrapper;
+        instance: Java.Wrapper;
 
-        public constructor (handleOrInstance?: NativePointerValue | Java.Wrapper) {
+        constructor (handleOrInstance?: NativePointerValue | Java.Wrapper) {
             handleOrInstance ? this.instance = Java.cast(handleOrInstance, Api.View) : null;
         }
         /** Gets alpha */

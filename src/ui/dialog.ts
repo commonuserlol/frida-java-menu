@@ -29,7 +29,7 @@ namespace Menu {
             this.instance.setView(view);
         }
         /** Sets positive button */
-        public setPositiveButton(callback: DialogCallback) {
+        setPositiveButton(callback: DialogCallback) {
             this.instance.setPositiveButton(wrap(callback.label), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
@@ -44,7 +44,7 @@ namespace Menu {
             }).$new());
         }
         /** Sets negative button */
-        public setNegativeButton(callback: DialogCallback) {
+        setNegativeButton(callback: DialogCallback) {
             this.instance.setNegativeButton(wrap(callback.label), Java.registerClass({
                 name: randomString(35),
                 implements: [Api.DialogInterfaceOnClickListener],
@@ -57,12 +57,12 @@ namespace Menu {
             }).$new());
         }
         /** Creates dialog */
-        public create() {
+        create() {
             return this.instance.create();
         }
 
         /** Shows dialog */
-        public show() {
+        show() {
             const dialog = this.create();
             dialog.getWindow().setType(apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value);
             dialog.show();

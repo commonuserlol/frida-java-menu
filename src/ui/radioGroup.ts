@@ -9,7 +9,7 @@ namespace Menu {
             this.buttons = buttons;
         }
         /** Adds new `RadioButton` */
-        public addButton(label: string, index: number, callback?: (index: number) => void) {
+        addButton(label: string, index: number, callback?: (index: number) => void) {
             const button = new View(Api.RadioButton.$new(app.context));
             const params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             button.text = label;
@@ -23,11 +23,11 @@ namespace Menu {
             this.instance.addView(Java.cast(button.instance, Api.View), index, params);
         }
         /** Checks object with given id */
-        public check(id: number) {
+        check(id: number) {
             this.instance.check(id);
         }
         /** Gets child at ginen index */
-        public getChildAt(index: number): Java.Wrapper {
+        getChildAt(index: number): Java.Wrapper {
             return this.instance.getChildAt(index);
         }
     }

@@ -39,11 +39,10 @@ namespace Menu {
         /**
          * Sets icon for menu
          *
-         * @public
          * @param {string} value can be base64-encoded image or link (only for Web type)
          * @param {("Normal" | "Web")} [type="Normal"] Normal accepts only base64-encoded image. Web accepts links to images/gifs, etc
          */
-        public icon(value: string, type: "Normal" | "Web" = "Normal") {
+        icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
                 this.layout.initializeIcon(value, type);
                 
@@ -55,7 +54,7 @@ namespace Menu {
         }
 
         /** Sets menu settings */
-        public settings(label: string, state: boolean = false): Layout {
+        settings(label: string, state: boolean = false): Layout {
             const settings = new Settings(label, state);
             settings.orientation = Api.VERTICAL;
             add(settings.settings, this.layout.titleLayout);
@@ -63,7 +62,7 @@ namespace Menu {
         }
 
         /** Hides menu */
-        public hide() {
+        hide() {
             Java.scheduleOnMainThread(() => {
                 try {
                     this.rootFrame.visibility = Api.GONE;
@@ -88,7 +87,7 @@ namespace Menu {
         }
 
         /** Shows menu */
-        public show() {
+        show() {
             Java.scheduleOnMainThread(() => {
                 try {
                     app.windowManager.addView(this.rootFrame.instance, this.layout.params);
