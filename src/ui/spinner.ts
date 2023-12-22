@@ -8,10 +8,6 @@ namespace Menu {
             this.instance = Api.Spinner.$new(app.context);
             this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
             this.initialized = false;
-            const params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
-            params.setMargins(7, 2, 7, 2);
-            this.layoutParams = params;
-            this.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
             const arrayAdapter = Api.ArrayAdapter.$new(app.context, Api.simple_spinner_dropdown_item, this.items);
             arrayAdapter.setDropDownViewResource(Api.simple_spinner_dropdown_item);
             this.adapter = arrayAdapter;
@@ -29,7 +25,7 @@ namespace Menu {
             this.instance.setAdapter(adapter);
         }
         /** Sets onItemSelectedListener */
-        set onItemSelectedListener(callback: (index: number) => void) {
+        set onItemSelectedListener(callback: ThisWithIndexCallback<Spinner>) {
             this.instance.setOnItemSelectedListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnItemSelectedListener],
@@ -40,7 +36,7 @@ namespace Menu {
                             return;
                         };
                         sharedPreferences.putInt(Api.JavaString.join(Api.JavaString.$new(", "), this.items), index);
-                        Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(config.color.secondaryText);
+                        new View(parent.getChildAt(0)).textColor = config.color.secondaryText; // gc will kill it (ig)
                         callback.call(this, index);
                     },
                     onNothingSelected: function(parent: Java.Wrapper) {

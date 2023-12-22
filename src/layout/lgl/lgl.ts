@@ -221,6 +221,7 @@ namespace Menu {
 
         spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
             const spinner = Menu.spinner(items, callback);
+            spinner.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
 
             return spinner;
         }
