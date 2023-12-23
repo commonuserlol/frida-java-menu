@@ -1,4 +1,5 @@
 namespace Menu {
+    /** Wrapper for `android.widget.Button` */
     export class Button extends View {
         constructor(text?: string) {
             super();

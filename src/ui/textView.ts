@@ -1,4 +1,5 @@
 namespace Menu {
+    /** Wrapper for `android.widget.TextView` */
     export class TextView extends View {
         constructor(text?: string) {
             super();

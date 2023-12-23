@@ -1,4 +1,5 @@
 namespace Menu {
+    /** @internal */
     export function stateHolder(state: boolean, onStateChange: (state: boolean) => void) {
         let firstSkipped = false;
         const manager = () => {

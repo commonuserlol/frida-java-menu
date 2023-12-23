@@ -1,6 +1,8 @@
 namespace Menu {
+    /** Switch JS callback */
     export declare type SwitchCallback = (this: Switch, state: boolean) => void;
 
+    /** Wrapper for `android.widget.Switch` */
     export class Switch extends View {
         constructor(text?: string, state: boolean = false) {
             super();

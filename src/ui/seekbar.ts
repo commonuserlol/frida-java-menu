@@ -1,6 +1,8 @@
 namespace Menu {
+    /** SeekBar JS callback */
     export declare type SeekBarCallback = (this: SeekBar, progress: number) => void;
 
+    /** Wrapper for `android.widget.SeekBar` */
     export class SeekBar extends View {
         constructor(progress: number = 0) {
             super();

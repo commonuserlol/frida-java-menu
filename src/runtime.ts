@@ -31,6 +31,14 @@ namespace Menu {
         }
     };
 
+    /** App main activity instance
+     * 
+     * Since this field hacked example call is:
+     * 
+     * ```typescript
+     * const activity = await Menu.activityInstance;
+     * ```
+     */
     export declare const activityInstance: Promise<Java.Wrapper>;
     getter(Menu, "activityInstance", () => {
         return new Promise((resolve, reject) => {

@@ -62,20 +62,28 @@ namespace Menu {
         /** Removes template objects */
         abstract handleRemove(remove: ComposerHandler): void;
 
+        /** Creates Button widget with layout-specific style */
         abstract button(label: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button;
 
+        /** Creates AlertDialog.Builder layout-specific style */
         abstract dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog>;
 
+        /** Creates RadioGroup widget with layout-specific style */
         abstract radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<Button>): RadioGroup;
 
+        /** Creates SeekBar widget with layout-specific style */
         abstract seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View;
 
+        /** Creates Spinner widget with layout-specific style */
         abstract spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner;
 
+        /** Creates Switch widget with layout-specific style */
         abstract toggle(label: string, callback?: SwitchCallback): Switch;
 
+        /** Creates TextView widget with layout-specific style */
         abstract textView(label: string): TextView;
 
+        /** Creates AlertDialog.Builder with EditText and layout-specific style */
         async inputNumber(title: string, max: number, positiveCallback: DialogInputCallback<number>, negativeCallback: DialogCallback): Promise<Dialog> {
             const view = Api.EditText.$new(app.context);
             if (max > 0) {
@@ -93,6 +101,7 @@ namespace Menu {
             negativeCallback, view);
         }
 
+        /** Creates AlertDialog.Builder with EditText and layout-specific style */
         async inputText(title: string, positiveCallback: DialogInputCallback<string>, negativeCallback: DialogCallback, hint?: string): Promise<Dialog> {
             const view = Api.EditText.$new(app.context);
             if (hint) view.setHint(wrap(hint));
@@ -105,6 +114,7 @@ namespace Menu {
             }, negativeCallback, view);
         }
 
+        /** Kills widgets handle */
         abstract destroy(): void;
     }
 }

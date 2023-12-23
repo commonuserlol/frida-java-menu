@@ -1,5 +1,7 @@
 namespace Menu {
+    /** Wrapper for `android.view.View` */
     export class View {
+        /** Java instance of this wrapper */
         instance: Java.Wrapper;
 
         constructor (handleOrInstance?: NativePointerValue | Java.Wrapper) {
@@ -112,9 +114,8 @@ namespace Menu {
         }
     }
     
-    /** Wraps text from HTML */
-    export function wrap(text: string): Java.Wrapper
-    {
+    /** Parses text from HTML */
+    export function wrap(text: string): Java.Wrapper {
         return Api.HTML.fromHtml(Api.JavaString.$new(String(text)));
     }
 }

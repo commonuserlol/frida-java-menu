@@ -1,6 +1,7 @@
 namespace Menu {
-
+    /** Wrapper for `android.widget.RadioGroup` */
     export class RadioGroup extends View {
+        /** @internal Button lust */
         buttons: string[];
 
         constructor(buttons: string[]) {

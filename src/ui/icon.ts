@@ -1,4 +1,5 @@
 namespace Menu {
+    /** Commonized wrapper for `android.widget.ImageView` or `android.webkit.WebView` */
     export class Icon extends View {
         constructor(type: "Normal" | "Web" = "Normal", value: string) {
             super();

@@ -1,7 +1,11 @@
 namespace Menu {
+    /** Implementation of settings for LGL layout */
     export class Settings extends Layout {
+        /** TextView which will toggle state */
         settings: TextView;
+        /** @internal Is settings opened? */
         state: boolean;
+        /** @internal Workaround to open settings if `state == true` by default */
         triggered: boolean;
 
         constructor(label: string, state: boolean = false) {
@@ -23,7 +27,7 @@ namespace Menu {
             if (this.state) this.swapViews(this, Menu.instance.layout.layout);
         }
 
-        /** Replaces old view with new one */
+        /** @internal Replaces old view with new one */
         swapViews(_new: View, old: View) {
             const proxy = Menu.instance.layout.proxy;
             
@@ -31,7 +35,7 @@ namespace Menu {
             add(_new, proxy);
         }
 
-        /** Handler for state change (onClick event) */
+        /** @internal Handler for state change (onClick event) */
         handleState() {
             if (this.visibility == Api.VISIBLE) this.triggered = true;
             if (this.triggered) this.state = !this.state;

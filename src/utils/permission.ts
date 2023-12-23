@@ -1,4 +1,5 @@
 namespace Menu {
+    /** Permission interface */
     export interface Permission {
         name: string,
         ask: () => void,

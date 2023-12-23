@@ -1,5 +1,7 @@
 namespace Menu {
+    /** Wrapper for `android.widget.Spinner` */
     export class Spinner extends View {
+        /** Java `ArrayList` with items */
         items: Java.Wrapper;
         /** @internal Workaround to skip self-call for callback */
         initialized: boolean;

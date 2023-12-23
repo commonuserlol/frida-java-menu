@@ -1,14 +1,19 @@
 namespace Menu {
     export declare type DialogCallback = {
+        /** Callback label */
         label: string,
+        /** JS callback function */
         fn: (this: Dialog) => void
     };
 
     export declare type DialogInputCallback<T extends string | number> = {
+        /** Callback label */
         label: string,
+        /** JS callback function */
         fn: (this: Dialog, result: T) => void
     }
 
+    /** Wrapper for `android.app.AlertDialog(.Builder)` */
     export class Dialog extends View {
         constructor(context: Java.Wrapper, title?: string, message?: string) {
             super();
