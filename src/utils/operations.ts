@@ -1,15 +1,21 @@
 namespace Menu {
+    export declare type RawOrWrapper = Java.Wrapper | View;
+
+    export function instanceofRawOrWrapper(object: RawOrWrapper) {
+        return object instanceof View ? object.instance : object;
+    }
+
     /** Adds view to layout */
-    export function add(view: View, layout: Java.Wrapper | View = Menu.instance.layout.layout) {
+    export function add(view: View, layout: RawOrWrapper = Menu.instance.layout.layout) {
         Java.scheduleOnMainThread(() => {
-            (layout instanceof View ? layout.instance : layout).addView((view instanceof View ? view.instance : view));
+            instanceofRawOrWrapper(layout).addView(instanceofRawOrWrapper(view));
         })
     }
 
     /** Removes view from layout */
-    export function remove(view: View, layout: Java.Wrapper | View = Menu.instance.layout.layout) {
+    export function remove(view: View, layout: RawOrWrapper = Menu.instance.layout.layout) {
         Java.scheduleOnMainThread(() => {
-            (layout instanceof View ? layout.instance : layout).removeView((view instanceof View ? view.instance: view));
+            instanceofRawOrWrapper(layout).removeView(instanceofRawOrWrapper(view));
         })
     }
 }
