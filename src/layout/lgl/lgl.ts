@@ -84,10 +84,7 @@ namespace Menu {
             this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(config.menu.width)), Api.WRAP_CONTENT);
         }
 
-        initializeIcon(value: string, type: "Normal" | "Web"): void {
-            super.initializeIcon(value, type);
-            this.icon.visibility = Api.VISIBLE;
-        }
+        initializeIcon(): void {}
 
         initializeProxy(): void {
             super.initializeProxy();
@@ -115,8 +112,8 @@ namespace Menu {
             this.hide.backgroundColor = Api.TRANSPARENT;
             this.hide.textColor = config.color.primaryText;
             this.hide.onClickListener = () => {
-                this.icon.visibility = Api.VISIBLE;
-                this.icon.alpha = 0;
+                Menu.instance.icon.visibility = Api.VISIBLE;
+                Menu.instance.icon.alpha = 0;
                 this.me.visibility = Api.GONE;
                 toast(config.strings.hideCallback, 1);
             }
@@ -131,8 +128,8 @@ namespace Menu {
             this.close.backgroundColor = 0;
             this.close.textColor = config.color.primaryText;
             this.close.onClickListener = () => {
-                this.icon.visibility = Api.VISIBLE;
-                this.icon.alpha = config.icon.alpha;
+                Menu.instance.icon.visibility = Api.VISIBLE;
+                Menu.instance.icon.alpha = config.icon.alpha;
                 this.me.visibility = Api.GONE;
             }
         }
@@ -297,7 +294,7 @@ namespace Menu {
             this.subtitle.destroy();
             this.titleLayout.destroy();
             this.title.destroy();
-            this.icon.destroy();
+            Menu.instance.icon.destroy();
             this.me.destroy();
         }
     }

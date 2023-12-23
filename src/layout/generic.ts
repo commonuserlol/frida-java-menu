@@ -7,8 +7,6 @@ namespace Menu {
         params: Java.Wrapper; // TODO: Maybe i should add wrapper for *params
         /** Layout as layout */
         me: Layout;
-        /** Icon holder */
-        icon: Icon;
         /** Proxy layout for scrolling feature */
         proxy: Layout;
         /** Main layout for widgets */
@@ -38,15 +36,8 @@ namespace Menu {
         /** Initializes own layout */
         abstract initializeLayout(): void;
 
-        /** Initializes icon */
-        initializeIcon(value: string, type: "Normal" | "Web"): void {
-            this.icon = new Icon(type, value);
-
-            this.icon.onClickListener = () => {
-                this.icon.visibility = Api.GONE;
-                this.me.visibility = Api.VISIBLE;
-            }
-        };
+        /** Sets icon style */
+        abstract initializeIcon(): void;
 
         /** Initializes proxy layout for scrolling feature */
         initializeProxy(): void {

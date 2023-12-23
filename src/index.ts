@@ -36,7 +36,7 @@
 /// <reference path="./ui/toast.ts" />
 
 /* Layout */
-/// <reference path="./layout/icon.ts" />
+/// <reference path="./ui/icon.ts" />
 /// <reference path="./layout/config.ts" />
 /// <reference path="./layout/generic.ts" />
 /// <reference path="./layout/lgl/lgl.ts" />

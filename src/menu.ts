@@ -12,6 +12,8 @@ namespace Menu {
     export class Composer<T extends Menu.GenericLayout = Menu.GenericLayout> {
         /** @internal */
         rootFrame: Layout;
+        /** Icon holder */
+        icon: Icon;
         /** Layout layout */
         layout: T;
 
@@ -42,14 +44,22 @@ namespace Menu {
          * @param {string} value can be base64-encoded image or link (only for Web type)
          * @param {("Normal" | "Web")} [type="Normal"] Normal accepts only base64-encoded image. Web accepts links to images/gifs, etc
          */
-        icon(value: string, type: "Normal" | "Web" = "Normal") {
+        iconImage(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.layout.initializeIcon(value, type);
+                this.icon = new Icon(type, value);
+
+                this.icon.onClickListener = () => {
+                    this.icon.visibility = Api.GONE;
+                    this.layout.me.visibility = Api.VISIBLE;
+                }
+                this.icon.visibility = Api.VISIBLE;
+
+                this.layout.initializeIcon();
                 
                 new OnTouch(this.rootFrame);
-                new OnTouch(this.layout.icon);
+                new OnTouch(this.icon);
 
-                add(this.layout.icon, this.rootFrame);
+                add(this.icon, this.rootFrame);
             });
         }
 
