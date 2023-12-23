@@ -187,12 +187,15 @@ namespace Menu {
             return dialog;
         }
 
-        radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-            const radioGroup = Menu.radioGroup(buttons, function (index: number) {
-                const button = new View(this.getChildAt(index));
-                radioGroupLabel.text = format(label, button.text);
-                callback?.call(radioGroup, index);
+        radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<Button>): RadioGroup {
+            const instances = makeButtonInstances(buttons, function (index: number) {
+                radioGroupLabel.text = format(label, this.text);
+                callback?.call(this, index);
+            }).map(e => {
+                e.textColor = config.color.secondaryText;
+                return e;
             });
+            const radioGroup = Menu.radioGroup(instances);
             const radioGroupLabel = this.textView(format(label, ""));
             const radioGroupLabelParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             radioGroup.padding = [10, 5, 10, 5];

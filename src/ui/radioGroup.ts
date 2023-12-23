@@ -8,20 +8,6 @@ namespace Menu {
             this.instance = Api.RadioGroup.$new(app.context);
             this.buttons = buttons;
         }
-        /** Adds new `RadioButton` */
-        addButton(label: string, index: number, callback?: (index: number) => void) {
-            const button = new View(Api.RadioButton.$new(app.context));
-            const params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            button.text = label;
-            button.textColor = config.color.secondaryText;
-            if (callback) {
-                button.onClickListener = () => {
-                    sharedPreferences.putInt(this.buttons.join(), index);
-                    callback.call(this, index);
-                }
-            }
-            this.instance.addView(Java.cast(button.instance, Api.View), index, params);
-        }
         /** Checks object with given id */
         check(id: number) {
             this.instance.check(id);
@@ -32,13 +18,26 @@ namespace Menu {
         }
     }
 
+    /** @internal Makes buttons from `string[]` */
+    export function makeButtonInstances(buttons: string[], callback?: ThisWithIndexCallback<Button>) {
+        return buttons.map((e: string, index: number) => {
+            const object = new View(Api.RadioButton.$new(app.context)) as Button;
+            object.text = e;
+            object.onClickListener = () => {
+                sharedPreferences.putInt(buttons.join(), index);
+                callback?.call(object, index);
+            }
+
+            return object;
+        });
+    }
+
     /** @internal Initializes new `android.widget.RadioGroup` wrapper with default parameters */
-    export function radioGroup(buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-        const radioGroup = new RadioGroup(buttons);
+    export function radioGroup(buttons: View[]): RadioGroup {
+        const radioGroup = new RadioGroup(buttons.map(e => e.text));
         const savedIndex = sharedPreferences.getInt(buttons.join());
         for (const button of buttons) {
-            const index = buttons.indexOf(button);
-            radioGroup.addButton(button, index, callback);
+            radioGroup.instance.addView(button.instance, buttons.indexOf(button), Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT));
         }
         if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex).getId()));
 

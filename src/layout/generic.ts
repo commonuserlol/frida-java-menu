@@ -75,7 +75,7 @@ namespace Menu {
 
         abstract dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog>;
 
-        abstract radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup;
+        abstract radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<Button>): RadioGroup;
 
         abstract seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View;
 
