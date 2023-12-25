@@ -33,7 +33,7 @@ namespace Menu {
             add(this.layout.me, this.rootFrame);
             this.layout.handleAdd(add);
 
-            onDestroy(() => this.destroy());
+            onDestroy(() => setTimeout(this.destroy, 50));
             onPause(() => this.hide());
             onResume(() => this.show());
         }
@@ -86,14 +86,14 @@ namespace Menu {
 
         /** Disposes instance of `Composer` */
         destroy() {
+            // Unhook java methods
             onPause();
             onResume();
             onDestroy();
+            // Remove views
             this.hide();
             remove(this.layout.me, this.rootFrame);
             this.layout.handleRemove(remove);
-            this.layout.destroy();
-            this.rootFrame.destroy();
         }
 
         /** Shows menu */
