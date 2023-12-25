@@ -63,8 +63,6 @@ namespace Menu {
             this.subtitle.textSize = 10;
             this.subtitle.gravity = Api.CENTER;
             this.subtitle.padding = [0, 0, 0, 5];
-
-            this.ensureInitialized();
         }
 
         initializeParams(): void {
@@ -288,7 +286,7 @@ namespace Menu {
 
             add(textView, parentLayout);
             add(layout, parentLayout);
-            
+
             return [parentLayout, layout];
         }
 

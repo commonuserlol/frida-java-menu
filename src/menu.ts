@@ -30,6 +30,7 @@ namespace Menu {
             this.layout = layout;
             this.layout.title.text = title;
             this.layout.subtitle.text = subtitle;
+            this.layout.ensureInitialized();
 
             this.layout.handleAdd(add);
             add(this.layout.me, this.rootFrame);

@@ -50,10 +50,7 @@ namespace Menu {
         /** Initializes hide/kill & close button and their layout */
         abstract initializeButtons(): void;
 
-        /** Initializes everything needed for start
-         * 
-         * Called by constructor after title & subtitle init
-         */
+        /** Initializes everything needed for start */
         abstract ensureInitialized(): void;
 
         /** Adds everything needed from template */
