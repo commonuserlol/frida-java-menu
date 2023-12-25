@@ -86,9 +86,8 @@ namespace Menu {
         /** Creates AlertDialog.Builder with EditText and layout-specific style */
         async inputNumber(title: string, max: number, positiveCallback: DialogInputCallback<number>, negativeCallback: DialogCallback): Promise<Dialog> {
             const view = Api.EditText.$new(app.context);
-            if (max > 0) {
+            if (max > 0)
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
-            }
             view.setInputType(Api.InputType.TYPE_CLASS_NUMBER.value);
 
             return await this.dialog(title, "", {
@@ -104,7 +103,8 @@ namespace Menu {
         /** Creates AlertDialog.Builder with EditText and layout-specific style */
         async inputText(title: string, positiveCallback: DialogInputCallback<string>, negativeCallback: DialogCallback, hint?: string): Promise<Dialog> {
             const view = Api.EditText.$new(app.context);
-            if (hint) view.setHint(wrap(hint));
+            if (hint)
+                view.setHint(wrap(hint));
             return await this.dialog(title, "", {
                 label: positiveCallback.label,
                 fn: function () {

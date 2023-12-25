@@ -67,7 +67,8 @@ namespace Menu {
         const seekbar = new SeekBar(sharedPreferences.getInt(label));
         seekbar.max = max;
         min ? seekbar.min = min : seekbar.min = 0;
-        if (callback) seekbar.onSeekBarChangeListener = callback;
+        if (callback)
+            seekbar.onSeekBarChangeListener = callback;
 
         return seekbar;
     }

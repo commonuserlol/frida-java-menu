@@ -4,7 +4,8 @@ namespace Menu {
         return new Promise((resolve, reject) => {
             const waitInterval = setInterval(() => {
                 try {
-                    if (!app.instance) return;
+                    if (!app.instance)
+                        return;
         
                     clearInterval(waitInterval);
                     resolve();

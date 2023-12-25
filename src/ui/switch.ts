@@ -7,7 +7,8 @@ namespace Menu {
         constructor(text?: string, state: boolean = false) {
             super();
             this.instance = Api.Switch.$new(app.context);
-            if (text) this.text = text;
+            if (text)
+                this.text = text;
             this.checked = state;
         }
         /** Sets checked */
@@ -32,10 +33,12 @@ namespace Menu {
     /** @internal Initializes new `android.widget.Switch` wrapper with default parameters */
     export function toggle(label: string, callback?: SwitchCallback): Switch {
         const toggle = new Switch(label);
-        if (callback) toggle.onCheckedChangeListener = callback;
+        if (callback)
+            toggle.onCheckedChangeListener = callback;
 
         const savedState = sharedPreferences.getBool(label);
-        if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
+        if (savedState)
+            Java.scheduleOnMainThread(() => toggle.checked = savedState);
 
         return toggle;
     }

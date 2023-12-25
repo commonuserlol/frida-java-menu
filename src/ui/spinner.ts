@@ -58,10 +58,12 @@ namespace Menu {
     /** @internal Initializes new `android.widget.Spinner` wrapper with default parameters */
     export function spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
         const spinner = new Spinner(items);
-        if (callback) spinner.onItemSelectedListener = callback;
+        if (callback)
+            spinner.onItemSelectedListener = callback;
 
         const savedIndex = sharedPreferences.getInt(items.join());
-        if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
+        if (savedIndex > -1)
+            Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
 
         return spinner;
     }

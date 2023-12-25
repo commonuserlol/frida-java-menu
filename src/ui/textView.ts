@@ -4,7 +4,8 @@ namespace Menu {
         constructor(text?: string) {
             super();
             this.instance = Api.TextView.$new(app.context);
-            if (text) this.text = text;
+            if (text)
+                this.text = text;
         }
         /** Gets ellipsize */
         get ellipsize(): Java.Wrapper {

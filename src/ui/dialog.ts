@@ -18,8 +18,10 @@ namespace Menu {
         constructor(context: Java.Wrapper, title?: string, message?: string) {
             super();
             this.instance = Api.AlertDialog_Builder.$new(context);
-            if (title) this.title = title;
-            if (message) this.message = message;
+            if (title)
+                this.title = title;
+            if (message)
+                this.message = message;
         }
         /** Sets title */
         set title(title: string) {
@@ -78,8 +80,10 @@ namespace Menu {
     export async function dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog> {
         const dialog = new Dialog(await activityInstance, title, message);
         view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
-        if (positiveCallback) dialog.setPositiveButton(positiveCallback)
-        if (negativeCallback) dialog.setNegativeButton(negativeCallback);
+        if (positiveCallback)
+            dialog.setPositiveButton(positiveCallback)
+        if (negativeCallback)
+            dialog.setNegativeButton(negativeCallback);
 
         return dialog;
     }

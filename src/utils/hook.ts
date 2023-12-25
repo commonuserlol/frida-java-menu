@@ -3,9 +3,8 @@ namespace Menu {
     export function hook(name: string, callback?: ((instance: Java.Wrapper) => void)) {
         const target = Api.Activity[name];
         callback ? target.implementation = function (this: Java.Wrapper, args: any) {
-            if (this.getComponentName().getClassName() == launcher) {
+            if (this.getComponentName().getClassName() == launcher) 
                 callback?.(this);
-            }
             args ? target.call(this, args) : target.call(this);
         } : target.implementation = null;
     }

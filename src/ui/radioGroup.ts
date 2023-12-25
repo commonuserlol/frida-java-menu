@@ -41,7 +41,8 @@ namespace Menu {
         }
 
         const savedIndex = sharedPreferences.getInt(buttons.join());
-        if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex).getId()));
+        if (savedIndex > -1)
+            Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex).getId()));
 
         return radioGroup;
     }

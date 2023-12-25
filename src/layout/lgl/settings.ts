@@ -23,7 +23,8 @@ namespace Menu {
             this.state = state;
             this.triggered = false;
 
-            if (this.state) this.swapViews(this, Menu.instance.layout.layout);
+            if (this.state)
+                this.swapViews(this, Menu.instance.layout.layout);
         }
 
         /** @internal Replaces old view with new one */
@@ -36,9 +37,15 @@ namespace Menu {
 
         /** @internal Handler for state change (onClick event) */
         handleState() {
-            if (this.visibility == Api.VISIBLE) this.triggered = true;
-            if (this.triggered) this.state = !this.state;
-            this.state ? this.swapViews(this, Menu.instance.layout.layout) : (this.triggered ? this.swapViews(Menu.instance.layout.layout, this) : null);
+            if (this.visibility == Api.VISIBLE)
+                this.triggered = true;
+            if (this.triggered)
+                this.state = !this.state;
+            if (this.state)
+                this.swapViews(this, Menu.instance.layout.layout);
+            else
+                if (this.triggered)
+                    this.swapViews(Menu.instance.layout.layout, this);
         }
     }
 }

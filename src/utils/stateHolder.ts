@@ -8,11 +8,13 @@ namespace Menu {
                 firstSkipped = true;
                 return;
             }
-            if (!firstSkipped) firstSkipped = true;
+            if (!firstSkipped)
+                firstSkipped = true;
             state = !state;
             onStateChange(state);
         };
-        if (state) manager();
+        if (state)
+            manager();
         return manager;
     }
 }

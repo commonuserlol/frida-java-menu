@@ -4,7 +4,8 @@ namespace Menu {
         constructor(type: "Normal" | "Web" = "Normal", value: string) {
             super();
             this.instance = type == "Normal" ? Api.ImageView.$new(app.context) : Api.WebView.$new(app.context);
-            if (value) this.image = value;
+            if (value)
+                this.image = value;
         }
 
         /** @internal */
@@ -29,7 +30,7 @@ namespace Menu {
             isNormalType ? this.imageForImageView = image : this.imageForWebView = image;
 
             this.alpha = config.icon.alpha;
-            
+
             this.layoutParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             this.instance.getLayoutParams().height.value = applyDimension;
             this.instance.getLayoutParams().width.value = applyDimension;
