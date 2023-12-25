@@ -35,7 +35,7 @@ namespace Menu {
             this.layout.handleAdd(add);
             add(this.layout.me, this.rootFrame);
 
-            onDestroy(() => setTimeout(this.destroy, 50));
+            onDestroy(() => this.destroy);
             onPause(() => this.hide());
             onResume(() => this.show());
         }
