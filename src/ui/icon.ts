@@ -11,6 +11,7 @@ namespace Menu {
         set imageForImageView(image: string) {
             this.instance.setScaleType(Api.ScaleType.FIT_XY.value);
             this.instance.setImageBitmap(bitmap(image));
+
             config.icon.alpha = Math.round(config.icon.alpha * 255);
         }
 
@@ -26,7 +27,9 @@ namespace Menu {
             const isNormalType = this.instance.$className == Api.ImageView.$className;
             const applyDimension = Math.floor(dp(config.icon.size));
             isNormalType ? this.imageForImageView = image : this.imageForWebView = image;
+
             this.alpha = config.icon.alpha;
+            
             this.layoutParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             this.instance.getLayoutParams().height.value = applyDimension;
             this.instance.getLayoutParams().width.value = applyDimension;

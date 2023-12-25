@@ -35,6 +35,7 @@ namespace Menu {
                 case Api.ACTION_UP:
                     instance.layout.me.alpha = 1.;
                     instance.icon.alpha = instance.icon.instance.$className == Api.ImageView.$className ? 255 : 1.;
+
                     const [rawX, rawY] = [Math.floor(event.getRawX() - this.touchPosition.x), Math.floor(event.getRawX() - this.touchPosition.y)];
                     if (instance.icon.visibility == Api.VISIBLE) {
                         if (app.orientation == Api.ORIENTATION_LANDSCAPE) {
@@ -51,8 +52,10 @@ namespace Menu {
                     instance.layout.me.alpha = 0.5;
                     instance.icon.alpha = instance.icon.instance.$className == Api.ImageView.$className ?
                             Math.round(config.icon.alpha / 2) : 0.5;
+
                     instance.layout.params.x.value = this.initialPosition.x + Math.floor(event.getRawX() - this.touchPosition.x);
                     instance.layout.params.y.value = this.initialPosition.y + Math.floor(event.getRawY() - this.touchPosition.y);
+                    
                     Java.scheduleOnMainThread(() => {
                         app.windowManager.updateViewLayout(instance.rootFrame.instance, instance.layout.params);
                     })

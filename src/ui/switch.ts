@@ -32,8 +32,9 @@ namespace Menu {
     /** @internal Initializes new `android.widget.Switch` wrapper with default parameters */
     export function toggle(label: string, callback?: SwitchCallback): Switch {
         const toggle = new Switch(label);
-        const savedState = sharedPreferences.getBool(label);
         if (callback) toggle.onCheckedChangeListener = callback;
+
+        const savedState = sharedPreferences.getBool(label);
         if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
 
         return toggle;

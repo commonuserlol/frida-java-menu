@@ -36,10 +36,11 @@ namespace Menu {
     /** @internal Initializes new `android.widget.RadioGroup` wrapper with default parameters */
     export function radioGroup(buttons: View[]): RadioGroup {
         const radioGroup = new RadioGroup(buttons.map(e => e.text));
-        const savedIndex = sharedPreferences.getInt(buttons.join());
         for (const button of buttons) {
             radioGroup.instance.addView(button.instance, buttons.indexOf(button), Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT));
         }
+
+        const savedIndex = sharedPreferences.getInt(buttons.join());
         if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex).getId()));
 
         return radioGroup;

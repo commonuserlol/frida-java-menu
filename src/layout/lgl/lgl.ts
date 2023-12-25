@@ -42,21 +42,19 @@ namespace Menu {
         constructor(cfg?: GenericConfig) {
             super(cfg ?? LGLConfig);
             this.titleLayout = new Layout(Api.RelativeLayout);
-            this.title = new TextView();
-            this.subtitle = new TextView();
+            this.titleLayout.padding = [10, 5, 10, 5];
+            this.titleLayout.verticalGravity = 16;
 
-            // Configure title & subtitle
             const titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT); // For `this.title`
             titleParams.addRule(Api.CENTER_HORIZONTAL);
 
-            this.titleLayout.padding = [10, 5, 10, 5];
-            this.titleLayout.verticalGravity = 16;
-            
+            this.title = new TextView();
             this.title.textColor = config.color.primaryText;
             this.title.textSize = 18;
             this.title.gravity = Api.CENTER;
             this.title.layoutParams = titleParams;
-            
+
+            this.subtitle = new TextView();
             this.subtitle.ellipsize = Api.TruncateAt.MARQUEE.value;
             this.subtitle.marqueeRepeatLimit = -1;
             this.subtitle.singleLine = true;
@@ -88,8 +86,7 @@ namespace Menu {
 
         initializeProxy(): void {
             super.initializeProxy();
-            const proxyParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
-            this.proxy.layoutParams = proxyParams;
+            this.proxy.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
             this.proxy.backgroundColor = config.color.layoutBg;
         }
 
@@ -100,14 +97,16 @@ namespace Menu {
 
         initializeButtons(): void {
             const hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
+
             const closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
+
             this.buttonLayout = new Layout(Api.RelativeLayout);
-            this.hide = new Button(config.strings.hide);
-            this.close = new Button(config.strings.close);
             this.buttonLayout.padding = [10, 3, 10, 3];
             this.buttonLayout.verticalGravity = Api.CENTER;
-            
-            hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
+
+            this.hide = new Button(config.strings.hide);
             this.hide.layoutParams = hideButtonParams;
             this.hide.backgroundColor = Api.TRANSPARENT;
             this.hide.textColor = config.color.primaryText;
@@ -117,13 +116,12 @@ namespace Menu {
                 this.me.visibility = Api.GONE;
                 toast(config.strings.hideCallback, 1);
             }
-
             this.hide.onLongClickListener = () => {
                 instance.destroy();
                 toast(config.strings.killCallback, 1);
             }
 
-            closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
+            this.close = new Button(config.strings.close);
             this.close.layoutParams = closeButtonParams;
             this.close.backgroundColor = 0;
             this.close.textColor = config.color.primaryText;
@@ -165,9 +163,10 @@ namespace Menu {
         }
 
         button(text: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
-            const button = Menu.button(text, callback, longCallback);
             const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             params.setMargins(7, 5, 7, 5);
+
+            const button = Menu.button(text, callback, longCallback);
             button.layoutParams = params;
             button.allCaps = false;
             button.textColor = config.color.secondaryText;
@@ -185,6 +184,10 @@ namespace Menu {
         }
 
         radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<Button>): RadioGroup {
+            const radioGroupLabel = this.textView(format(label, ""));
+
+            const radioGroupLabelParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+
             const instances = makeButtonInstances(buttons, function (index: number) {
                 radioGroupLabel.text = format(label, this.text);
                 callback?.call(this, index);
@@ -192,9 +195,8 @@ namespace Menu {
                 e.textColor = config.color.secondaryText;
                 return e;
             });
+
             const radioGroup = Menu.radioGroup(instances);
-            const radioGroupLabel = this.textView(format(label, ""));
-            const radioGroupLabelParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
             radioGroup.instance.addView(Java.cast(radioGroupLabel.instance, Api.View), buttons.length, radioGroupLabelParams);
@@ -207,11 +209,13 @@ namespace Menu {
                 seekbarLabel.text = format(label, progress);
                 callback?.call(seekbar, progress);
             });
+            seekbar.padding = [25, 10, 35, 10];
+
             const seekbarLabel = this.textView(format(label, seekbar.progress));
+
             const layout = new Layout(Api.LinearLayout);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;
-            seekbar.padding = [25, 10, 35, 10];
 
             add(seekbarLabel, layout);
             add(seekbar, layout);
@@ -253,22 +257,23 @@ namespace Menu {
         }
 
         collapse(label: string, state: boolean): CollapseReturn {
-            const parentLayout = new Layout(Api.LinearLayout);
-            const layout = new Layout(Api.LinearLayout);
-            const textView = this.category(`▽ ${label} ▽`);
             const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-            textView.backgroundColor = config.color.collapseBg;
             params.setMargins(0, 5, 0, 0);
+
+            const parentLayout = new Layout(Api.LinearLayout);
             parentLayout.layoutParams = params;
             parentLayout.verticalGravity = 16;
             parentLayout.orientation = Api.VERTICAL;
 
+            const layout = new Layout(Api.LinearLayout);
             layout.verticalGravity = 16;
             layout.padding = [0, 5, 0, 5];
             layout.orientation = Api.VERTICAL;
             layout.backgroundColor = config.color.layoutBg;
             layout.visibility = Api.GONE;
 
+            const textView = this.category(`▽ ${label} ▽`);
+            textView.backgroundColor = config.color.collapseBg;
             textView.padding = [0, 20, 0, 20];
             textView.onClickListener = stateHolder(state, (s: boolean) => {
                 if (s) {
@@ -280,8 +285,10 @@ namespace Menu {
                     textView.text = `▽ ${label} ▽`;
                 }
             });
+
             add(textView, parentLayout);
             add(layout, parentLayout);
+            
             return [parentLayout, layout];
         }
 

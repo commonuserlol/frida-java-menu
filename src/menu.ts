@@ -26,12 +26,13 @@ namespace Menu {
             }
 
             this.rootFrame = new Layout(Api.FrameLayout);
+
             this.layout = layout;
             this.layout.title.text = title;
             this.layout.subtitle.text = subtitle;
-            
-            add(this.layout.me, this.rootFrame);
+
             this.layout.handleAdd(add);
+            add(this.layout.me, this.rootFrame);
 
             onDestroy(() => setTimeout(this.destroy, 50));
             onPause(() => this.hide());
@@ -94,6 +95,8 @@ namespace Menu {
             this.hide();
             remove(this.layout.me, this.rootFrame);
             this.layout.handleRemove(remove);
+
+            Menu.instance = undefined as unknown as Composer;
         }
 
         /** Shows menu */

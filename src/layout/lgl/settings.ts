@@ -10,19 +10,18 @@ namespace Menu {
 
         constructor(label: string, state: boolean = false) {
             super(Api.LinearLayout);
-            this.settings = new TextView(label);
-            this.state = state;
-            this.triggered = false;
-
             const settingsParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
             settingsParams.addRule(Api.ALIGN_PARENT_RIGHT);
 
-            // Initialize label
+            this.settings = new TextView(label);
             this.settings.textColor = config.color.primaryText;
             this.settings.typeface = Api.Typeface.DEFAULT_BOLD.value;
             this.settings.textSize = 20;
             this.settings.layoutParams = settingsParams;
             this.settings.onClickListener = () => this.handleState();
+
+            this.state = state;
+            this.triggered = false;
 
             if (this.state) this.swapViews(this, Menu.instance.layout.layout);
         }

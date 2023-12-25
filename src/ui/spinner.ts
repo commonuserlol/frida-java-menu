@@ -11,6 +11,7 @@ namespace Menu {
             this.instance = Api.Spinner.$new(app.context);
             this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
             this.initialized = false;
+
             const arrayAdapter = Api.ArrayAdapter.$new(app.context, Api.simple_spinner_dropdown_item, this.items);
             arrayAdapter.setDropDownViewResource(Api.simple_spinner_dropdown_item);
             this.adapter = arrayAdapter;
@@ -57,9 +58,10 @@ namespace Menu {
     /** @internal Initializes new `android.widget.Spinner` wrapper with default parameters */
     export function spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
         const spinner = new Spinner(items);
+        if (callback) spinner.onItemSelectedListener = callback;
+
         const savedIndex = sharedPreferences.getInt(items.join());
         if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
-        if (callback) spinner.onItemSelectedListener = callback;
 
         return spinner;
     }
