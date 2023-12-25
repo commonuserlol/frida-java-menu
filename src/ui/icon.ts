@@ -1,7 +1,7 @@
 namespace Menu {
     /** Commonized wrapper for `android.widget.ImageView` or `android.webkit.WebView` */
     export class Icon extends View {
-        constructor(type: "Normal" | "Web" = "Normal", value: string) {
+        constructor(type: "Normal" | "Web", value: string) {
             super();
             this.instance = type == "Normal" ? Api.ImageView.$new(app.context) : Api.WebView.$new(app.context);
             if (value)
