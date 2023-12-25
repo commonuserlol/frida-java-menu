@@ -289,18 +289,5 @@ namespace Menu {
 
             return [parentLayout, layout];
         }
-
-        destroy(): void {
-            this.buttonLayout.destroy();
-            this.close.destroy();
-            this.hide.destroy();
-            this.proxy.destroy();
-            this.layout.destroy();
-            this.subtitle.destroy();
-            this.titleLayout.destroy();
-            this.title.destroy();
-            Menu.instance.icon.destroy();
-            this.me.destroy();
-        }
     }
 }

@@ -110,8 +110,5 @@ namespace Menu {
                 }
             }, negativeCallback, view);
         }
-
-        /** Kills widgets handle */
-        abstract destroy(): void;
     }
 }
