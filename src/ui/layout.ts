@@ -14,6 +14,9 @@ namespace Menu {
         get childCount(): number {
             return this.instance.getChildCount();
         }
+        set gravity(gravity: number) {
+            this.instance.setGravity(gravity);
+        }
         /** Sets vertical gravity */
         set verticalGravity(verticalGravity: number) {
             this.instance.setVerticalGravity(verticalGravity);
