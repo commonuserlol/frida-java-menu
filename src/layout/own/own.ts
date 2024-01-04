@@ -63,12 +63,8 @@ namespace Menu {
 
         constructor(cfg?: GenericConfig) {
             super(cfg ?? ObsidianLayoutConfig);
-            this.titleLayout = new Layout(Api.RelativeLayout);
-            this.titleLayout.padding = [10, 5, 10, 5];
-            this.titleLayout.verticalGravity = 16;
-
             const titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT); // For `this.title`
-            titleParams.addRule(Api.CENTER_HORIZONTAL);
+            titleParams.addRule(Api.RelativeLayout.CENTER_IN_PARENT.value);
 
             this.title = new TextView();
             this.title.textColor = config.color.primaryText;
@@ -180,8 +176,7 @@ namespace Menu {
         handleAdd(add: ComposerHandler): void {
             add(this.buttonProxyLayout, this.buttonLayout);
             add(this.buttonLayout, this.me);
-            add(this.title, this.titleLayout);
-            add(this.titleLayout, this.me);
+            add(this.title, this.buttonLayout);
             add(this.subtitle, this.me);
             add(this.layout, this.proxy);
             add(this.proxy, this.me);
@@ -197,8 +192,7 @@ namespace Menu {
             remove(this.proxy, this.me);
             remove(this.layout, this.proxy);
             remove(this.subtitle, this.me);
-            remove(this.titleLayout, this.me);
-            remove(this.title, this.titleLayout);
+            remove(this.title, this.buttonLayout);
         }
 
         button(text: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
