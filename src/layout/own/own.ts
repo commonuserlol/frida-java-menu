@@ -49,7 +49,7 @@ namespace Menu {
                 noOverlayPermission: "Overlay permission is needed to show the menu",
                 hide: "<b>_</b>",
                 close: "✖",
-                hideCallback: "Icon hidden. Remember the hidden icon position",
+                hideCallback: "Icon hidden",
                 killCallback: "Menu killed"
             }
         };
