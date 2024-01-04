@@ -34,7 +34,7 @@ namespace Menu {
 
             menu: {
                 width: 300,
-                height: 150,
+                height: 200,
                 x: 100,
                 y: 100,
                 cornerRadius: 45
