@@ -5,8 +5,14 @@ namespace Menu {
         hideFg: string,
         closeFg: string
     }
+
+    interface ObsidianMenuConfig extends MenuConfig {
+        cornerRadius: number
+    }
+
     export interface ObsidianConfig extends GenericConfig {
-        color: ObsidianColorConfig
+        color: ObsidianColorConfig,
+        menu: ObsidianMenuConfig
     }
     /** Own layout configuration */
     export declare const ObsidianLayoutConfig: ObsidianConfig;
@@ -31,6 +37,7 @@ namespace Menu {
                 height: 150,
                 x: 100,
                 y: 100,
+                cornerRadius: 45
             },
 
             icon: {
@@ -80,6 +87,14 @@ namespace Menu {
             this.subtitle.padding = [0, 0, 0, 5];
         }
 
+        /** @internal */
+        roundedDrawable(): Java.Wrapper {
+            const gradientDrawable = Api.GradientDrawable.$new();
+            gradientDrawable.setCornerRadius((config as ObsidianConfig).menu.cornerRadius);
+
+            return gradientDrawable;
+        }
+
         initializeParams(): void {
             super.initializeParams();
             this.params.gravity.value = 51;
@@ -88,9 +103,12 @@ namespace Menu {
         }
 
         initializeLayout(): void {
+            const gradientDrawable = this.roundedDrawable();
+            gradientDrawable.setColor(parseColor(config.color.menu));
+
             this.me = new Layout(Api.LinearLayout);
             this.me.visibility = Api.GONE;
-            this.me.backgroundColor = config.color.menu;
+            this.me.background = gradientDrawable;
             this.me.orientation = Api.VERTICAL;
             this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(config.menu.width)), Api.WRAP_CONTENT);
         }
@@ -99,8 +117,13 @@ namespace Menu {
 
         initializeProxy(): void {
             super.initializeProxy();
+
+            // without roundind proxy it only top corners will be rounded
+            const gradientDrawable = this.roundedDrawable();
+            gradientDrawable.setColor(parseColor(config.color.layoutBg));
+
             this.proxy.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
-            this.proxy.backgroundColor = config.color.layoutBg;
+            this.proxy.background = gradientDrawable;
         }
 
         initializeMainLayout(): void {
