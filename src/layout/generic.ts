@@ -19,10 +19,10 @@ namespace Menu {
         subtitle: TextView;
         /** Layout for hide/kill and close buttons */
         buttonLayout: Layout;
-        /** Hide/kill button */
-        hide: Button;
-        /** Close button */
-        close: Button;
+        /** Hide/kill widget */
+        hide: View;
+        /** Close widget */
+        close: View;
 
         constructor(cfg: GenericConfig) {
             config = cfg;
