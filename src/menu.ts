@@ -13,7 +13,7 @@ namespace Menu {
         /** @internal */
         rootFrame: Layout;
         /** Icon holder */
-        icon: Icon;
+        $icon: Icon;
         /** Layout layout */
         layout: T;
 
@@ -46,22 +46,22 @@ namespace Menu {
          * @param {string} value can be base64-encoded image or link (only for Web type)
          * @param {("Normal" | "Web")} [type="Normal"] Normal accepts only base64-encoded image. Web accepts links to images/gifs, etc
          */
-        iconImage(value: string, type: "Normal" | "Web" = "Normal") {
+        icon(value: string, type: "Normal" | "Web" = "Normal") {
             Java.scheduleOnMainThread(() => {
-                this.icon = new Icon(type, value);
+                this.$icon = new Icon(type, value);
 
-                this.icon.onClickListener = () => {
-                    this.icon.visibility = Api.GONE;
+                this.$icon.onClickListener = () => {
+                    this.$icon.visibility = Api.GONE;
                     this.layout.me.visibility = Api.VISIBLE;
                 }
-                this.icon.visibility = Api.VISIBLE;
+                this.$icon.visibility = Api.VISIBLE;
 
                 this.layout.initializeIcon();
                 
                 new OnTouch(this.rootFrame);
-                new OnTouch(this.icon);
+                new OnTouch(this.$icon);
 
-                add(this.icon, this.rootFrame);
+                add(this.$icon, this.rootFrame);
             });
         }
 
