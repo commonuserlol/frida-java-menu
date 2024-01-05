@@ -55,7 +55,7 @@ namespace Menu {
         };
     }, lazy);
 
-    /** LGL Mod Menu template */
+    /** Obsidian layout */
     export class ObsidianLayout extends GenericLayout {
         declare hide: TextView;
         declare close: TextView;
@@ -144,8 +144,8 @@ namespace Menu {
             this.hide.backgroundColor = Api.TRANSPARENT;
             this.hide.textColor = (config as ObsidianConfig).color.hideFg;
             this.hide.onClickListener = () => {
-                Menu.instance.icon.visibility = Api.VISIBLE;
-                Menu.instance.icon.alpha = 0;
+                Menu.instance.$icon.visibility = Api.VISIBLE;
+                Menu.instance.$icon.alpha = 0;
                 this.me.visibility = Api.GONE;
                 toast(config.strings.hideCallback, 1);
             }
@@ -159,8 +159,8 @@ namespace Menu {
             this.close.backgroundColor = Api.TRANSPARENT;
             this.close.textColor = (config as ObsidianConfig).color.closeFg;
             this.close.onClickListener = () => {
-                Menu.instance.icon.visibility = Api.VISIBLE;
-                Menu.instance.icon.alpha = config.icon.alpha;
+                Menu.instance.$icon.visibility = Api.VISIBLE;
+                Menu.instance.$icon.alpha = config.icon.alpha;
                 this.me.visibility = Api.GONE;
             }
         }

@@ -37,7 +37,7 @@ namespace Menu {
         };
     }, lazy);
 
-    /** LGL Mod Menu template */
+    /** LGL Mod Menu layout */
     export class LGLLayout extends GenericLayout {
         constructor(cfg?: GenericConfig) {
             super(cfg ?? LGLConfig);
@@ -109,8 +109,8 @@ namespace Menu {
             this.hide.backgroundColor = Api.TRANSPARENT;
             this.hide.textColor = config.color.primaryText;
             this.hide.onClickListener = () => {
-                Menu.instance.icon.visibility = Api.VISIBLE;
-                Menu.instance.icon.alpha = 0;
+                Menu.instance.$icon.visibility = Api.VISIBLE;
+                Menu.instance.$icon.alpha = 0;
                 this.me.visibility = Api.GONE;
                 toast(config.strings.hideCallback, 1);
             }
@@ -124,8 +124,8 @@ namespace Menu {
             this.close.backgroundColor = 0;
             this.close.textColor = config.color.primaryText;
             this.close.onClickListener = () => {
-                Menu.instance.icon.visibility = Api.VISIBLE;
-                Menu.instance.icon.alpha = config.icon.alpha;
+                Menu.instance.$icon.visibility = Api.VISIBLE;
+                Menu.instance.$icon.alpha = config.icon.alpha;
                 this.me.visibility = Api.GONE;
             }
         }
