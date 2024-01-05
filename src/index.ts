@@ -41,7 +41,7 @@
 /// <reference path="./layout/generic.ts" />
 /// <reference path="./layout/lgl/lgl.ts" />
 /// <reference path="./layout/lgl/settings.ts" />
-/// <reference path="./layout/own/own.ts" />
+/// <reference path="./layout/obsidian/obsidian.ts" />
 
 /* Main class */
 /// <reference path="./menu.ts" />
