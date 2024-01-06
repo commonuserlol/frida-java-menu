@@ -209,10 +209,7 @@ namespace Menu {
         }
 
         async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper): Promise<Dialog> {
-            const dialog = await Menu.dialog(title, message, positiveCallback, negativeCallback, view);
-            // I have no idea should I show dialog
-            // But let user care about this
-            // Reference: https://github.com/LGLTeam/Android-Mod-Menu/blob/2e6095c7cb85458fff07f413d95d98a22e195cfa/app/src/main/java/com/android/support/Menu.java#L812
+            const dialog = await Menu.dialog(title, message, positiveCallback, negativeCallback, view);;
             return dialog;
         }
 
