@@ -69,8 +69,12 @@ namespace Menu {
         }
 
         /** Shows dialog */
-        show() {
-            const dialog = this.create();
+        show(): void;
+        /** Shows dialog with given instance by `create` method call */
+        show(instance: Java.Wrapper): void;
+        /** @internal */
+        show(instance?: Java.Wrapper) {
+            const dialog = instance ?? this.create();
             dialog.getWindow().setType(apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value);
             dialog.show();
         }
