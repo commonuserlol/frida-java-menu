@@ -81,7 +81,7 @@ namespace Menu {
                     remove(this.rootFrame, app.windowManager);
                 }
                 catch (e) {
-                    console.warn("Menu already destroyed, ignoring `destroy` call");
+                    (globalThis as any).console.warn("Menu already destroyed, ignoring `destroy` call");
                 }
             });
         }
@@ -108,7 +108,7 @@ namespace Menu {
                     this.rootFrame.visibility = Api.VISIBLE;
                 }
                 catch (e) {
-                    console.warn("Menu already showed, ignoring `show` call");
+                    (globalThis as any).console.warn("Menu already showed, ignoring `show` call");
                 }
             });
         }
