@@ -29,8 +29,7 @@
   },
   "homepage": "https://github.com/commonuserlol/frida-java-menu#readme",
   "devDependencies": {
-    "@types/frida-gum": "^18.3.2",
-    "@types/node": "^20.2.5",
-    "typescript": "^5.0.4"
+    "@types/frida-gum": "^18.5.1",
+    "typescript": "^5.3.3"
   }
 }
