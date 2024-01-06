@@ -1,4 +1,6 @@
 namespace Menu {
+    /** First layout - to add to the layout; Second - for your widgets */
+    export declare type CollapseReturn = [Layout, Layout];
     /** LGL Layout configuration */
     export declare const LGLConfig: GenericConfig;
     getter(Menu, "LGLConfig", () => {
@@ -35,26 +37,24 @@ namespace Menu {
         };
     }, lazy);
 
-    /** LGL Mod Menu template */
+    /** LGL Mod Menu layout */
     export class LGLLayout extends GenericLayout {
         constructor(cfg?: GenericConfig) {
             super(cfg ?? LGLConfig);
             this.titleLayout = new Layout(Api.RelativeLayout);
-            this.title = new TextView();
-            this.subtitle = new TextView();
+            this.titleLayout.padding = [10, 5, 10, 5];
+            this.titleLayout.verticalGravity = 16;
 
-            // Configure title & subtitle
             const titleParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT); // For `this.title`
             titleParams.addRule(Api.CENTER_HORIZONTAL);
 
-            this.titleLayout.padding = [10, 5, 10, 5];
-            this.titleLayout.verticalGravity = 16;
-            
+            this.title = new TextView();
             this.title.textColor = config.color.primaryText;
             this.title.textSize = 18;
             this.title.gravity = Api.CENTER;
             this.title.layoutParams = titleParams;
-            
+
+            this.subtitle = new TextView();
             this.subtitle.ellipsize = Api.TruncateAt.MARQUEE.value;
             this.subtitle.marqueeRepeatLimit = -1;
             this.subtitle.singleLine = true;
@@ -63,12 +63,10 @@ namespace Menu {
             this.subtitle.textSize = 10;
             this.subtitle.gravity = Api.CENTER;
             this.subtitle.padding = [0, 0, 0, 5];
-
-            this.ensureInitialized();
         }
 
         initializeParams(): void {
-            this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
+            super.initializeParams();
             this.params.gravity.value = 51;
             this.params.x.value = config.menu.x;
             this.params.y.value = config.menu.y;
@@ -82,21 +80,11 @@ namespace Menu {
             this.me.layoutParams = Layout.LinearLayoutParams(Math.floor(dp(config.menu.width)), Api.WRAP_CONTENT);
         }
 
-        initializeIcon(value: string, type?: "Normal" | "Web"): void {
-            this.icon = new Icon(type, value);
-
-            this.icon.onClickListener = () => {
-                this.icon.visibility = Api.GONE;
-                this.me.visibility = Api.VISIBLE;
-            }
-
-            this.icon.visibility = Api.VISIBLE;
-        }
+        initializeIcon(): void {}
 
         initializeProxy(): void {
-            const proxyParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
-            this.proxy = new Layout(Api.ScrollView);
-            this.proxy.layoutParams = proxyParams;
+            super.initializeProxy();
+            this.proxy.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
             this.proxy.backgroundColor = config.color.layoutBg;
         }
 
@@ -107,36 +95,37 @@ namespace Menu {
 
         initializeButtons(): void {
             const hideButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
+
             const closeButtonParams = Layout.RelativeLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+            closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
+
             this.buttonLayout = new Layout(Api.RelativeLayout);
-            this.hide = new Button(config.strings.hide);
-            this.close = new Button(config.strings.close);
             this.buttonLayout.padding = [10, 3, 10, 3];
             this.buttonLayout.verticalGravity = Api.CENTER;
-            
-            hideButtonParams.addRule(Api.ALIGN_PARENT_LEFT);
+
+            this.hide = new Button(config.strings.hide);
             this.hide.layoutParams = hideButtonParams;
             this.hide.backgroundColor = Api.TRANSPARENT;
             this.hide.textColor = config.color.primaryText;
             this.hide.onClickListener = () => {
-                this.icon.visibility = Api.VISIBLE;
-                this.icon.alpha = 0;
+                Menu.instance.$icon.visibility = Api.VISIBLE;
+                Menu.instance.$icon.alpha = 0;
                 this.me.visibility = Api.GONE;
                 toast(config.strings.hideCallback, 1);
             }
-
             this.hide.onLongClickListener = () => {
                 instance.destroy();
                 toast(config.strings.killCallback, 1);
             }
 
-            closeButtonParams.addRule(Api.ALIGN_PARENT_RIGHT);
+            this.close = new Button(config.strings.close);
             this.close.layoutParams = closeButtonParams;
             this.close.backgroundColor = 0;
             this.close.textColor = config.color.primaryText;
             this.close.onClickListener = () => {
-                this.icon.visibility = Api.VISIBLE;
-                this.icon.alpha = config.icon.alpha;
+                Menu.instance.$icon.visibility = Api.VISIBLE;
+                Menu.instance.$icon.alpha = config.icon.alpha;
                 this.me.visibility = Api.GONE;
             }
         }
@@ -171,10 +160,11 @@ namespace Menu {
             remove(this.title, this.titleLayout);
         }
 
-        button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
-            const button = super.button(text, callback, longCallback);
+        button(text: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
             const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             params.setMargins(7, 5, 7, 5);
+
+            const button = Menu.button(text, callback, longCallback);
             button.layoutParams = params;
             button.allCaps = false;
             button.textColor = config.color.secondaryText;
@@ -183,29 +173,63 @@ namespace Menu {
             return button;
         }
 
-        radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-            const radioGroup = super.radioGroup(label, buttons, callback);
+        async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper): Promise<Dialog> {
+            const dialog = await Menu.dialog(title, message, positiveCallback, negativeCallback, view);
+            // I have no idea should I show dialog
+            // But let user care about this
+            // Reference: https://github.com/LGLTeam/Android-Mod-Menu/blob/2e6095c7cb85458fff07f413d95d98a22e195cfa/app/src/main/java/com/android/support/Menu.java#L812
+            return dialog;
+        }
+
+        radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<Button>): RadioGroup {
+            const radioGroupLabel = this.textView(format(label, ""));
+
+            const radioGroupLabelParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
+
+            const instances = makeButtonInstances(buttons, function (index: number) {
+                radioGroupLabel.text = format(label, this.text);
+                callback?.call(this, index);
+            }).map(e => {
+                e.textColor = config.color.secondaryText;
+                return e;
+            });
+
+            const radioGroup = Menu.radioGroup(instances);
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
+            radioGroup.instance.addView(Java.cast(radioGroupLabel.instance, Api.View), buttons.length, radioGroupLabelParams);
 
             return radioGroup;
         }
 
         seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
-            const seekbar = super.seekbar(label, max, min, callback);
+            const seekbar = Menu.seekbar(label, max, min, (progress: number) => {
+                seekbarLabel.text = format(label, progress);
+                callback?.call(seekbar, progress);
+            });
+            seekbar.padding = [25, 10, 35, 10];
+
+            const seekbarLabel = this.textView(format(label, seekbar.progress));
+
             const layout = new Layout(Api.LinearLayout);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;
-            seekbar.padding = [25, 10, 35, 10];
 
-            Menu.instance.add((seekbar as SeekBar).label, layout);
-            Menu.instance.add(seekbar, layout);
+            add(seekbarLabel, layout);
+            add(seekbar, layout);
 
             return layout;
         }
 
+        spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
+            const spinner = Menu.spinner(items, callback);
+            spinner.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
+
+            return spinner;
+        }
+
         toggle(label: string, callback?: SwitchCallback): Switch {
-            const toggle = super.toggle(label, callback);
+            const toggle = Menu.toggle(label, callback);
             toggle.textColor = config.color.secondaryText;
             toggle.padding = [10, 5, 10, 5];
 
@@ -213,7 +237,7 @@ namespace Menu {
         }
 
         textView(label: string): TextView {
-            const textView = super.textView(label);
+            const textView = Menu.textView(label);
             textView.textColor = config.color.secondaryText;
             textView.padding = [10, 5, 10, 5];
 
@@ -221,7 +245,7 @@ namespace Menu {
         }
 
         category(label: string): TextView {
-            const textView = super.textView(label);
+            const textView = Menu.textView(label);
             textView.backgroundColor = config.color.categoryBg;
             textView.gravity = Api.CENTER;
             textView.padding = [0, 5, 0, 5];
@@ -230,23 +254,24 @@ namespace Menu {
             return textView;
         }
 
-        collapse(label: string, state: boolean): [Layout, Layout] {
-            let parentLayout = new Layout(Api.LinearLayout);
-            let layout = new Layout(Api.LinearLayout);
-            let textView = this.category(`▽ ${label} ▽`);
-            let params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
-            textView.backgroundColor = config.color.collapseBg;
+        collapse(label: string, state: boolean): CollapseReturn {
+            const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             params.setMargins(0, 5, 0, 0);
+
+            const parentLayout = new Layout(Api.LinearLayout);
             parentLayout.layoutParams = params;
             parentLayout.verticalGravity = 16;
             parentLayout.orientation = Api.VERTICAL;
 
+            const layout = new Layout(Api.LinearLayout);
             layout.verticalGravity = 16;
             layout.padding = [0, 5, 0, 5];
             layout.orientation = Api.VERTICAL;
             layout.backgroundColor = config.color.layoutBg;
             layout.visibility = Api.GONE;
 
+            const textView = this.category(`▽ ${label} ▽`);
+            textView.backgroundColor = config.color.collapseBg;
             textView.padding = [0, 20, 0, 20];
             textView.onClickListener = stateHolder(state, (s: boolean) => {
                 if (s) {
@@ -258,22 +283,11 @@ namespace Menu {
                     textView.text = `▽ ${label} ▽`;
                 }
             });
-            Menu.instance.add(textView, parentLayout);
-            Menu.instance.add(layout, parentLayout);
-            return [parentLayout, layout];
-        }
 
-        destroy(): void {
-            this.buttonLayout.destroy();
-            this.close.destroy();
-            this.hide.destroy();
-            this.proxy.destroy();
-            this.layout.destroy();
-            this.subtitle.destroy();
-            this.titleLayout.destroy();
-            this.title.destroy();
-            this.icon.destroy();
-            this.me.destroy();
+            add(textView, parentLayout);
+            add(layout, parentLayout);
+
+            return [parentLayout, layout];
         }
     }
 }

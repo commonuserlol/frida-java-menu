@@ -1,16 +1,12 @@
 namespace Menu {
+    /** SeekBar JS callback */
     export declare type SeekBarCallback = (this: SeekBar, progress: number) => void;
 
+    /** Wrapper for `android.widget.SeekBar` */
     export class SeekBar extends View {
-        public readonly label: TextView;
-        public unformattedText: String;
-
-        constructor(text: string, progress: number = 0) {
+        constructor(progress: number = 0) {
             super();
             this.instance = Api.SeekBar.$new(app.context);
-            this.unformattedText = new String(text);
-            this.label = new TextView(format(this.unformattedText, progress ?? 0));
-            this.label.textColor = config.color.secondaryText;
             this.progress = progress;
         }
         /** Gets max value */
@@ -55,7 +51,6 @@ namespace Menu {
                     },
                     onProgressChanged: (seekBar: Java.Wrapper, progress: number) => {
                         seekBar.setProgress(progress)
-                        this.label.text = format(this.unformattedText, progress);
                         callback.call(this, progress);
                     }
                 }
@@ -63,8 +58,18 @@ namespace Menu {
         }
         /** Sets progress */
         set progress(progress: number) {
-            this.label.text = format(this.unformattedText, progress);
             this.instance.setProgress(progress);
         }
+    }
+
+    /** @internal Initializes new `android.widget.SeekBar` wrapper with default parameters */
+    export function seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): SeekBar {
+        const seekbar = new SeekBar(sharedPreferences.getInt(label));
+        seekbar.max = max;
+        min ? seekbar.min = min : seekbar.min = 0;
+        if (callback)
+            seekbar.onSeekBarChangeListener = callback;
+
+        return seekbar;
     }
 }

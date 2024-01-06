@@ -1,9 +1,11 @@
 namespace Menu {
+    /** Wrapper for `android.widget.TextView` */
     export class TextView extends View {
         constructor(text?: string) {
             super();
             this.instance = Api.TextView.$new(app.context);
-            if (text) this.text = text;
+            if (text)
+                this.text = text;
         }
         /** Gets ellipsize */
         get ellipsize(): Java.Wrapper {
@@ -53,5 +55,12 @@ namespace Menu {
         set typeface(tf: Java.Wrapper) {
             this.instance.setTypeface(tf);
         }
+    }
+
+    /** @internal Initializes new `android.widget.TextView` wrapper with default parameters */
+    export function textView(label: string): TextView {
+        const textView = new TextView(label);
+
+        return textView;
     }
 }

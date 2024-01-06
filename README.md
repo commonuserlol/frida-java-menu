@@ -1,32 +1,24 @@
-# frida-java-menu
-<p align="center">
-<b>Easy library to create menu for Android using <a href="https://frida.re/">Frida</a></b></p>
+## Overview
+Yet easy but powerful [Frida](https://frida.re) module to create custom floating menu on Android.
 
-![](https://i.imgur.com/gWrXy04.png)
+## Features
+* Frida Integration: no need to compile the code and then inject it every time as you did with a completely Java menu
+* Zero-knowledge about JNI: this project uses frida's convenient api instead of JNI
+* Ready-to-use wrappers: even if you don’t know anything about Java, the project already includes wrappers for the API with minimal jsdoc
+* Highly customizable: ready-made layouts/configs available or create your own
 
-<p align="center"><a href="https://github.com/commonuserlol/frida-java-menu/wiki/Examples"><b>Get started</b></a></p>
+## Usage
+Please refer to wiki page.
 
-# Comparison
-| *                        |     Android-Mod-Menu aka LGL Mod Menu     | Frida-Java-Menu |
-|:------------------------:|:-----------------------------------------:|:---------------:|
-|JNI knowledge required    |✅                                         |❌               |
-|Change config at runtime  |❌                                         |✅               |
-|Easy to inject            |❌ (need to add smali manually)            |✅               |
-|Dymanically add widgets   |❌ (hardcoded in `GetFeatureList`)         |✅               |
-|Easy create widget        |❌ (args splitted by "_")                  |✅               |
-|Easy callbacks            |❌ (by index)                              |✅ (by function) |
-|Editor/IDE tips with types|✅ (not for widgets)                       |✅               |
+## Troubleshooting
+Keep in mind that not all devices/firmwares work here. Basically, only those whose ART codebase is not particularly changed from AOSP.<br>***MIUI, ColorOS and other OEM roms MAY work incorrect or won't work at all***
 
+## Contributing
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-# Supported roms
-Should work with (almost) pure **AOSP** (e.g. **LineageOS** based rom)<br>
-Correct work is ***NOT GUARANTEED*** for MIUI, EMUI, RUI and other **OEM** rom<br>
+## License
+This project is licensed under the GNU General Public License v3.0.
 
-# Credits
-
-[Frida](https://github.com/frida/frida/) - make this possible<br>
-[Android-Mod-Menu](https://github.com/LGLTeam/Android-Mod-Menu/) - original project<br>
-[frida-il2cpp-bridge](https://github.com/vfsfitvnm/frida-il2cpp-bridge/) - useful internal things
-
-# Need help?
-Use wiki (rarely updates) or create issue
+## Acknowledgments
+[Android-Mod-Menu](https://github.com/LGLTeam/Android-Mod-Menu/) - lgl layout java source<br>
+[frida-il2cpp-bridge](https://github.com/vfsfitvnm/frida-il2cpp-bridge) - internal helpers (lazy, decorate, ...)

@@ -1,8 +1,3 @@
-/// <reference path="./api.ts" />
-/// <reference path="./utils/lazy.ts" />
-/// <reference path="./utils/getter.ts" />
-/// <reference path="./utils/decorate.ts" />
-
 namespace Menu {
     export const app = {
         /** Returns app instance */
@@ -35,8 +30,29 @@ namespace Menu {
             return Java.cast(app.context.getSystemService(Api.WINDOW_SERVICE), Api.ViewManager);
         }
     };
-    /** App activity instance */
-    export declare let activityInstance: Java.Wrapper;
+
+    /** App main activity instance
+     * 
+     * Since this field hacked example call is:
+     * 
+     * ```typescript
+     * const activity = await Menu.activityInstance;
+     * ```
+     */
+    export declare const activityInstance: Promise<Java.Wrapper>;
+    getter(Menu, "activityInstance", () => {
+        return new Promise((resolve, reject) => {
+            Java.choose(Api.Activity.$className, {
+                onMatch: (instance) => {
+                    if (instance.getComponentName().getClassName() == launcher) {
+                        resolve(Java.retain(instance));
+                        return "stop";
+                    }
+                },
+                onComplete() {}
+            });
+        });
+    }, lazy);
 
     /** Android version */
     export declare const androidVersion: string;

@@ -1,42 +1,49 @@
 namespace Menu {
-
+    /** Wrapper for `android.widget.RadioGroup` */
     export class RadioGroup extends View {
-        private unformattedText: string;
-        public readonly label: TextView;
-        
-        constructor(text: string) {
+        /** @internal Button lust */
+        buttons: string[];
+
+        constructor(buttons: string[]) {
             super();
             this.instance = Api.RadioGroup.$new(app.context);
-            this.label = new TextView(text);
-            let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            this.unformattedText = text;
-            this.label.text = format(text, 0);
-            this.instance.addView(Java.cast(this.label.instance, Api.View), 0, params);
-        }
-        /** Adds new `RadioButton` */
-        public addButton(label: string, index: number, callback?: (index: number) => void) {
-            let button = new View();
-            let params = Api.LinearLayout_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
-            button.instance = Api.RadioButton.$new(app.context);
-            button.text = label;
-            button.textColor = config.color.secondaryText;
-            if (callback) {
-                button.onClickListener = () => {
-                    this.label.text = format(this.unformattedText, label);
-                    sharedPreferences.putInt(this.label.text, index);
-                    callback(index);
-                }
-            }
-            this.instance.addView(Java.cast(button.instance, Api.View), index+1, params);
+            this.buttons = buttons;
         }
         /** Checks object with given id */
-        public check(id: number) {
-            this.label.text = format(this.unformattedText, Java.cast(this.instance.findViewById(id), Api.TextView).getText().toString());
+        check(id: number) {
             this.instance.check(id);
         }
         /** Gets child at ginen index */
-        public getChildAt(index: number): Java.Wrapper {
+        getChildAt(index: number): Java.Wrapper {
             return this.instance.getChildAt(index);
         }
+    }
+
+    /** @internal Makes buttons from `string[]` */
+    export function makeButtonInstances(buttons: string[], callback?: ThisWithIndexCallback<Button>) {
+        return buttons.map((e: string, index: number) => {
+            const object = new View(Api.RadioButton.$new(app.context)) as Button;
+            object.text = e;
+            object.onClickListener = () => {
+                sharedPreferences.putInt(buttons.join(), index);
+                callback?.call(object, index);
+            }
+
+            return object;
+        });
+    }
+
+    /** @internal Initializes new `android.widget.RadioGroup` wrapper with default parameters */
+    export function radioGroup(buttons: View[]): RadioGroup {
+        const radioGroup = new RadioGroup(buttons.map(e => e.text));
+        for (const button of buttons) {
+            radioGroup.instance.addView(button.instance, buttons.indexOf(button), Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT));
+        }
+
+        const savedIndex = sharedPreferences.getInt(buttons.join());
+        if (savedIndex > -1)
+            Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex).getId()));
+
+        return radioGroup;
     }
 }

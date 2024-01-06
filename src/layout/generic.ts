@@ -7,8 +7,6 @@ namespace Menu {
         params: Java.Wrapper; // TODO: Maybe i should add wrapper for *params
         /** Layout as layout */
         me: Layout;
-        /** Icon holder */
-        icon: Icon;
         /** Proxy layout for scrolling feature */
         proxy: Layout;
         /** Main layout for widgets */
@@ -21,26 +19,30 @@ namespace Menu {
         subtitle: TextView;
         /** Layout for hide/kill and close buttons */
         buttonLayout: Layout;
-        /** Hide/kill button */
-        hide: Button;
-        /** Close button */
-        close: Button;
+        /** Hide/kill widget */
+        hide: View;
+        /** Close widget */
+        close: View;
 
         constructor(cfg: GenericConfig) {
             config = cfg;
         }
 
         /** Initializes menu props */
-        abstract initializeParams(): void;
+        initializeParams(): void {
+            this.params = Api.WindowManager_Params.$new(Api.WRAP_CONTENT, Api.WRAP_CONTENT, apiLevel >= 26 ? Api.WindowManager_Params.TYPE_APPLICATION_OVERLAY.value : Api.WindowManager_Params.TYPE_PHONE.value, 8, -3);
+        };
 
         /** Initializes own layout */
         abstract initializeLayout(): void;
 
-        /** Initializes icon */
-        abstract initializeIcon(value: string, type: "Normal" | "Web"): void;
+        /** Sets icon style */
+        abstract initializeIcon(): void;
 
         /** Initializes proxy layout for scrolling feature */
-        abstract initializeProxy(): void;
+        initializeProxy(): void {
+            this.proxy = new Layout(Api.ScrollView);
+        };
 
         /** Initializes main layout for widgets */
         abstract initializeMainLayout(): void;
@@ -48,10 +50,7 @@ namespace Menu {
         /** Initializes hide/kill & close button and their layout */
         abstract initializeButtons(): void;
 
-        /** Initializes everything needed for start
-         * 
-         * Called by constructor after title & subtitle init
-         */
+        /** Initializes everything needed for start */
         abstract ensureInitialized(): void;
 
         /** Adds everything needed from template */
@@ -60,88 +59,49 @@ namespace Menu {
         /** Removes template objects */
         abstract handleRemove(remove: ComposerHandler): void;
 
-        button(text?: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
-            const button = new Button(text);
-            if (callback) button.onClickListener = () => callback.call(button);
-            if (longCallback) button.onLongClickListener = () => longCallback.call(button);
-    
-            return button;
-        }
+        /** Creates Button widget with layout-specific style */
+        abstract button(label: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button;
 
-        async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog> {
-            const instance = await MainActivity.getActivityInstance();
-            const dialog = new Dialog(instance, title, message);
-            view ? (view instanceof View ? dialog.view = view.instance : dialog.view = view) : null;
-            if (positiveCallback) dialog.setPositiveButton(positiveCallback)
-            if (negativeCallback) dialog.setNegativeButton(negativeCallback);
-    
-            return dialog;
-        }
+        /** Creates AlertDialog.Builder layout-specific style */
+        abstract dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper | View): Promise<Dialog>;
 
-        radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<RadioGroup>): RadioGroup {
-            const radioGroup = new RadioGroup(label);
-            const savedIndex = sharedPreferences.getInt(label);
-            for (const button of buttons) {
-                const index = buttons.indexOf(button);
-                radioGroup.addButton(button, index, callback);
-            }
-            if (savedIndex > -1) Java.scheduleOnMainThread(() => radioGroup.check(radioGroup.getChildAt(savedIndex+1).getId()));
-    
-            return radioGroup;
-        }
+        /** Creates RadioGroup widget with layout-specific style */
+        abstract radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<Button>): RadioGroup;
 
-        seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
-            const seekbar = new SeekBar(label, sharedPreferences.getInt(label));
-            seekbar.max = max;
-            min ? seekbar.min = min : seekbar.min = 0;
-            if (callback) seekbar.onSeekBarChangeListener = callback;
-    
-            return seekbar;
-        }
+        /** Creates SeekBar widget with layout-specific style */
+        abstract seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View;
 
-        spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
-            const spinner = new Spinner(items);
-            const savedIndex = sharedPreferences.getInt(items.join());
-            if (savedIndex > -1) Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
-            if (callback) spinner.onItemSelectedListener = callback;
-            return spinner;
-        }
+        /** Creates Spinner widget with layout-specific style */
+        abstract spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner;
 
-        toggle(label: string, callback?: SwitchCallback): Switch {
-            const toggle = new Switch(label);
-            const savedState = sharedPreferences.getBool(label);
-            if (callback) toggle.onCheckedChangeListener = callback;
-            if (savedState) Java.scheduleOnMainThread(() => toggle.checked = savedState);
-    
-            return toggle;
-        }
+        /** Creates Switch widget with layout-specific style */
+        abstract toggle(label: string, callback?: SwitchCallback): Switch;
 
-        textView(label: string): TextView {
-            const textView = new TextView(label);
-    
-            return textView;
-        }
+        /** Creates TextView widget with layout-specific style */
+        abstract textView(label: string): TextView;
 
+        /** Creates AlertDialog.Builder with EditText and layout-specific style */
         async inputNumber(title: string, max: number, positiveCallback: DialogInputCallback<number>, negativeCallback: DialogCallback): Promise<Dialog> {
-            let view = Api.EditText.$new(app.context);
-            if (max > 0) {
+            const view = Api.EditText.$new(app.context);
+            if (max > 0)
                 view.setHint(Api.JavaString.$new(`Max value: ${max}`));
-            }
             view.setInputType(Api.InputType.TYPE_CLASS_NUMBER.value);
 
             return await this.dialog(title, "", {
                 label: positiveCallback?.label,
                 fn: function () {
-                    let result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
+                    const result = parseFloat(Java.cast(view, Api.TextView).getText().toString());
                     !Number.isNaN(result) ? positiveCallback?.fn.call(this, result <= max ? result : max) : positiveCallback?.fn.call(this, NaN);
                 },
             },
             negativeCallback, view);
         }
 
+        /** Creates AlertDialog.Builder with EditText and layout-specific style */
         async inputText(title: string, positiveCallback: DialogInputCallback<string>, negativeCallback: DialogCallback, hint?: string): Promise<Dialog> {
-            let view = Api.EditText.$new(app.context);
-            if (hint) view.setHint(wrap(hint));
+            const view = Api.EditText.$new(app.context);
+            if (hint)
+                view.setHint(wrap(hint));
             return await this.dialog(title, "", {
                 label: positiveCallback.label,
                 fn: function () {
@@ -150,7 +110,5 @@ namespace Menu {
                 }
             }, negativeCallback, view);
         }
-
-        abstract destroy(): void;
     }
 }

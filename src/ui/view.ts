@@ -1,8 +1,10 @@
 namespace Menu {
+    /** Wrapper for `android.view.View` */
     export class View {
-        public instance: Java.Wrapper;
+        /** Java instance of this wrapper */
+        instance: Java.Wrapper;
 
-        public constructor (handleOrInstance?: NativePointerValue | Java.Wrapper) {
+        constructor (handleOrInstance?: NativePointerValue | Java.Wrapper) {
             handleOrInstance ? this.instance = Java.cast(handleOrInstance, Api.View) : null;
         }
         /** Gets alpha */
@@ -63,34 +65,34 @@ namespace Menu {
         }
         /** Sets text */
         set text(text: string) {
-            this.instance.setText(wrap(text));
+            Java.cast(this.instance, Api.TextView).setText(wrap(text));
         }
         /** Sets text color */
         set textColor(color: string | number) {
-            this.instance.setTextColor(parseColor(color));
+            Java.cast(this.instance, Api.TextView).setTextColor(parseColor(color));
         }
         /** Sets visibility */
         set visibility(visibility: number) {
             this.instance.setVisibility(visibility);
         }
         /** Sets onClickListener callback */
-        set onClickListener(callback: () => void) {
+        set onClickListener(callback: ThisCallback<View>) {
             this.instance.setOnClickListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnClickListener],
                 methods: {
-                    onClick: callback
+                    onClick: () => callback.call(this)
                 }
             }).$new());
         }
         /** Sets onLongClickListener callback */
-        set onLongClickListener(callback: () => void) {
+        set onLongClickListener(callback: ThisCallback<View>) {
             this.instance.setOnLongClickListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnLongClickListener],
                 methods: {
                     onLongClick: (view: Java.Wrapper) => {
-                        callback();
+                        callback.call(this);
                         return true;
                     }
                 }
@@ -112,9 +114,8 @@ namespace Menu {
         }
     }
     
-    /** Wraps text from HTML */
-    export function wrap(text: string): Java.Wrapper
-    {
+    /** Parses text from HTML */
+    export function wrap(text: string): Java.Wrapper {
         return Api.HTML.fromHtml(Api.JavaString.$new(String(text)));
     }
 }

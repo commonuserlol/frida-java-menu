@@ -1,18 +1,18 @@
 namespace Menu {
+    /** Wrapper for `android.widget.Spinner` */
     export class Spinner extends View {
-        public items: Java.Wrapper;
-        private initialized: boolean;
+        /** Java `ArrayList` with items */
+        items: Java.Wrapper;
+        /** @internal Workaround to skip self-call for callback */
+        initialized: boolean;
 
         constructor(items: string[]) {
             super();
             this.instance = Api.Spinner.$new(app.context);
             this.items = Api.ArrayList.$new(Api.Arrays.asList(Java.array("java.lang.String", items)));
             this.initialized = false;
-            let params = Api.LinearLayout_Params.$new(Api.MATCH_PARENT, Api.WRAP_CONTENT);
-            params.setMargins(7, 2, 7, 2);
-            this.layoutParams = params;
-            this.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
-            let arrayAdapter = Api.ArrayAdapter.$new(app.context, Api.simple_spinner_dropdown_item, this.items);
+
+            const arrayAdapter = Api.ArrayAdapter.$new(app.context, Api.simple_spinner_dropdown_item, this.items);
             arrayAdapter.setDropDownViewResource(Api.simple_spinner_dropdown_item);
             this.adapter = arrayAdapter;
         }
@@ -29,7 +29,7 @@ namespace Menu {
             this.instance.setAdapter(adapter);
         }
         /** Sets onItemSelectedListener */
-        set onItemSelectedListener(callback: (index: number) => void) {
+        set onItemSelectedListener(callback: ThisWithIndexCallback<Spinner>) {
             this.instance.setOnItemSelectedListener(Java.registerClass({
                 name: randomString(35),
                 implements: [Api.OnItemSelectedListener],
@@ -40,7 +40,7 @@ namespace Menu {
                             return;
                         };
                         sharedPreferences.putInt(Api.JavaString.join(Api.JavaString.$new(", "), this.items), index);
-                        Java.cast(parent.getChildAt(0), Api.TextView).setTextColor(config.color.secondaryText);
+                        new View(parent.getChildAt(0)).textColor = config.color.secondaryText; // gc will kill it (ig)
                         callback.call(this, index);
                     },
                     onNothingSelected: function(parent: Java.Wrapper) {
@@ -53,5 +53,18 @@ namespace Menu {
         set selection(position: number) {
             this.instance.setSelection(position);
         }
+    }
+
+    /** @internal Initializes new `android.widget.Spinner` wrapper with default parameters */
+    export function spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
+        const spinner = new Spinner(items);
+        if (callback)
+            spinner.onItemSelectedListener = callback;
+
+        const savedIndex = sharedPreferences.getInt(items.join());
+        if (savedIndex > -1)
+            Java.scheduleOnMainThread(() => spinner.selection = savedIndex);
+
+        return spinner;
     }
 }
