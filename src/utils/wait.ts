@@ -6,10 +6,10 @@ namespace Menu {
                 try {
                     Java.perform(() => {
                         if (!app.instance)
-                        return;
-        
+                            return;
+
                         clearInterval(waitInterval);
-                        callback();
+                        Java.scheduleOnMainThread(() => callback());
                         resolve();
                     });
                 } catch (e) {}
