@@ -4,12 +4,14 @@ namespace Menu {
         return new Promise((resolve, reject) => {
             const waitInterval = setInterval(() => {
                 try {
-                    if (!app.instance)
+                    Java.perform(() => {
+                        if (!app.instance)
                         return;
         
-                    clearInterval(waitInterval);
-                    resolve();
-                    Java.perform(callback);
+                        clearInterval(waitInterval);
+                        callback();
+                        resolve();
+                    });
                 } catch (e) {}
             }, 10);
         });
