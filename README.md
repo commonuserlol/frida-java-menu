@@ -11,7 +11,7 @@ Yet easy but powerful [Frida](https://frida.re) module to create custom floating
 Please refer to wiki page.
 
 ## Troubleshooting
-Keep in mind that not all devices/firmwares work here. Basically, only those whose ART codebase is not particularly changed from AOSP.<br>***MIUI, ColorOS and other OEM roms MAY work incorrect or won't work at all***
+Through a very unstable Java bridge (on which this works), we cannot guarantee that everything will work. Please, prefer roms with non/slightly modified ART code (AOSP forks mainly)<br>***MIUI, ColorOS and other OEM roms MAY work incorrect or won't work at all***
 
 ## Contributing
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
