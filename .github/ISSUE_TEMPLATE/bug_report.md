@@ -8,10 +8,6 @@ assignees: ''
 ---
 **PLEASE COMPLETE THIS TEMPLATE OR ISSUE WILL BE CLOSED WITHOUT EXPLANATION**
 
-
-**YOU MUST COMPLETE EVERYTHING WHICH NOT MARKED (optional)**
-
-
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -42,7 +38,7 @@ A clear and concise description of what you expected to happen, e.g.:
 If applicable, add screenshots to help explain your problem, else skip or delete this.
 
 
-**Backtrace (optional, complete this only if you got crash, else delete/skip)**
+**Backtrace (optional, complete this only if you got crash)**
 To get backtrace run connect to phone via adb, run app, run ASAP command: `adb shell pidof -s com.app.name` (Android 8+, replace com.app.name with real package name) OR try other from [here](https://stackoverflow.com/questions/6854127/filter-logcat-to-get-only-the-messages-from-my-application-in-android).
 
 
@@ -50,6 +46,8 @@ To get backtrace run connect to phone via adb, run app, run ASAP command: `adb s
  - Device name: [e.g. Xiaomi Redmi 10TS Pro Max]
  - Firmware or Custom ROM: [e.g. MIUI 14 or LineageOS 20]
  - Android version: [e.g. Android 12.1]
+ - Mode of operation: [frida-server/frida-gadget in listen/script mode]
+ - Other ART hook (if rooted and if installed): [e.g. LSPosed]
 
 **Additional context (optional)**
 Add any other context about the problem here.
