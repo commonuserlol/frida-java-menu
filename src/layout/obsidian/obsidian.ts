@@ -84,9 +84,9 @@ namespace Menu {
         }
 
         /** @internal */
-        roundedDrawable(): Java.Wrapper {
-            const gradientDrawable = Api.GradientDrawable.$new();
-            gradientDrawable.setCornerRadius((config as ObsidianConfig).menu.cornerRadius);
+        roundedDrawable(): GradientDrawable {
+            const gradientDrawable = new GradientDrawable();
+            gradientDrawable.cornerRadius = (config as ObsidianConfig).menu.cornerRadius;
 
             return gradientDrawable;
         }
@@ -100,7 +100,7 @@ namespace Menu {
 
         initializeLayout(): void {
             const gradientDrawable = this.roundedDrawable();
-            gradientDrawable.setColor(parseColor(config.color.menu));
+            gradientDrawable.color = config.color.menu;
 
             this.me = new Layout(Api.LinearLayout);
             this.me.visibility = Api.GONE;
@@ -116,7 +116,7 @@ namespace Menu {
 
             // without roundind proxy it only top corners will be rounded
             const gradientDrawable = this.roundedDrawable();
-            gradientDrawable.setColor(parseColor(config.color.layoutBg));
+            gradientDrawable.color = config.color.layoutBg;
 
             this.proxy.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Math.floor(dp(config.menu.height)));
             this.proxy.background = gradientDrawable;
@@ -196,6 +196,9 @@ namespace Menu {
         }
 
         button(text: string, callback?: ThisCallback<Button>, longCallback?: ThisCallback<Button>): Button {
+            const gradientDrawable = this.roundedDrawable();
+            gradientDrawable.color = config.color.buttonBg;
+
             const params = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             params.setMargins(7, 5, 7, 5);
 
@@ -203,17 +206,19 @@ namespace Menu {
             button.layoutParams = params;
             button.allCaps = false;
             button.textColor = config.color.secondaryText;
-            button.backgroundColor = config.color.buttonBg;
+            button.background = gradientDrawable;
 
             return button;
         }
 
         async dialog(title: string, message: string, positiveCallback?: DialogCallback, negativeCallback?: DialogCallback, view?: Java.Wrapper): Promise<Dialog> {
-            const dialog = await Menu.dialog(title, message, positiveCallback, negativeCallback, view);;
+            const dialog = await Menu.dialog(title, message, positiveCallback, negativeCallback, view);
             return dialog;
         }
 
         radioGroup(label: string, buttons: string[], callback?: ThisWithIndexCallback<Button>): RadioGroup {
+            const gradientDrawable = this.roundedDrawable();
+
             const radioGroupLabel = this.textView(format(label, ""));
 
             const radioGroupLabelParams = Layout.LinearLayoutParams(Api.WRAP_CONTENT, Api.WRAP_CONTENT);
@@ -230,11 +235,14 @@ namespace Menu {
             radioGroup.padding = [10, 5, 10, 5];
             radioGroup.orientation = Api.VERTICAL;
             radioGroup.instance.addView(Java.cast(radioGroupLabel.instance, Api.View), buttons.length, radioGroupLabelParams);
+            radioGroup.background = gradientDrawable;
 
             return radioGroup;
         }
 
         seekbar(label: string, max: number, min?: number, callback?: SeekBarCallback): View {
+            const gradientDrawable = this.roundedDrawable();
+
             const seekbar = Menu.seekbar(label, max, min, (progress: number) => {
                 seekbarLabel.text = format(label, progress);
                 callback?.call(seekbar, progress);
@@ -246,6 +254,7 @@ namespace Menu {
             const layout = new Layout(Api.LinearLayout);
             layout.layoutParams = Layout.LinearLayoutParams(Api.MATCH_PARENT, Api.MATCH_PARENT);
             layout.orientation = Api.VERTICAL;
+            layout.background = gradientDrawable;
 
             add(seekbarLabel, layout);
             add(seekbar, layout);
@@ -254,23 +263,33 @@ namespace Menu {
         }
 
         spinner(items: string[], callback?: ThisWithIndexCallback<Spinner>): Spinner {
+            const gradientDrawable = this.roundedDrawable();
+
             const spinner = Menu.spinner(items, callback);
+            spinner.background = gradientDrawable;
             spinner.background.setColorFilter(1, Api.Mode.SRC_ATOP.value);
 
             return spinner;
         }
 
         toggle(label: string, callback?: SwitchCallback): Switch {
+            const gradientDrawable = this.roundedDrawable();
+
             const toggle = Menu.toggle(label, callback);
             toggle.textColor = config.color.secondaryText;
+            toggle.background = gradientDrawable;
             toggle.padding = [10, 5, 10, 5];
 
             return toggle;
         }
 
         textView(label: string): TextView {
+            const gradientDrawable = this.roundedDrawable();
+            gradientDrawable.color = config.color.layoutBg;
+
             const textView = Menu.textView(label);
             textView.textColor = config.color.secondaryText;
+            textView.background = gradientDrawable;
             textView.padding = [10, 5, 10, 5];
 
             return textView;
