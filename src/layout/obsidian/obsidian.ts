@@ -174,12 +174,16 @@ namespace Menu {
         }
 
         handleAdd(add: ComposerHandler): void {
+            const filler = this.textView("\u2800");
+            filler.textColor = "#000000";
+            
             add(this.buttonProxyLayout, this.buttonLayout);
             add(this.buttonLayout, this.me);
             add(this.title, this.buttonLayout);
             add(this.subtitle, this.me);
             add(this.layout, this.proxy);
             add(this.proxy, this.me);
+            add(filler, this.me);
             add(this.hide, this.buttonProxyLayout);
             add(this.close, this.buttonProxyLayout);
         }
@@ -285,7 +289,6 @@ namespace Menu {
 
         textView(label: string): TextView {
             const gradientDrawable = this.roundedDrawable();
-            gradientDrawable.color = config.color.layoutBg;
 
             const textView = Menu.textView(label);
             textView.textColor = config.color.secondaryText;
