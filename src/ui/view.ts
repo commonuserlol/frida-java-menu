@@ -94,6 +94,9 @@ namespace Menu {
                     onLongClick: (view: Java.Wrapper) => {
                         callback.call(this);
                         return true;
+                    },
+                    onLongClickUseDefaultHapticFeedback(view: Java.Wrapper) {
+                        return false;
                     }
                 }
             }).$new());
